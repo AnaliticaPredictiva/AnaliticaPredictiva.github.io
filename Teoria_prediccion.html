@@ -376,6 +376,147 @@ div.tocify {
 <h5>
 <strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em>
 </h5>
+<p>
+<span style="font-size: 18pt; font-family: helvetica;"><strong><span style="color: #000000;">Sesión 3 - Introducción a los K Vecinos más cercanos</span></strong></span>
+</p>
+<p>
+<span style="font-size: 14pt; font-family: helvetica;"><strong><span style="color: #000000;">Técnica de clasificación y regresión:</span></strong></span>
+</p>
+<p>
+<span style="color: #000000; font-family: helvetica;"><strong><span style="font-size: 12pt;">1) Clasificación</span></strong></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Sea <span style="font-size: 14pt;"><em>{ ( X<sub>1</sub> , Y<sub>1</sub>) , … , ( X<sub>n</sub> , Y<sub>n</sub>)  }</em> </span>una m.a donde <span style="font-size: 14pt;"><em>X<sub>i </sub> ϵ R<sup>P </sup>y Y <sub>i </sub>ϵ { C<sub>1</sub>, … ,C<sub>J</sub> } =C</em></span></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ahora sea X m.a nueva observación cuya clase <em><span style="font-size: 14pt;">Y ϵ C</span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">se desea predecir,</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Primero se calculan las instancias de <span style="font-size: 14pt;"><em>X a X<sub>1</sub>, … , Xn</em></span> :</span>
+</p>
+<p>
+<em><span style="font-size: 14pt; font-family: helvetica; color: #808080;">{ X, i = || X - X<sub>i </sub>|| , i=1, … , n }</span></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ahora se define <span style="font-size: 14pt;"><em>E X , <sub>(1)</sub> = min i E X , i</em> </span>(La menor distancia)</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><span style="font-size: 14pt;"><em> E X , <sub>(2)</sub> = min i E X , i  E X , (I)</em> </span>(La segunda menor distancia)</span>
+</p>
+<p>
+<span style="font-size: 16px; font-family: helvetica; color: #808080;">…</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><span style="font-size: 14pt;">E X , <sub>(n)</sub> = max i E X , i</span> </em>(La mayor distancia)</span>
+</p>
+<p>
+<span style="font-family: helvetica; color: #808080;"></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Los K Vecinos más cercanos a<em><span style="font-size: 14pt;"> X</span> </em>son los <em><span style="font-size: 14pt;">X<sub>j</sub></span></em> que satisfacen <span style="font-size: 14pt;"><em>|| X –X<sub>j</sub> || &lt; E X , <sub>(K)</sub></em></span></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Referimos el clasificador de los K Vecinos más cercanos como</span>
+</p>
+<p>
+<span style="font-size: 14pt;"><em><span style="font-family: helvetica; color: #808080;">d: R<sup>P –&gt;</sup></span></em></span><span style="font-size: 14pt;"><em><span style="font-family: helvetica; color: #808080;">C</span></em></span>
+</p>
+<p>
+<span style="font-size: 14pt;"><em><span style="font-family: helvetica; color: #808080;">d( X ) –&gt; arg max j Σ { y<sub>i</sub> = C<sub>j</sub> }, donde || X<sub>i </sub>– X || &lt;  E X , (K)</span></em></span>
+</p>
+<p>
+<span style="font-family: helvetica;"></span>
+</p>
+<p>
+<span style="font-family: helvetica;"><strong><span style="font-size: 12pt; color: #000000;">2) Regresión: </span></strong></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Es este caso <em><span style="font-size: 14pt;">Yi ϵ R</span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">La función de regresión es:</span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/1.png" alt="1" width="435" height="75" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Si <em><span style="font-size: 14pt;">X<sub>0 </sub></span></em>es un valor particular, entonces<em><span style="font-size: 14pt;"> f (X<sub>0</sub>)</span></em> es una aproximación de <em><span style="font-size: 14pt;">E [ Y | X = X<sub>0</sub>]</span></em></span>
+</p>
+<p>
+<span style="font-size: 14pt; color: #000000; font-family: helvetica;"><strong>¿Qué es E [ Y| X = X<sub>0</sub>] ?</strong></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Sea <span style="font-size: 14pt;"><em>( Y, X )</em> </span>una tupla de r.a con fdp conjunta<em><span style="font-size: 14pt;"> f <sub>Y,X </sub>( Y, X).</span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Dado <em><span style="font-size: 14pt;">X = X<sub>0</sub></span></em> , queremos aproximar <span style="font-size: 14pt;"><em>Y</em></span> por <em><span style="font-size: 14pt;">g ( X )</span></em>, con <span style="font-size: 14pt;"><em>g: R<sup>P </sup>à R</em>.</span></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">El costo cuadrado de g es</span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/2.png" alt="2" width="545" height="98" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">En la expresión azul, <em><span style="text-decoration: underline; font-size: 14pt;">X</span></em> está fija y <span style="font-size: 14pt;"><em>Y</em></span> es la variable de integración. Cuando <em><span style="text-decoration: underline; font-size: 14pt;">X</span></em> está fija entonces</span>
+</p>
+<p>
+<span style="font-size: 14pt;"><em><span style="font-family: helvetica;">f (Y, X) = f <sub>Y|X = X</sub> (y) f<sub>x</sub> (X).</span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Recordemos que la fdp condicional de Y dado <span style="font-size: 14pt;"><em>X = X<sub>0</sub></em></span> es </span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/3.png" alt="3" width="501" height="150" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;"><img src="Images/IntroprediccionKNN/4.png" alt="4" width="124" height="30" />es una función solo de <span style="font-size: 14pt;"><em>y</em></span>. Así</span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/5.png" alt="5" width="647" height="173" /></span>
+</p>
+<p>
+<span style="font-family: helvetica;"></span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/6.png" alt="6" width="542" height="58" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">La formula (2) indica que para minimizar el costo cuadrático de g() se puede hacer la minimización condicionado sobre X y luego tomando la esperanza con respecto a <span style="text-decoration: underline;">X</span>:</span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/7.png" alt="7" width="799" height="176" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Para minimizar esta expresión con respecto a C, derivamos con respecto a C e igualamos la derivada a O:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;"><img src="Images/IntroprediccionKNN/8.png" alt="8" width="792" height="212" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Si se reemplaza (5) en (2) se obtiene la pérdida cuadrática de g:</span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/9.png" alt="9" width="531" height="146" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Por otro lado el MSE o Pérdida Cuadrática del estimador (4) del parámetro δ es:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;"><img src="Images/IntroprediccionKNN/10.png" alt="10" width="987" height="228" /></span>
+</p>
+<p>
+<span style="font-family: helvetica;"></span><span style="font-size: 12pt; font-family: helvetica;">Esto quiere decir que el MSE de <span style="font-size: 14pt;"><em>g()</em></span> se puede ver como:</span>
+</p>
+<p>
+<span style="font-family: helvetica;"><img src="Images/IntroprediccionKNN/11.png" alt="11" width="674" height="152" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">           </span>
+</p>
 <div id="ilustracción-de-la-teoría-de-la-predicción-mediante-simulación" class="section level2">
 <h2>Ilustracción de la teoría de la predicción mediante simulación</h2>
 <p>Dada una muestra <span class="math inline">\(L\left\{(X_1,Y_1),...,(X_n,Y_n)\right\}\)</span>, con <span class="math inline">\(X_i\)</span> toma valores en <span class="math inline">\(\mathbb{R}^p\)</span> y <span class="math inline">\(Y_i\)</span> toma valores en <span class="math inline">\(\mathbb{R}\)</span> y provienen de una distribución conjunta con densidad <span class="math inline">\(f_{Y,X}\left(y,x\right)\)</span>, la función <span class="math inline">\(g(\cdot)\)</span> que minimiza <span class="math inline">\(E[(Y-g(X))^2]\)</span> es <span class="math inline">\(E[Y|X]\)</span>. La pérdida cuadrática de <span class="math inline">\(g(\cdot)\)</span> es <span class="math inline">\(E[V[Y|X]]\)</span>.</p>
