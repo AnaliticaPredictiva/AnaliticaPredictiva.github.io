@@ -1,0 +1,115 @@
+---
+title: "Sesión 3- 21 de Mayo de 2020"
+---
+<h5><strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la&nbsp;Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em></h5>
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+datos <- read.csv2("real_estate_valuation_dataset.csv")
+```
+
+```{r}
+head(datos)
+```
+
+```{r}
+datos_an<-subset(datos,select = c("X2","X3","X4","Y"))
+head(datos_an)
+```
+
+```{r}
+summary(datos_an)
+```
+
+
+* X2: edad de la casa
+* X3: distancia al MRT
+* X4: número de comercios alrededor
+
+
+```{r}
+pairs(datos_an)
+```
+
+
+```{r}
+plot(datos_an$X3,datos_an$Y,log="xy")
+```
+
+# Programa para hacer el clasificador de los K vecinos más cercanos:
+
+
+```{r}
+fknn=function(x,k,X0,Y0){
+  # a) encontrar todas las distancias
+  # D<-rbind(x,X0) # op1
+  # distancias<-dist(D) # op1
+  # distancias<-as.matrix(distancias)[1,-1] # op1
+  # Tarea: evaluar el desempeño (en tiempo) de ambas opciones
+  distancias<-apply(X0,1,function(y,x){sqrt(sum((x-y)^2))},x=x) #op2
+  # b) ordenar las distancias
+  orden<-sort(distancias,index.return=TRUE)
+  knn_ix<-orden$ix[1:k]
+  # c) calcular la respuesta como el promedio
+  Y_pred<-mean(Y0[knn_ix])
+  return(Y_pred)
+  # Y_pred<-mean(Y[orden$ix[1:k]]) # Mala práctica
+}
+```
+
+Encontremos el K óptimo:
+
+```{r}
+set.seed(20200521)
+p_vl<-0.2
+N<-dim(datos_an)[1]
+ix_vl<-sample(N,round(0.2*N),replace = FALSE)
+X_tr<-datos_an[-ix_vl,1:3]
+X_vl<-datos_an[ix_vl,1:3]
+Y_tr<-datos_an$Y[-ix_vl]
+Y_vl<-datos_an$Y[ix_vl]
+```
+
+
+```{r}
+Y_pred_k<-apply(X_vl,1,fknn,k=2,X0=X_tr,Y0=Y_tr)
+```
+
+```{r}
+(perdida_k_vl<-mean((Y_vl-Y_pred_k)^2))
+```
+
+
+```{r}
+mse_fn=function(k,X0,Y0,X1,Y1){
+  # Esta función calcula el mse para el método KNN datos
+  # unos conjuntos de entrenamiento, validación
+  # y un valor específico de k
+  # k: número de vecinos
+  # X0: datos de entrenamiento (covariables)
+  # Y0: datos de entrenamiento (respuesta)
+  # X1: datos de validación (covariables)
+  # Y1: datos de validación (respuesta)
+  Y_pred_k<-apply(X1,1,fknn,k=k,X0=X0,Y0=Y0)
+  perdida_k_vl<-mean((Y1-Y_pred_k)^2)
+  return(perdida_k_vl)
+}
+```
+
+```{r}
+(mse_fn(k=2,X0=X_tr,Y0=Y_tr,X1=X_vl,Y1=Y_vl))
+```
+
+```{r}
+MSE_k<-sapply(1:20,FUN=mse_fn,X0=X_tr,Y0=Y_tr,X1=X_vl,Y1=Y_vl,simplify = TRUE)
+```
+
+
+```{r}
+plot(1:20,MSE_k,type="h",las=1,xlab="K: número de vecinos",ylab = "MSE")
+```
+

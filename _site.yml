@@ -1,0 +1,19 @@
+name: "Analítica Predictiva"
+output_dir: "."
+navbar:
+  title: "Analítica Predictiva"
+  left:
+    - text: "Introducción"
+      href: index.html
+    - text: "Sesiones de clase"
+      href: about.html
+    - text: "Preguntas y respuestas"
+      href: Preguntasrespuestas.html
+
+output:
+  html_document:
+    theme: journal
+    highlight: textmate
+    toc: true
+    toc_float: true
+    

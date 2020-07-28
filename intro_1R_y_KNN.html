@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Sesión 2- 14 de Mayo de 2020</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Analítica Predictiva</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introducción</a>
+</li>
+<li>
+  <a href="about.html">Sesiones de clase</a>
+</li>
+<li>
+  <a href="Preguntasrespuestas.html">Preguntas y respuestas</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Sesión 2- 14 de Mayo de 2020</h1>
+
+</div>
+
+
+<h5>
+<strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em>
+</h5>
+<div id="r-y-vecinos-más-cercanos" class="section level1">
+<h1>1R y Vecinos más cercanos</h1>
+<div id="introducción-a-los-vecinos-más-cercanos" class="section level2">
+<h2>Introducción a los vecinos más cercanos</h2>
+<p>En este método se tiene un conjunto de referencia <span class="math inline">\((X,y)\)</span>, donde <span class="math inline">\(X\)</span> es una matriz cuyas filas representan individuos y cuyas columnas representan características, y <span class="math inline">\(y\)</span> es un vector cuyas entradas corresponden a las respuestas asociadas a las filas de <span class="math inline">\(X\)</span>.</p>
+</div>
+<div id="introducción-a-los-vecinos-más-cercanos-1" class="section level2">
+<h2>Introducción a los vecinos más cercanos</h2>
+<p>Para una nueva observación <span class="math inline">\(x\)</span>, su predicción <span class="math inline">\(\hat{y}\)</span> se obtiene buscando las <span class="math inline">\(k\)</span> filas en <span class="math inline">\(X\)</span> más cercanas a la nueva observación, <span class="math inline">\(x\)</span>, y promediando las respuestas correspondientes (en el caso de la regresión) o tomando la clase más frecuente (en el caso de la clasificación).</p>
+<div id="conjuntos-de-datos-para-probar" class="section level3">
+<h3>Conjuntos de datos para probar:</h3>
+<p>A continuación se propone el siguiente conjunto de datos para desarrollar modelos de regresión:</p>
+<p><a href="http://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set">Real estate valuation data set Data Set</a></p>
+<p><strong>Citación:</strong> Yeh, I. C., &amp; Hsu, T. K. (2018). Building real estate valuation models with comparative approach through case-based reasoning. Applied Soft Computing, 65, 260-271.</p>
+</div>
+</div>
+<div id="predicción-de-precios-con-knn" class="section level2">
+<h2>Predicción de precios con KNN</h2>
+<p>Lectura de la base de datos:</p>
+<pre class="r"><code>precios &lt;- read.csv(&quot;real_estate_valuation_dataset.csv&quot;,header = TRUE,sep=&quot;;&quot;,dec=&quot;,&quot;)</code></pre>
+<p>La definición de las variables es la siguiente:</p>
+<ul>
+<li>X1: fecha de la transacción (por ejemplo 2013.250=2013 Marzo, * 2013.500=2013 Junio, etc.)</li>
+<li>X2: edad de la casa en años</li>
+<li>X3: distancial al MRT (transporte masivo) más cercano en metros</li>
+<li>X4: número de tiendas de conveniencia en el vecindario (entero)</li>
+<li>X5: latitud (unidad: grados)</li>
+<li>X6: longitude (unidad: grados)</li>
+<li>Y: precio por unidad de área (10000 Nuevos dólares taiwaneses/ 3.3 <span class="math inline">\(m^2\)</span>)</li>
+</ul>
+<p>La base tiene la siguiente estructura:</p>
+<pre class="r"><code>head(precios)</code></pre>
+<pre><code>##   ï..No       X1   X2         X3 X4       X5       X6    Y
+## 1     1 2012.917 32.0   84.87882 10 24.98298 121.5402 37.9
+## 2     2 2012.917 19.5  306.59470  9 24.98034 121.5395 42.2
+## 3     3 2013.583 13.3  561.98450  5 24.98746 121.5439 47.3
+## 4     4 2013.500 13.3  561.98450  5 24.98746 121.5439 54.8
+## 5     5 2012.833  5.0  390.56840  5 24.97937 121.5425 43.1
+## 6     6 2012.667  7.1 2175.03000  3 24.96305 121.5125 32.1</code></pre>
+<p>Selección de la base de datos solo con las variables edad de la casa, distancia al MRT y tiendas de conveniencia cercanas y la variable respuesta:</p>
+<pre class="r"><code>precios_red&lt;-precios[,c(&quot;X2&quot;,&quot;X3&quot;,&quot;X4&quot;,&quot;Y&quot;)]</code></pre>
+<div id="descripción-básica" class="section level3">
+<h3>Descripción básica:</h3>
+<p>Estadísticos de resumen:</p>
+<pre class="r"><code>summary(precios_red)</code></pre>
+<pre><code>##        X2               X3                X4               Y         
+##  Min.   : 0.000   Min.   :  23.38   Min.   : 0.000   Min.   :  7.60  
+##  1st Qu.: 9.025   1st Qu.: 289.32   1st Qu.: 1.000   1st Qu.: 27.70  
+##  Median :16.100   Median : 492.23   Median : 4.000   Median : 38.45  
+##  Mean   :17.713   Mean   :1083.89   Mean   : 4.094   Mean   : 37.98  
+##  3rd Qu.:28.150   3rd Qu.:1454.28   3rd Qu.: 6.000   3rd Qu.: 46.60  
+##  Max.   :43.800   Max.   :6488.02   Max.   :10.000   Max.   :117.50</code></pre>
+<p>Cálculo de la desviación estándar:</p>
+<pre class="r"><code>apply(precios_red,2,sd)</code></pre>
+<pre><code>##          X2          X3          X4           Y 
+##   11.392485 1262.109595    2.945562   13.606488</code></pre>
+<p>Gráfico de dispersión por pares:</p>
+<pre class="r"><code>pairs(precios_red)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Cálculo de la correlación entre las variables:</p>
+<pre class="r"><code>cor(precios_red)</code></pre>
+<pre><code>##             X2          X3          X4          Y
+## X2  1.00000000  0.02562205  0.04959251 -0.2105670
+## X3  0.02562205  1.00000000 -0.60251914 -0.6736129
+## X4  0.04959251 -0.60251914  1.00000000  0.5710049
+## Y  -0.21056705 -0.67361286  0.57100491  1.0000000</code></pre>
+<p>Gráfica de precios versus la edad de la casa:</p>
+<pre class="r"><code>plot(precios_red$X2,precios_red$Y,las=1,
+     xlab=&quot;Edad de la casa [años]&quot;,
+     ylab=&quot;Precio [log moneda]&quot;,
+     main=&quot;Edad de la casa vs Precio&quot;,
+     log=&quot;y&quot;)
+grid()</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Gráfica de precios versus la distancia al MRT:</p>
+<pre class="r"><code>plot(precios_red$X3,precios_red$Y,las=1,
+     xlab=&quot;Distancia al MRT [log m]&quot;,
+     ylab=&quot;Precio [log moneda]&quot;,
+     main=&quot;Distancia al MRT vs Precio&quot;,
+     log=&quot;xy&quot;)
+grid()</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Precios versus cantidad de tiendas de conveniencia:</p>
+<pre class="r"><code>boxplot(Y~X4,data=precios_red,
+        las=1,log=&quot;y&quot;,
+     xlab=&quot;Tiendas de conveniencia&quot;,
+     ylab=&quot;Precio [log moneda]&quot;,
+     main=&quot;Tiendas de conveniencia vs precio&quot;)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="análisis-de-la-variable-respuesta" class="section level3">
+<h3>Análisis de la variable respuesta:</h3>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre class="r"><code>hist(precios_red$Y,xlab=&quot;Precio&quot;,ylab=&quot;Frecuencia&quot;,las=1,
+     main=&quot;Histograma precio&quot;,freq = FALSE)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>hist_Y&lt;-plot_ly(x=precios_red$Y,type=&quot;histogram&quot;,
+                histnorm=&quot;probability&quot;)
+hist_Y&lt;-layout(hist_Y,title=&#39;Histograma precio&#39;,
+        # xaxis = list(type = &quot;log&quot;),       
+         xaxis=list(title=&quot;Precio&quot;
+                    # ,type=&quot;log&quot;
+                    ),
+         yaxis=list(title=&quot;Frecuencia rel.&quot;))
+hist_Y</code></pre>
+<pre><code>## Warning: `arrange_()` is deprecated as of dplyr 0.7.0.
+## Please use `arrange()` instead.
+## See vignette(&#39;programming&#39;) for more help
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div id="htmlwidget-ebeb0b82fad27e54a941" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ebeb0b82fad27e54a941">{"x":{"visdat":{"3b0c380e2554":["function () ","plotlyVisDat"]},"cur_data":"3b0c380e2554","attrs":{"3b0c380e2554":{"x":[37.9,42.2,47.3,54.8,43.1,32.1,40.3,46.7,18.8,22.1,41.4,58.1,39.3,23.8,34.3,50.5,70.1,37.4,42.3,47.7,29.3,51.6,24.6,47.9,38.8,27,56.2,33.6,47,57.1,22.1,25,34.2,49.3,55.1,27.3,22.9,25.3,47.7,46.2,15.9,18.2,34.7,34.1,53.9,38.3,42,61.5,13.4,13.2,44.2,20.7,27,38.9,51.7,13.7,41.9,53.5,22.6,42.4,21.3,63.2,27.7,55,25.3,44.3,50.7,56.8,36.2,42,59,40.8,36.3,20,54.4,29.5,36.8,25.6,29.8,26.5,40.3,36.8,48.1,17.7,43.7,50.8,27,18.3,48,25.3,45.4,43.2,21.8,16.1,41,51.8,59.5,34.6,51,62.2,38.2,32.9,54.4,45.7,30.5,71,47.1,26.6,34.1,28.4,51.6,39.4,23.1,7.6,53.3,46.4,12.2,13,30.6,59.6,31.3,48,32.5,45.5,57.4,48.6,62.9,55,60.7,41,37.5,30.7,37.5,39.5,42.2,20.8,46.8,47.4,43.5,42.5,51.4,28.9,37.5,40.1,28.4,45.5,52.2,43.2,45.1,39.7,48.5,44.7,28.9,40.9,20.7,15.6,18.3,35.6,39.4,37.4,57.8,39.6,11.6,55.5,55.2,30.6,73.6,43.4,37.4,23.5,14.4,58.8,58.1,35.1,45.2,36.5,19.2,42,36.7,42.6,15.5,55.9,23.6,18.8,21.8,21.5,25.7,22,44.3,20.5,42.3,37.8,42.7,49.3,29.3,34.6,36.6,48.2,39.1,31.6,25.5,45.9,31.5,46.1,26.6,21.4,44,34.2,26.2,40.9,52.2,43.5,31.1,58,20.9,48.1,39.7,40.8,43.8,40.2,78.3,38.5,48.5,42.3,46,49,12.8,40.2,46.6,19,33.4,14.7,17.4,32.4,23.9,39.3,61.9,39,40.6,29.7,28.8,41.4,33.4,48.2,21.7,40.8,40.6,23.1,22.3,15,30,13.8,52.7,25.9,51.8,17.4,26.5,43.9,63.3,28.8,30.7,24.4,53,31.7,40.6,38.1,23.7,41.1,40.1,23,117.5,26.5,40.5,29.3,41,49.7,34,27.7,44,31.1,45.4,44.8,25.6,23.5,34.4,55.3,56.3,32.9,51,44.5,37,54.4,24.5,42.5,38.1,21.8,34.1,28.5,16.7,46.1,36.9,35.7,23.2,38.4,29.4,55,50.2,24.7,53,19.1,24.7,42.2,78,42.8,41.6,27.3,42,37.5,49.8,26.9,18.6,37.7,33.1,42.5,31.3,38.1,62.1,36.7,23.6,19.2,12.8,15.6,39.6,38.4,22.8,36.5,35.6,30.9,36.3,50.4,42.9,37,53.5,46.6,41.2,37.9,30.8,11.2,53.7,47,42.3,28.6,25.7,31.3,30.1,60.7,45.3,44.9,45.1,24.7,47.1,63.3,40,48,33.1,29.5,24.8,20.9,43.1,22.8,42.1,51.7,41.5,52.2,49.5,23.8,30.5,56.8,37.4,69.7,53.3,47.3,29.3,40.3,12.9,46.6,55.3,25.6,27.3,67.7,38.6,31.3,35.3,40.3,24.7,42.5,31.9,32.2,23,37.3,35.5,27.7,28.5,39.7,41.2,37.2,40.5,22.3,28.1,15.4,50,40.6,52.5,63.9],"histnorm":"probability","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"histogram"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Histograma precio","xaxis":{"domain":[0,1],"automargin":true,"title":"Precio"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Frecuencia rel."},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[37.9,42.2,47.3,54.8,43.1,32.1,40.3,46.7,18.8,22.1,41.4,58.1,39.3,23.8,34.3,50.5,70.1,37.4,42.3,47.7,29.3,51.6,24.6,47.9,38.8,27,56.2,33.6,47,57.1,22.1,25,34.2,49.3,55.1,27.3,22.9,25.3,47.7,46.2,15.9,18.2,34.7,34.1,53.9,38.3,42,61.5,13.4,13.2,44.2,20.7,27,38.9,51.7,13.7,41.9,53.5,22.6,42.4,21.3,63.2,27.7,55,25.3,44.3,50.7,56.8,36.2,42,59,40.8,36.3,20,54.4,29.5,36.8,25.6,29.8,26.5,40.3,36.8,48.1,17.7,43.7,50.8,27,18.3,48,25.3,45.4,43.2,21.8,16.1,41,51.8,59.5,34.6,51,62.2,38.2,32.9,54.4,45.7,30.5,71,47.1,26.6,34.1,28.4,51.6,39.4,23.1,7.6,53.3,46.4,12.2,13,30.6,59.6,31.3,48,32.5,45.5,57.4,48.6,62.9,55,60.7,41,37.5,30.7,37.5,39.5,42.2,20.8,46.8,47.4,43.5,42.5,51.4,28.9,37.5,40.1,28.4,45.5,52.2,43.2,45.1,39.7,48.5,44.7,28.9,40.9,20.7,15.6,18.3,35.6,39.4,37.4,57.8,39.6,11.6,55.5,55.2,30.6,73.6,43.4,37.4,23.5,14.4,58.8,58.1,35.1,45.2,36.5,19.2,42,36.7,42.6,15.5,55.9,23.6,18.8,21.8,21.5,25.7,22,44.3,20.5,42.3,37.8,42.7,49.3,29.3,34.6,36.6,48.2,39.1,31.6,25.5,45.9,31.5,46.1,26.6,21.4,44,34.2,26.2,40.9,52.2,43.5,31.1,58,20.9,48.1,39.7,40.8,43.8,40.2,78.3,38.5,48.5,42.3,46,49,12.8,40.2,46.6,19,33.4,14.7,17.4,32.4,23.9,39.3,61.9,39,40.6,29.7,28.8,41.4,33.4,48.2,21.7,40.8,40.6,23.1,22.3,15,30,13.8,52.7,25.9,51.8,17.4,26.5,43.9,63.3,28.8,30.7,24.4,53,31.7,40.6,38.1,23.7,41.1,40.1,23,117.5,26.5,40.5,29.3,41,49.7,34,27.7,44,31.1,45.4,44.8,25.6,23.5,34.4,55.3,56.3,32.9,51,44.5,37,54.4,24.5,42.5,38.1,21.8,34.1,28.5,16.7,46.1,36.9,35.7,23.2,38.4,29.4,55,50.2,24.7,53,19.1,24.7,42.2,78,42.8,41.6,27.3,42,37.5,49.8,26.9,18.6,37.7,33.1,42.5,31.3,38.1,62.1,36.7,23.6,19.2,12.8,15.6,39.6,38.4,22.8,36.5,35.6,30.9,36.3,50.4,42.9,37,53.5,46.6,41.2,37.9,30.8,11.2,53.7,47,42.3,28.6,25.7,31.3,30.1,60.7,45.3,44.9,45.1,24.7,47.1,63.3,40,48,33.1,29.5,24.8,20.9,43.1,22.8,42.1,51.7,41.5,52.2,49.5,23.8,30.5,56.8,37.4,69.7,53.3,47.3,29.3,40.3,12.9,46.6,55.3,25.6,27.3,67.7,38.6,31.3,35.3,40.3,24.7,42.5,31.9,32.2,23,37.3,35.5,27.7,28.5,39.7,41.2,37.2,40.5,22.3,28.1,15.4,50,40.6,52.5,63.9],"histnorm":"probability","type":"histogram","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Categorización de la variable respuesta:</p>
+<pre class="r"><code>precios_red$Y_cat&lt;-cut(precios_red$Y,breaks=c(0,30,50,118),labels=c(&quot;bajo&quot;,&quot;medio&quot;,&quot;alto&quot;))</code></pre>
+<p>Esto permite otro tipo de exploración:</p>
+<pre class="r"><code>boxplot(X3~Y_cat,data=precios_red,las=1,#log=&quot;y&quot;,
+        xlab=&quot;Precio&quot;,
+        ylab=&quot;Distancia al MRT&quot;)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<pre class="r"><code>table(precios_red$Y_cat,precios_red$X4)</code></pre>
+<pre><code>##        
+##          0  1  2  3  4  5  6  7  8  9 10
+##   bajo  48 26 11 28  6  3  1  2  1  0  0
+##   medio 16 17 12 16 22 41 25 23 23 12  8
+##   alto   3  3  1  2  3 23 11  6  6 13  2</code></pre>
+<pre class="r"><code>proportions(table(precios_red$Y_cat,precios_red$X4),margin=c(1))*100</code></pre>
+<pre><code>##        
+##                  0          1          2          3          4          5
+##   bajo  38.0952381 20.6349206  8.7301587 22.2222222  4.7619048  2.3809524
+##   medio  7.4418605  7.9069767  5.5813953  7.4418605 10.2325581 19.0697674
+##   alto   4.1095890  4.1095890  1.3698630  2.7397260  4.1095890 31.5068493
+##        
+##                  6          7          8          9         10
+##   bajo   0.7936508  1.5873016  0.7936508  0.0000000  0.0000000
+##   medio 11.6279070 10.6976744 10.6976744  5.5813953  3.7209302
+##   alto  15.0684932  8.2191781  8.2191781 17.8082192  2.7397260</code></pre>
+<pre class="r"><code>chisq.test(table(precios_red$Y_cat,precios_red$X4))</code></pre>
+<pre><code>## Warning in chisq.test(table(precios_red$Y_cat, precios_red$X4)): Chi-squared
+## approximation may be incorrect</code></pre>
+<pre><code>## 
+##  Pearson&#39;s Chi-squared test
+## 
+## data:  table(precios_red$Y_cat, precios_red$X4)
+## X-squared = 189.14, df = 20, p-value &lt; 2.2e-16</code></pre>
+<pre class="r"><code>precios_red$edad&lt;-cut(precios_red$X2,breaks=c(0,5,10,50),labels = c(&quot;casi_nueva&quot;,&quot;usada&quot;,&quot;vieja&quot;),right = FALSE)</code></pre>
+<pre class="r"><code>precios_red$tiendas&lt;-cut(precios_red$X4,breaks=c(0,3,6,11),labels = c(&quot;bajo&quot;,&quot;medio&quot;,&quot;alto&quot;),right = FALSE)</code></pre>
+<pre class="r"><code>table(precios_red$Y_cat,precios_red$tiendas)</code></pre>
+<pre><code>##        
+##         bajo medio alto
+##   bajo    85    37    4
+##   medio   45    79   91
+##   alto     7    28   38</code></pre>
+<pre class="r"><code>cuts_dMRT&lt;-quantile(precios_red$X3,probs = c(0,0.25,0.75,1))
+precios_red$dMRT&lt;-cut(precios_red$X3,breaks=cuts_dMRT,labels = c(&quot;cerca&quot;,&quot;medio&quot;,&quot;lejos&quot;),include.lowest=TRUE)</code></pre>
+</div>
+</div>
+<div id="particionamiento-del-conjunto-de-datos" class="section level2">
+<h2>Particionamiento del conjunto de datos:</h2>
+<pre class="r"><code>set.seed(20200513)
+N&lt;-dim(precios_red)[1] # tamaño de la muestra original
+p&lt;-0.2 # fracción reservada para validación
+id_vl&lt;-sample(N,round(N*p),replace = FALSE)
+datos_vl&lt;-precios_red[id_vl,]
+datos_tr&lt;-precios_red[-id_vl,]</code></pre>
+</div>
+<div id="predicción-con-1r" class="section level2">
+<h2>Predicción con 1R</h2>
+<pre class="r"><code>library(OneR)</code></pre>
+<pre class="r"><code>modelos_onerule&lt;-OneR(Y_cat~edad+tiendas+dMRT,data=datos_tr) # Modelo con variables categóricas
+# modelos_onerule&lt;-OneR(Y~X2+X3+X4,data=datos_tr) # Modelo con variables numéricas</code></pre>
+<pre class="r"><code>summary(modelos_onerule)</code></pre>
+<pre><code>## 
+## Call:
+## OneR.formula(formula = Y_cat ~ edad + tiendas + dMRT, data = datos_tr)
+## 
+## Rules:
+## If dMRT = cerca then Y_cat = medio
+## If dMRT = medio then Y_cat = medio
+## If dMRT = lejos then Y_cat = bajo
+## 
+## Accuracy:
+## 226 of 331 instances classified correctly (68.28%)
+## 
+## Contingency table:
+##        dMRT
+## Y_cat   cerca medio lejos Sum
+##   bajo      3    31  * 63  97
+##   medio  * 46 * 117    14 177
+##   alto     41    16     0  57
+##   Sum      90   164    77 331
+## ---
+## Maximum in each column: &#39;*&#39;
+## 
+## Pearson&#39;s Chi-squared test:
+## X-squared = 187.58, df = 4, p-value &lt; 2.2e-16</code></pre>
+<p>¿Están todos los tipos de casas igualmente representados? Probablemente no. Las casas caras son más escasas. El desbalanceo de los datos puede estar llevando a un sesgo.</p>
+<!-- ### Ejemplo con el conjunto `crabs` del paquete `MASS` -->
+<!-- En el siguiente ejemplo se usan las medidas morfométricas de cangrejos para clasificarlos según su especie con el método 1R. El sexo del cangrejo es una variable de confusión. -->
+<!-- ```{r} -->
+<!-- library(MASS) -->
+<!-- N_crabs<-nrow(crabs) -->
+<!-- ix_tr<-sample(N_crabs,floor(0.8*N_crabs),replace=FALSE) -->
+<!-- crabs_tr<-crabs[ix_tr,] -->
+<!-- crabs_vl<-crabs[-ix_tr,] -->
+<!-- crabs_1R<-OneR(sp~FL+RW+CL+BD,data = crabs_tr) -->
+<!-- summary(crabs_1R) -->
+<!-- ``` -->
+<!-- Validación: -->
+<!-- ```{r} -->
+<!-- pred_vl<-predict(crabs_1R,crabs_vl) -->
+<!-- eval_model(pred_vl, actual=crabs_vl$sp) -->
+<!-- ``` -->
+<!-- Aparentemente el sexo es una variable que necesita ser tenida en cuenta. Tarea: mirar el análisis descriptivo con la función `pairs()`. -->
+</div>
+<div id="programación-del-método-de-los-k-vecinos-más-cercanos" class="section level2">
+<h2>Programación del método de los K vecinos más cercanos</h2>
+<div id="particionamiento-de-los-datos-en-entrenamiento-y-validación" class="section level3">
+<h3>Particionamiento de los datos en entrenamiento y validación</h3>
+<p>Se cuenta con 414 registros. Se tomará el 25% para validación. Para que este script sea reproducible se fija el valor de la semilla antes de simular números aleatorios:</p>
+<pre class="r"><code>n&lt;-dim(precios_red)[1]
+n_vl&lt;-round(n*0.25)
+set.seed(20190930) # Se fija la semilla para obtener
+                   # resultados reproducibles
+ix_vl&lt;-sample(1:n,n_vl,replace = FALSE)
+X_tr&lt;-precios_red[-ix_vl,c(&quot;X2&quot;,&quot;X3&quot;,&quot;X4&quot;)]
+X_vl&lt;-precios_red[ix_vl,c(&quot;X2&quot;,&quot;X3&quot;,&quot;X4&quot;)]
+Y_tr&lt;-precios_red$Y[-ix_vl]
+Y_vl&lt;-precios_red$Y[ix_vl]</code></pre>
+<div id="función-para-encontrar-los-k-vecinos-más-cercanos-y-promediar-sus-respuestas" class="section level4">
+<h4>Función para encontrar los k vecinos más cercanos y promediar sus respuestas:</h4>
+<p>La siguiente función encuentra los <span class="math inline">\(k\)</span> vecinos más cercanos y promedia sus respuestas conrrespondientes:</p>
+<pre class="r"><code>fknn&lt;-function(x,k,X_tr,Y_tr){
+  # x: observación a predecir
+  # k: cuántos vecinos más cercanos se deben hallar
+  # X0: dataframe o matriz con los datos de entrenamiento
+  # Y0: respuesta asociada a X0
+  xX&lt;-rbind(x,X_tr) # Se concatenan x y X
+  distancias&lt;-as.matrix(dist(xX)) # Se calcula la matriz de distancias y se convierte a la clase matrix
+  d_vec&lt;-distancias[1,-1] # Se selecciona la columna 1 que corresponde a todas las distancias con respecto a x
+  orden&lt;-sort(d_vec,index.return=TRUE) # Se ordenan las distancias en forma ascendente
+  k_vecinos&lt;-orden$ix[1:k] # se obtienen los índices de los k vecinos más cercanos
+  respuestas_knn&lt;-Y_tr[k_vecinos] # se extraen las respuestas correspondientes a los k vecinos más cercanos
+  r_knn&lt;-mean(respuestas_knn) # se promedian las respuestas de los k vecinos más cercanos
+  return(r_knn)
+}</code></pre>
+<!-- Valores para prueba de escritorio: -->
+<!-- ```{r} -->
+<!-- k<-3 -->
+<!-- x<-X_vl[23,] -->
+<!-- X<-X_tr -->
+<!-- Y<-Y_tr -->
+<!-- ``` -->
+<p>Prueba de la función:</p>
+<pre class="r"><code>fknn(x=X_vl[1,],k=3,X_tr=X_tr,Y_tr=Y_tr)</code></pre>
+<pre><code>## [1] 32.33333</code></pre>
+</div>
+</div>
+<div id="predicción-de-los-datos-de-validación" class="section level3">
+<h3>Predicción de los datos de validación</h3>
+<div id="forma-1-usando-un-ciclo-for" class="section level4">
+<h4>Forma 1: usando un ciclo for</h4>
+<p>Esta forma no es tan eficiente en R, pero conviene ilustrar su uso:</p>
+<pre class="r"><code>Y_vl_pred&lt;-rep(NA,n_vl) # se crea un vector que alojará el cálculo de las predicciones
+for (i in 1:n_vl){
+  Y_vl_pred[i]&lt;-fknn(x=X_vl[i,],k=3,X_tr=X_tr,Y_tr=Y_tr)
+}</code></pre>
+</div>
+<div id="forma-2-usando-apply" class="section level4">
+<h4>Forma 2: usando apply</h4>
+<p>La familia de funciones <em>apply</em> proporciona una mejor alternativa para aplicar métodos iterativos:</p>
+<pre class="r"><code>Y_vl_pred&lt;-apply(X_vl,1,fknn,k=3,X_tr=X_tr,Y_tr=Y_tr)</code></pre>
+<p>Cálculo del MSE:</p>
+<pre class="r"><code>MSEk3&lt;-mean((Y_vl_pred-Y_vl)^2)
+MSEk3</code></pre>
+<pre><code>## [1] 102.5929</code></pre>
+<p>Gráfico de valores predichos vs observados para k=3:</p>
+<pre class="r"><code>par(pty=&quot;s&quot;)
+plot(Y_vl_pred,Y_vl,xlab=&quot;Predichos [moneda]&quot;,ylab=&quot;Observados [moneda]&quot;,las=1)
+abline(a=0,b=1,lwd=2)
+grid()</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+</div>
+</div>
+<div id="número-de-vecinos-óptimo" class="section level3">
+<h3>Número de vecinos óptimo</h3>
+<p>A continuación se encuentra el número de vecinos óptimo variando <span class="math inline">\(k\)</span> y obteniendo para cada valor el MSE en el conjunto de validación.</p>
+<p>Para ello se crea primero una función que se pueda invocar fácilmente con <em>apply</em>:</p>
+<pre class="r"><code>mse_knn_k&lt;-function(k,X_tr,Y_tr,X_vl,Y_vl){
+  Y_vl_pred&lt;-apply(X_vl,1,fknn,k=k,X_tr=X_tr,Y_tr=Y_tr)
+  MSEk&lt;-mean((Y_vl_pred-Y_vl)^2)
+  return(MSEk)
+}</code></pre>
+<p>Prueba de la función:</p>
+<pre class="r"><code>mse_knn_k(k=3,X_tr=X_tr,Y_tr=Y_tr,X_vl=X_vl,Y_vl=Y_vl)</code></pre>
+<pre><code>## [1] 102.5929</code></pre>
+<p>Ahora se aplica la función para un rango de valores de <span class="math inline">\(k\)</span> entre 1 y 100:</p>
+<pre class="r"><code>k&lt;-1:100
+mse_vl_k&lt;-sapply(k,mse_knn_k,X_tr=X_tr,Y_tr=Y_tr,X_vl=X_vl,Y_vl=Y_vl)</code></pre>
+<p>Gráfica del MSE vs <span class="math inline">\(k\)</span>:</p>
+<pre class="r"><code>plot(k,mse_vl_k,xlab=&quot;Número de vecinos&quot;,ylab=&quot;MSE de validación&quot;,las=1,type = &quot;l&quot;)
+grid()</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+</div>
+<div id="normalización-de-los-datos" class="section level3">
+<h3>Normalización de los datos</h3>
+<p>La normalización de los datos puede mejorar el desempeño de la técnica y reducir la variabilidad del error de validación.</p>
+<p>Para normalizar se puede restar la media de cada variable y dividir por su desviación estándar. Esto puede hacerse con la función <em>scale</em>:</p>
+<pre class="r"><code>precios_red_cent&lt;-scale(precios_red[,c(&quot;X2&quot;,&quot;X3&quot;,&quot;X4&quot;,&quot;Y&quot;)],center=TRUE,scale=TRUE)
+centro&lt;-attr(precios_red_cent,&quot;center&quot;)
+escala&lt;-attr(precios_red_cent,&quot;scale&quot;)
+precios_red_cent&lt;-as.data.frame(precios_red_cent)</code></pre>
+<p>Obtengamos el diagrama de dispersión por pares de los datos normalizados:</p>
+<pre class="r"><code>pairs(precios_red_cent)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
+<p>Ahora entrenemos el modelo con los datos normalizado Para ello dividamos el conjunto normalizado en entrenamiento y validación:</p>
+<pre class="r"><code>n&lt;-dim(precios_red)[1]
+n_vl&lt;-round(n*0.25)
+set.seed(20190930) # Se fija la semilla para obtener
+                   # resultados reproducibles
+ix_vl&lt;-sample(1:n,n_vl,replace = FALSE)
+X_tr&lt;-precios_red_cent[-ix_vl,c(&quot;X2&quot;,&quot;X3&quot;,&quot;X4&quot;)]
+X_vl&lt;-precios_red_cent[ix_vl,c(&quot;X2&quot;,&quot;X3&quot;,&quot;X4&quot;)]
+Y_tr&lt;-precios_red_cent$Y[-ix_vl]
+Y_vl&lt;-precios_red_cent$Y[ix_vl]</code></pre>
+<p>Ahora, obtengamos nuevamente el MSE en función de <span class="math inline">\(k\)</span>:</p>
+<pre class="r"><code>k&lt;-1:100
+mse_vl_k&lt;-sapply(k,mse_knn_k,X_tr=X_tr,Y_tr=Y_tr,X_vl=X_vl,Y_vl=Y_vl)</code></pre>
+<p>Gráfica del MSE vs <span class="math inline">\(k\)</span> para los datos normalizados:</p>
+<pre class="r"><code>plot(k,mse_vl_k,xlab=&quot;Número de vecinos&quot;,ylab=&quot;MSE de validación&quot;,las=1,type = &quot;l&quot;)
+grid()</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+</div>
+<div id="knn-con-caret" class="section level3">
+<h3>Knn con caret</h3>
+<p>El paquete caret contiene una serie de funciones para el entrenamiento de métodos de aprendizaje de máquina.</p>
+<p>A continuación se entrena un modelo de los <span class="math inline">\(k\)</span> vecinos más cercanos utilizando las funciones <em>train()</em> y <em>trainControl()</em>:</p>
+<pre class="r"><code>library(caret)
+set.seed(2019092)
+ctrl&lt;-trainControl(method = &quot;LGOCV&quot;,p=0.75,number = 20)
+modelo_entrenamiento&lt;-train(Y ~ X2+X3+X4,
+             data       = precios_red,
+             method     = &quot;knn&quot;,
+             preProcess = c(&quot;center&quot;,&quot;scale&quot;),
+             tuneGrid   = expand.grid(k = 1:30),
+             trControl  = ctrl,
+             metric     = &quot;RMSE&quot;)</code></pre>
+<pre class="r"><code>print(modelo_entrenamiento)</code></pre>
+<pre><code>## k-Nearest Neighbors 
+## 
+## 414 samples
+##   3 predictor
+## 
+## Pre-processing: centered (3), scaled (3) 
+## Resampling: Repeated Train/Test Splits Estimated (20 reps, 75%) 
+## Summary of sample sizes: 312, 312, 312, 312, 312, 312, ... 
+## Resampling results across tuning parameters:
+## 
+##   k   RMSE      Rsquared   MAE     
+##    1  9.905815  0.5474593  6.229655
+##    2  8.852191  0.5987048  5.812850
+##    3  8.687407  0.6044412  5.673517
+##    4  8.725091  0.5981017  5.709287
+##    5  8.776102  0.5917692  5.802278
+##    6  8.817465  0.5873599  5.876139
+##    7  8.778098  0.5906457  5.895366
+##    8  8.821210  0.5852639  5.968680
+##    9  8.786022  0.5859482  5.955979
+##   10  8.794352  0.5832352  5.967602
+##   11  8.765216  0.5851013  5.958356
+##   12  8.741871  0.5865283  5.937460
+##   13  8.746952  0.5859650  5.950882
+##   14  8.759576  0.5846145  5.960118
+##   15  8.776896  0.5831229  5.979916
+##   16  8.773926  0.5833470  5.964186
+##   17  8.768257  0.5837793  5.965848
+##   18  8.771068  0.5833120  5.955491
+##   19  8.755168  0.5845389  5.936277
+##   20  8.760728  0.5838047  5.929834
+##   21  8.771969  0.5825002  5.930252
+##   22  8.772221  0.5824053  5.929194
+##   23  8.785903  0.5810477  5.928584
+##   24  8.810605  0.5786875  5.935624
+##   25  8.832897  0.5766542  5.943779
+##   26  8.863619  0.5739850  5.970941
+##   27  8.876060  0.5729557  5.985691
+##   28  8.882749  0.5725029  5.987131
+##   29  8.917127  0.5694100  6.023722
+##   30  8.938098  0.5672908  6.054798
+## 
+## RMSE was used to select the optimal model using the smallest value.
+## The final value used for the model was k = 3.</code></pre>
+<p>Gráfico del RMSE vs k:</p>
+<pre class="r"><code>plot(modelo_entrenamiento)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>Importancia de las variables:</p>
+<pre class="r"><code>importancia&lt;-varImp(modelo_entrenamiento)
+dotPlot(importancia)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
+<div id="selección-de-variables" class="section level3">
+<h3>Selección de variables</h3>
+<p>Explicado en <a href="https://stackoverflow.com/questions/51933704/feature-selection-with-caret-rfe-and-training-with-another-method">StackOverFlow</a></p>
+<pre class="r"><code>require(caret)
+set.seed(2019092) # Se fija la semilla para obtener resultados reproducibles.
+
+# Se configura el método de selección de variables. Se utiliza K-fold cross-validation con K=10.
+rctrl1 &lt;- rfeControl(method = &quot;cv&quot;,
+                     number = 10,
+                     returnResamp = &quot;all&quot;,
+                     functions = caretFuncs,
+                     saveDetails = TRUE)
+
+# Selección de variables. Se configuar para obtener el mejor modelo con 1 y con 2 variables (sizes=c(1,2)):
+model_select &lt;- rfe(Y ~ ., data = precios_red,
+             sizes = c(1,2),
+             method = &quot;knn&quot;,
+             metric = &quot;RMSE&quot;,
+             preProcess = c(&quot;center&quot;,&quot;scale&quot;),
+             trControl = trainControl(method = &quot;cv&quot;,number = 10),
+             tuneGrid = data.frame(k = 1:10),
+             rfeControl = rctrl1)</code></pre>
+<pre class="r"><code>print(model_select)</code></pre>
+<pre><code>## 
+## Recursive feature selection
+## 
+## Outer resampling method: Cross-Validated (10 fold) 
+## 
+## Resampling performance over subset size:
+## 
+##  Variables  RMSE Rsquared   MAE RMSESD RsquaredSD  MAESD Selected
+##          1 9.105   0.5903 6.504  2.845    0.13505 1.3621         
+##          2 7.058   0.7396 5.089  2.006    0.08042 0.7502         
+##         11 5.794   0.8258 3.991  2.152    0.08190 0.7781        *
+## 
+## The top 5 variables (out of 11):
+##    X3, Y_catalto, dMRTlejos, X4, X2</code></pre>
+<pre class="r"><code>plot(model_select, type = c(&quot;g&quot;, &quot;o&quot;))</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+</div>
+<div id="gráfico-de-superficie" class="section level3">
+<h3>Gráfico de superficie</h3>
+<p>Para ilustrar los gráficos de superficie se entrenará un modelo con las mejores dos variables, <span class="math inline">\(X3\)</span> y <span class="math inline">\(X4\)</span>:</p>
+<pre class="r"><code>library(caret)
+set.seed(2019092)
+ctrl&lt;-trainControl(method = &quot;cv&quot;,number = 10)
+modelo_X3X4&lt;-train(Y ~ X3+X4,
+             data       = precios_red,
+             method     = &quot;knn&quot;,
+             preProcess = c(&quot;center&quot;,&quot;scale&quot;),
+             tuneGrid   = expand.grid(k = 1:30),
+             trControl  = ctrl,
+             metric     = &quot;RMSE&quot;)</code></pre>
+<p>El resultado del modelo es el siguiente:</p>
+<pre class="r"><code>plot(modelo_X3X4)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<p>Observemos que los datos fueron preprocesados internamente usando los siguientes valores de medias y varianzas:</p>
+<pre class="r"><code>(medias&lt;-modelo_X3X4$preProcess$mean)</code></pre>
+<pre><code>##          X3          X4 
+## 1083.885689    4.094203</code></pre>
+<pre class="r"><code>(dsv_es&lt;-modelo_X3X4$preProcess$std)</code></pre>
+<pre><code>##          X3          X4 
+## 1262.109595    2.945562</code></pre>
+<p>Para graficar la superficie de respuesta se obtienen las predicciones del modelo en un rango de valores típicos de <span class="math inline">\(X3\)</span> y <span class="math inline">\(X4\)</span>. Primero se generan los valores típicos de las variables y luego, con el comando <em>expand.grid()</em> se generan todas las posibles combinaciones. El resultado final se guarda en un dataframe, llamado aquí <em>newdata</em>, que se usará para la predicción:</p>
+<pre class="r"><code>X3&lt;-seq(min(precios_red$X3),max(precios_red$X3),length.out = 100)
+X4&lt;-0:10
+newdata&lt;-expand.grid(X3,X4)
+names(newdata)&lt;-c(&quot;X3&quot;,&quot;X4&quot;)</code></pre>
+<pre class="r"><code>precios_predichos&lt;-predict(modelo_X3X4,newdata = newdata)
+newdata$Y&lt;-precios_predichos
+z&lt;-matrix(precios_predichos,ncol=length(X4),nrow = length(X3))</code></pre>
+<pre class="r"><code>par(mar=c(6,8,4,2),mgp=c(5,1,0))
+z_img&lt;-t(z)
+image(z_img,xaxt=&#39;n&#39;,yaxt=&#39;n&#39;,xlab=&quot;Tiendas de conveniencia&quot;,ylab=&quot;Distancia al MRT (m)&quot;,col=gray.colors(20,rev=TRUE))
+labelsX3&lt;-format(X3, digits = 4,decimal.mark = &quot;,&quot;,big.mark = &quot; &quot;)
+axis(2,at=seq(0,1,by=1/(length(X3)-1)),labels =labelsX3,las=2)
+axis(1,at=seq(0,1,by=1/(length(X4)-1)),labels=X4,las=2)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-55-1.png" width="672" /> <!-- Otra alternativa para lo anterior es la siguiente: --></p>
+<!-- ```{r} -->
+<!--  library(lattice) -->
+<!--  levelplot(z_img) -->
+<!-- ``` -->
+<pre class="r"><code>persp(X3,X4,z,xlab=&quot;Distancia al MRT&quot;,ylab=&quot;Tiendas de conveniencia&quot;,zlab=&quot;Precio&quot;,main=&quot;Superficie de respuesta para un modelo con dos variables&quot;,theta=45,shade=0.3)</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre class="r"><code>p &lt;- plot_ly(x=X4,y=X3,z = z) 
+p &lt;- add_surface(p)
+p&lt;-layout(p,title=&#39;Precio vs dis MRT y número de comercios&#39;,
+         xaxis=list(title=&quot;Cantidad de comercios&quot;),
+         yaxis=list(title=&quot;Distancia al MRT (m)&quot;))
+p</code></pre>
+<div id="htmlwidget-2e5eb53c9e2080102970" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2e5eb53c9e2080102970">{"x":{"visdat":{"3b0c1edb3295":["function () ","plotlyVisDat"]},"cur_data":"3b0c1edb3295","attrs":{"3b0c1edb3295":{"x":[0,1,2,3,4,5,6,7,8,9,10],"y":[23.38284,88.6822153535354,153.981590707071,219.280966060606,284.580341414141,349.879716767677,415.179092121212,480.478467474747,545.777842828283,611.077218181818,676.376593535354,741.675968888889,806.975344242424,872.27471959596,937.574094949495,1002.87347030303,1068.17284565657,1133.4722210101,1198.77159636364,1264.07097171717,1329.37034707071,1394.66972242424,1459.96909777778,1525.26847313131,1590.56784848485,1655.86722383838,1721.16659919192,1786.46597454545,1851.76534989899,1917.06472525253,1982.36410060606,2047.6634759596,2112.96285131313,2178.26222666667,2243.5616020202,2308.86097737374,2374.16035272727,2439.45972808081,2504.75910343434,2570.05847878788,2635.35785414141,2700.65722949495,2765.95660484848,2831.25598020202,2896.55535555556,2961.85473090909,3027.15410626263,3092.45348161616,3157.7528569697,3223.05223232323,3288.35160767677,3353.6509830303,3418.95035838384,3484.24973373737,3549.54910909091,3614.84848444444,3680.14785979798,3745.44723515152,3810.74661050505,3876.04598585859,3941.34536121212,4006.64473656566,4071.94411191919,4137.24348727273,4202.54286262626,4267.8422379798,4333.14161333333,4398.44098868687,4463.7403640404,4529.03973939394,4594.33911474747,4659.63849010101,4724.93786545455,4790.23724080808,4855.53661616162,4920.83599151515,4986.13536686869,5051.43474222222,5116.73411757576,5182.03349292929,5247.33286828283,5312.63224363636,5377.9316189899,5443.23099434343,5508.53036969697,5573.82974505051,5639.12912040404,5704.42849575758,5769.72787111111,5835.02724646465,5900.32662181818,5965.62599717172,6030.92537252525,6096.22474787879,6161.52412323232,6226.82349858586,6292.12287393939,6357.42224929293,6422.72162464646,6488.021],"z":[[49.22,35.2166666666667,35.2166666666667,36.2333333333333,45.5363636363636,49.55,48.1444444444444,53.48,54.96,57.3909090909091,45.14],[49.22,35.2166666666667,35.2166666666667,36.88,36.72,49.55,48.1444444444444,52.16,54.96,57.3909090909091,45.14],[49.22,35.2166666666667,38.3333333333333,36.88,36.72,48.6,48.1444444444444,43.32,45.28,55.9066666666667,45.14],[49.22,46.2714285714286,39.86,41.6333333333333,36.72,46.85,47.5,43.0333333333333,47.04,48.72,45.14],[48.1666666666667,57.02,38.12,41.6333333333333,36.72,49.8538461538462,65.7333333333333,46.6,50.2,47.4333333333333,51.72],[44.4555555555555,41.3571428571429,38.12,41.6333333333333,38.9,53.6142857142857,42.48,40.34,43.04,48.94,51.72],[44.4555555555555,41.68,38.12,41.6333333333333,38.9,43.1125,30.16,39.6285714285714,36.4,44.3,51.72],[38.9333333333333,40.36,38.12,41.6333333333333,45,40.0666666666667,28.74,39.48,35.54,44.3,51.72],[38.14,40.36,38.12,41.6333333333333,47.68,44.94,38.98,37.84,40.98,44.3,51.72],[38.14,40.36,38.12,42.66,44.4833333333333,42.7428571428571,38.98,36.84,40.8,44.3,51.72],[32.22,38.46,39.48,44.66,41.6714285714286,42.7428571428571,38.98,36.84,40.8,44.3,51.72],[32.22,38.46,39.06,43.3333333333333,40.5,42.7428571428571,38.98,36.84,40.8,44.3,51.72],[32.22,38.46,39.06,43.3333333333333,41.65,40.25,38.98,36.84,40.8,44.3,51.72],[29.3,36.06,39.06,43.3333333333333,41.65,40.25,38.98,36.84,40.8,42.48,51.72],[27.48,29.2545454545455,39.06,43.3333333333333,38.1857142857143,40.25,34.24,36.84,40.8,42.24,51.72],[23.4,28.21,39.06,43.3333333333333,37.8333333333333,35.3833333333333,34.24,36.84,40.8,42.9666666666667,51.72],[23.4,28.21,39.06,32.38,36.2666666666667,34.38,34.24,36.26,37.76,42.9666666666667,51.72],[17.1,28.21,37.14,26.04,36.2666666666667,32.02,34.24,36.26,37.76,41.16,51.72],[16.62,27.8,32.4333333333333,24.92,36.2666666666667,32.02,34.24,36.26,37.76,41.16,51.72],[17.74,27.8,27.4454545454545,24.92,33.6,32.02,34.24,36.26,37.76,41.16,51.72],[32.28,27.45,28.52,24.92,33.6,31.8,34.92,36.26,37.76,41.16,51.72],[34.9,27.27,28.52,24.92,33.6,31.8,33.56,36.26,37.76,41.16,51.72],[34.9,27.1083333333333,28.52,24.92,33.6,31.8,33.56,34.0166666666667,37.76,41.16,47.74],[34.9,27.1083333333333,28.52,27.18,33.6,31.8,29,32.7,37.76,41.16,47.74],[34.9,25.28,28.52,28.34,29.7333333333333,31.8,29,32.7,37.76,41.16,47.74],[34.9,25.2,28.1833333333333,28.34,28.26,31.8,29,32.7,38.32,41.16,47.74],[38.54,25.4833333333333,28.88,25.34,25.36,29.65,26.84,32.7,38.32,41.16,47.74],[39.36,25.4833333333333,26.45,25.34,24.26,29.65,26.84,32.7,38.32,41.16,47.74],[29.66,25.4833333333333,26.36,25.9,25.4428571428571,26.1666666666667,26.84,32.7,38.32,37.76,47.74],[24.55,24.32,24.84,24.64,25.4428571428571,26.1666666666667,26.84,29.02,38.32,37.76,47.74],[25.32,24.76,24.84,29.0222222222222,27.44,25.26,25.26,25.7,38.32,37.76,47.74],[25.32,24.76,24.84,29.0222222222222,25.26,25.26,25.26,25.7,38.32,37.76,46.8333333333333],[24.72,24.76,24.84,28.475,25.26,25.26,25.26,25.26,38.32,37.76,46.8333333333333],[24.72,24.76,24.84,27.6666666666667,25.26,25.26,25.26,25.26,38.32,37.76,46.8333333333333],[24.72,25.32,24.84,25.5285714285714,25.26,25.26,25.26,25.26,38.32,37.76,46.8333333333333],[24.72,25.32,23.06,25.5285714285714,25.26,25.26,25.26,25.26,29.6,37.76,45.4857142857143],[24.72,24.72,24.66,25.5285714285714,25.26,25.26,25.26,25.26,25.48,37.76,45.4857142857143],[23.1,24.72,25.22,25.55,25.26,25.26,25.26,25.26,25.48,37.76,45.4857142857143],[23.1,24.72,24.06,24.06,25.26,25.26,25.26,25.26,25.26,37.76,43.36],[23.1,24.72,24.06,24.06,25.26,25.26,25.26,25.26,25.26,37.76,43.36],[23.1,23.1,24.06,24.06,25.26,25.26,25.26,25.26,25.26,37.76,43.36],[23.1,23.1,24.06,24.06,23.7,25.26,25.26,25.26,25.26,30.06,43.36],[26.1166666666667,26.1166666666667,24.06,24.06,23.7,25.26,25.26,25.26,25.26,28.48,43.36],[31.26,31.26,24.06,24.06,23.7,25.26,25.26,25.26,25.26,25.26,43.36],[31.26,31.26,24.06,22.7666666666667,23.7,25.26,25.26,25.26,25.26,25.26,39.04],[31.26,31.26,24.06,22.7666666666667,23.7,25.26,25.26,25.26,25.26,25.26,39.04],[31.26,31.26,22.6,22.7666666666667,23.7,24.02,25.26,25.26,25.26,25.26,39.04],[32.76,32.76,26.26,22.7666666666667,23.7,24.02,25.26,25.26,25.26,25.26,30.06],[32.76,32.76,31.18,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,30.06],[32.76,32.76,31.18,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,28.94],[32.76,32.76,31.18,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,25.26],[32.76,32.76,28.8,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,25.26],[32.76,32.76,28.8,22.74,23.7,23.7,24.02,25.26,25.26,25.26,25.26],[38.3,38.3,29.22,22.74,23.7,23.7,24.02,25.26,25.26,25.26,25.26],[35.12,35.12,35,22.74,23.7,23.7,23.7,25.26,25.26,25.26,25.26],[35.12,30.74,29.16,21.85,23.7,23.7,23.7,25.26,25.26,25.26,25.26],[23.12,30.74,29.16,20.2166666666667,22.74,23.7,23.7,25.26,25.26,25.26,25.26],[23.12,30.74,25.3833333333333,20.2166666666667,22.74,23.7,23.7,25.26,25.26,25.26,25.26],[22.4333333333333,22.66,24.6,19.12,22.74,23.7,23.7,24.02,25.26,25.26,25.26],[22.4333333333333,22.66,20.64,19.12,21.85,23.7,23.7,24.02,25.26,25.26,25.26],[18.2142857142857,19.025,20.64,19.12,20.2166666666667,22.74,23.7,24.02,25.26,25.26,25.26],[18.2142857142857,18.8444444444444,20.64,19.25,19.12,22.74,23.7,23.7,25.26,25.26,25.26],[16.7,17.6666666666667,18.19,18.19,19.12,22.74,23.7,23.7,25.26,25.26,25.26],[16.4571428571429,17.5545454545455,17.5545454545455,17.5545454545455,19.12,22.74,23.7,23.7,25.26,25.26,25.26],[16.6,18.3857142857143,18.3857142857143,18.3857142857143,19.12,19.12,23.7,23.7,24.02,25.26,25.26],[16.5,18.3857142857143,18.3857142857143,18.3857142857143,19.12,19.12,22.74,23.7,24.02,25.26,25.26],[17.3333333333333,18.68,18.68,18.68,19.12,19.12,21.28,23.7,24.02,25.26,25.26],[17.36,18.68,18.68,18.68,19.0166666666667,19.12,19.4166666666667,23.7,24.02,25.26,25.26],[17.36,18.68,18.68,18.68,19.0166666666667,19.12,20.5833333333333,23.7,23.7,25.26,25.26],[16.94,18.46,18.46,18.5714285714286,19.0166666666667,19.0166666666667,19.12,20.8,23.7,24.02,25.26],[16.94,17.16,18.26,19.0166666666667,19.0166666666667,19.0166666666667,19.12,19.82,23.7,24.02,25.26],[16.94,17.16,18.26,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,19.76,23.7,24.02,25.26],[16.94,17.16,18.26,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,19.76,23.7,24.02,25.26],[16.94,17.16,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,20.5833333333333,20.8,24.02,25.26],[16.94,17.16,17.88,17.88,17.88,17.88,17.88,17.88,19.76,23.7,25.26],[16.94,17.16,17.88,17.88,17.88,17.88,17.88,17.88,19.76,23.7,24.02],[16.94,17.08,17.88,17.88,17.88,17.88,17.88,17.88,19.6,20.8,24.02],[16.94,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,24.02],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,24.02],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,19.9],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,19.6],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6],[16.64,17.08,17.4,17.4,17.4,17.4,17.4,17.4,17.4,17.4,19.6],[16.64,17.4,17.4,17.4,17.4,17.4,17.4,17.4,17.4,17.4,19.36],[16.76,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[15.36,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92]],"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"surface","inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Precio vs dis MRT y número de comercios","xaxis":{"title":"Cantidad de comercios"},"yaxis":{"title":"Distancia al MRT (m)"},"scene":{"xaxis":{"title":[]},"yaxis":{"title":[]},"zaxis":{"title":[]}},"hovermode":"closest","showlegend":false,"legend":{"yanchor":"top","y":0.5}},"source":"A","config":{"showSendToCloud":false},"data":[{"colorbar":{"title":"","ticklen":2,"len":0.5,"lenmode":"fraction","y":1,"yanchor":"top"},"colorscale":[["0","rgba(68,1,84,1)"],["0.0416666666666666","rgba(70,19,97,1)"],["0.0833333333333334","rgba(72,32,111,1)"],["0.125","rgba(71,45,122,1)"],["0.166666666666667","rgba(68,58,128,1)"],["0.208333333333333","rgba(64,70,135,1)"],["0.25","rgba(60,82,138,1)"],["0.291666666666667","rgba(56,93,140,1)"],["0.333333333333333","rgba(49,104,142,1)"],["0.375","rgba(46,114,142,1)"],["0.416666666666667","rgba(42,123,142,1)"],["0.458333333333333","rgba(38,133,141,1)"],["0.5","rgba(37,144,140,1)"],["0.541666666666667","rgba(33,154,138,1)"],["0.583333333333333","rgba(39,164,133,1)"],["0.625","rgba(47,174,127,1)"],["0.666666666666667","rgba(53,183,121,1)"],["0.708333333333333","rgba(79,191,110,1)"],["0.75","rgba(98,199,98,1)"],["0.791666666666667","rgba(119,207,85,1)"],["0.833333333333333","rgba(147,214,70,1)"],["0.875","rgba(172,220,52,1)"],["0.916666666666667","rgba(199,225,42,1)"],["0.958333333333333","rgba(226,228,40,1)"],["1","rgba(253,231,37,1)"]],"showscale":true,"x":[0,1,2,3,4,5,6,7,8,9,10],"y":[23.38284,88.6822153535354,153.981590707071,219.280966060606,284.580341414141,349.879716767677,415.179092121212,480.478467474747,545.777842828283,611.077218181818,676.376593535354,741.675968888889,806.975344242424,872.27471959596,937.574094949495,1002.87347030303,1068.17284565657,1133.4722210101,1198.77159636364,1264.07097171717,1329.37034707071,1394.66972242424,1459.96909777778,1525.26847313131,1590.56784848485,1655.86722383838,1721.16659919192,1786.46597454545,1851.76534989899,1917.06472525253,1982.36410060606,2047.6634759596,2112.96285131313,2178.26222666667,2243.5616020202,2308.86097737374,2374.16035272727,2439.45972808081,2504.75910343434,2570.05847878788,2635.35785414141,2700.65722949495,2765.95660484848,2831.25598020202,2896.55535555556,2961.85473090909,3027.15410626263,3092.45348161616,3157.7528569697,3223.05223232323,3288.35160767677,3353.6509830303,3418.95035838384,3484.24973373737,3549.54910909091,3614.84848444444,3680.14785979798,3745.44723515152,3810.74661050505,3876.04598585859,3941.34536121212,4006.64473656566,4071.94411191919,4137.24348727273,4202.54286262626,4267.8422379798,4333.14161333333,4398.44098868687,4463.7403640404,4529.03973939394,4594.33911474747,4659.63849010101,4724.93786545455,4790.23724080808,4855.53661616162,4920.83599151515,4986.13536686869,5051.43474222222,5116.73411757576,5182.03349292929,5247.33286828283,5312.63224363636,5377.9316189899,5443.23099434343,5508.53036969697,5573.82974505051,5639.12912040404,5704.42849575758,5769.72787111111,5835.02724646465,5900.32662181818,5965.62599717172,6030.92537252525,6096.22474787879,6161.52412323232,6226.82349858586,6292.12287393939,6357.42224929293,6422.72162464646,6488.021],"z":[[49.22,35.2166666666667,35.2166666666667,36.2333333333333,45.5363636363636,49.55,48.1444444444444,53.48,54.96,57.3909090909091,45.14],[49.22,35.2166666666667,35.2166666666667,36.88,36.72,49.55,48.1444444444444,52.16,54.96,57.3909090909091,45.14],[49.22,35.2166666666667,38.3333333333333,36.88,36.72,48.6,48.1444444444444,43.32,45.28,55.9066666666667,45.14],[49.22,46.2714285714286,39.86,41.6333333333333,36.72,46.85,47.5,43.0333333333333,47.04,48.72,45.14],[48.1666666666667,57.02,38.12,41.6333333333333,36.72,49.8538461538462,65.7333333333333,46.6,50.2,47.4333333333333,51.72],[44.4555555555555,41.3571428571429,38.12,41.6333333333333,38.9,53.6142857142857,42.48,40.34,43.04,48.94,51.72],[44.4555555555555,41.68,38.12,41.6333333333333,38.9,43.1125,30.16,39.6285714285714,36.4,44.3,51.72],[38.9333333333333,40.36,38.12,41.6333333333333,45,40.0666666666667,28.74,39.48,35.54,44.3,51.72],[38.14,40.36,38.12,41.6333333333333,47.68,44.94,38.98,37.84,40.98,44.3,51.72],[38.14,40.36,38.12,42.66,44.4833333333333,42.7428571428571,38.98,36.84,40.8,44.3,51.72],[32.22,38.46,39.48,44.66,41.6714285714286,42.7428571428571,38.98,36.84,40.8,44.3,51.72],[32.22,38.46,39.06,43.3333333333333,40.5,42.7428571428571,38.98,36.84,40.8,44.3,51.72],[32.22,38.46,39.06,43.3333333333333,41.65,40.25,38.98,36.84,40.8,44.3,51.72],[29.3,36.06,39.06,43.3333333333333,41.65,40.25,38.98,36.84,40.8,42.48,51.72],[27.48,29.2545454545455,39.06,43.3333333333333,38.1857142857143,40.25,34.24,36.84,40.8,42.24,51.72],[23.4,28.21,39.06,43.3333333333333,37.8333333333333,35.3833333333333,34.24,36.84,40.8,42.9666666666667,51.72],[23.4,28.21,39.06,32.38,36.2666666666667,34.38,34.24,36.26,37.76,42.9666666666667,51.72],[17.1,28.21,37.14,26.04,36.2666666666667,32.02,34.24,36.26,37.76,41.16,51.72],[16.62,27.8,32.4333333333333,24.92,36.2666666666667,32.02,34.24,36.26,37.76,41.16,51.72],[17.74,27.8,27.4454545454545,24.92,33.6,32.02,34.24,36.26,37.76,41.16,51.72],[32.28,27.45,28.52,24.92,33.6,31.8,34.92,36.26,37.76,41.16,51.72],[34.9,27.27,28.52,24.92,33.6,31.8,33.56,36.26,37.76,41.16,51.72],[34.9,27.1083333333333,28.52,24.92,33.6,31.8,33.56,34.0166666666667,37.76,41.16,47.74],[34.9,27.1083333333333,28.52,27.18,33.6,31.8,29,32.7,37.76,41.16,47.74],[34.9,25.28,28.52,28.34,29.7333333333333,31.8,29,32.7,37.76,41.16,47.74],[34.9,25.2,28.1833333333333,28.34,28.26,31.8,29,32.7,38.32,41.16,47.74],[38.54,25.4833333333333,28.88,25.34,25.36,29.65,26.84,32.7,38.32,41.16,47.74],[39.36,25.4833333333333,26.45,25.34,24.26,29.65,26.84,32.7,38.32,41.16,47.74],[29.66,25.4833333333333,26.36,25.9,25.4428571428571,26.1666666666667,26.84,32.7,38.32,37.76,47.74],[24.55,24.32,24.84,24.64,25.4428571428571,26.1666666666667,26.84,29.02,38.32,37.76,47.74],[25.32,24.76,24.84,29.0222222222222,27.44,25.26,25.26,25.7,38.32,37.76,47.74],[25.32,24.76,24.84,29.0222222222222,25.26,25.26,25.26,25.7,38.32,37.76,46.8333333333333],[24.72,24.76,24.84,28.475,25.26,25.26,25.26,25.26,38.32,37.76,46.8333333333333],[24.72,24.76,24.84,27.6666666666667,25.26,25.26,25.26,25.26,38.32,37.76,46.8333333333333],[24.72,25.32,24.84,25.5285714285714,25.26,25.26,25.26,25.26,38.32,37.76,46.8333333333333],[24.72,25.32,23.06,25.5285714285714,25.26,25.26,25.26,25.26,29.6,37.76,45.4857142857143],[24.72,24.72,24.66,25.5285714285714,25.26,25.26,25.26,25.26,25.48,37.76,45.4857142857143],[23.1,24.72,25.22,25.55,25.26,25.26,25.26,25.26,25.48,37.76,45.4857142857143],[23.1,24.72,24.06,24.06,25.26,25.26,25.26,25.26,25.26,37.76,43.36],[23.1,24.72,24.06,24.06,25.26,25.26,25.26,25.26,25.26,37.76,43.36],[23.1,23.1,24.06,24.06,25.26,25.26,25.26,25.26,25.26,37.76,43.36],[23.1,23.1,24.06,24.06,23.7,25.26,25.26,25.26,25.26,30.06,43.36],[26.1166666666667,26.1166666666667,24.06,24.06,23.7,25.26,25.26,25.26,25.26,28.48,43.36],[31.26,31.26,24.06,24.06,23.7,25.26,25.26,25.26,25.26,25.26,43.36],[31.26,31.26,24.06,22.7666666666667,23.7,25.26,25.26,25.26,25.26,25.26,39.04],[31.26,31.26,24.06,22.7666666666667,23.7,25.26,25.26,25.26,25.26,25.26,39.04],[31.26,31.26,22.6,22.7666666666667,23.7,24.02,25.26,25.26,25.26,25.26,39.04],[32.76,32.76,26.26,22.7666666666667,23.7,24.02,25.26,25.26,25.26,25.26,30.06],[32.76,32.76,31.18,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,30.06],[32.76,32.76,31.18,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,28.94],[32.76,32.76,31.18,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,25.26],[32.76,32.76,28.8,22.7666666666667,23.7,23.7,25.26,25.26,25.26,25.26,25.26],[32.76,32.76,28.8,22.74,23.7,23.7,24.02,25.26,25.26,25.26,25.26],[38.3,38.3,29.22,22.74,23.7,23.7,24.02,25.26,25.26,25.26,25.26],[35.12,35.12,35,22.74,23.7,23.7,23.7,25.26,25.26,25.26,25.26],[35.12,30.74,29.16,21.85,23.7,23.7,23.7,25.26,25.26,25.26,25.26],[23.12,30.74,29.16,20.2166666666667,22.74,23.7,23.7,25.26,25.26,25.26,25.26],[23.12,30.74,25.3833333333333,20.2166666666667,22.74,23.7,23.7,25.26,25.26,25.26,25.26],[22.4333333333333,22.66,24.6,19.12,22.74,23.7,23.7,24.02,25.26,25.26,25.26],[22.4333333333333,22.66,20.64,19.12,21.85,23.7,23.7,24.02,25.26,25.26,25.26],[18.2142857142857,19.025,20.64,19.12,20.2166666666667,22.74,23.7,24.02,25.26,25.26,25.26],[18.2142857142857,18.8444444444444,20.64,19.25,19.12,22.74,23.7,23.7,25.26,25.26,25.26],[16.7,17.6666666666667,18.19,18.19,19.12,22.74,23.7,23.7,25.26,25.26,25.26],[16.4571428571429,17.5545454545455,17.5545454545455,17.5545454545455,19.12,22.74,23.7,23.7,25.26,25.26,25.26],[16.6,18.3857142857143,18.3857142857143,18.3857142857143,19.12,19.12,23.7,23.7,24.02,25.26,25.26],[16.5,18.3857142857143,18.3857142857143,18.3857142857143,19.12,19.12,22.74,23.7,24.02,25.26,25.26],[17.3333333333333,18.68,18.68,18.68,19.12,19.12,21.28,23.7,24.02,25.26,25.26],[17.36,18.68,18.68,18.68,19.0166666666667,19.12,19.4166666666667,23.7,24.02,25.26,25.26],[17.36,18.68,18.68,18.68,19.0166666666667,19.12,20.5833333333333,23.7,23.7,25.26,25.26],[16.94,18.46,18.46,18.5714285714286,19.0166666666667,19.0166666666667,19.12,20.8,23.7,24.02,25.26],[16.94,17.16,18.26,19.0166666666667,19.0166666666667,19.0166666666667,19.12,19.82,23.7,24.02,25.26],[16.94,17.16,18.26,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,19.76,23.7,24.02,25.26],[16.94,17.16,18.26,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,19.76,23.7,24.02,25.26],[16.94,17.16,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,19.0166666666667,20.5833333333333,20.8,24.02,25.26],[16.94,17.16,17.88,17.88,17.88,17.88,17.88,17.88,19.76,23.7,25.26],[16.94,17.16,17.88,17.88,17.88,17.88,17.88,17.88,19.76,23.7,24.02],[16.94,17.08,17.88,17.88,17.88,17.88,17.88,17.88,19.6,20.8,24.02],[16.94,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,24.02],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,24.02],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,19.9],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6,19.6],[16.64,17.08,17.88,17.88,17.88,17.88,17.88,17.88,17.88,17.88,19.6],[16.64,17.08,17.4,17.4,17.4,17.4,17.4,17.4,17.4,17.4,19.6],[16.64,17.4,17.4,17.4,17.4,17.4,17.4,17.4,17.4,17.4,19.36],[16.76,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[15.36,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92],[14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92,14.92]],"type":"surface","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="dónde-es-válida-la-superficie-de-respuesta" class="section level3">
+<h3>¿Dónde es válida la superficie de respuesta?</h3>
+<pre class="r"><code>plot(precios_red$X3,precios_red$X4,xlab=&quot;Distancia al MRT (m)&quot;,ylab=&quot;Tiendas de conveniencia&quot;,las=1)
+grid()</code></pre>
+<p><img src="intro_1R_y_KNN_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<h1 style="text-align: right;">
+<a href="Sesion2practica.html"><span style="color: #000000; font-size: 14pt;"><strong>SEGUNDA APLICACIÓN EN R </strong></span></a>
+</h1>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

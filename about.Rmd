@@ -1,0 +1,29 @@
+---
+title: "Sesiones de la Asignatura"
+---
+
+<p></p>
+<h1>¡Antes de empezar! Programa R STUDIO</h1>
+<h5 style="text-align: justify;"><span style="color: #808080;">La asigntaura se desarrolla en su totalidad en el programa R Studio.&nbsp;</span></h5>
+<h5 style="text-align: justify;"><span style="color: #808080;">Este es un entorno popular para crear aplicaciones y procesar datos en el lenguaje de programación R. Inicialmente, puede realizar la descarga en el siguiente link:&nbsp;<a style="color: #808080;" href="https://rstudio.com/products/rstudio/download/#download">https://rstudio.com/products/rstudio/download/#download</a></span></h5>
+<h5 style="text-align: justify;"><span style="color: #808080;"></span></h5>
+<h5 style="text-align: justify;"><span style="color: #808080;">Aqui podrá observar las sesiones digidas hasta la fecha. Al dar click podrá ver especificamente cada temática desde la conceptualización, hasta la practica realizada en el programa R.&nbsp;</span></h5>
+<h5 style="text-align: justify;"><span style="color: #808080;"> Luego de la descarga, se puede generar un Notebook o un documento R Markdown (etiquetas) dando click a file, new file y luego escoger el tipo de documento &nbsp;</span></h5>
+
+<h5 style="text-align: justify;"><span style="color: #808080;"> Durante las sesiones podrá observa el paso a paso y la descripción de cada algortitmo registrado. Aquí puede observar un resumen claro de cada sesión de la asignatura, puede entrar a la sesión que desee dando click a la imagen o en el enlace de la descripción.;</span></h5>
+<p style="text-align: justify;"><span style="color: #808080;"></span></p>
+
+<p>&nbsp;</p>
+<h1>Sesión 1 - Reglas </h1>
+<p>&nbsp;</p>
+<h5 style="text-align: justify;"><span style="color: #808080;">En la sesión inicial el profesor realiza la introducción a la asignatura y presenta los conceptos iniciales. En esta sesión podrá aprender el término predicción, modelos, estructuras, notaciones matemáticas con respecto a variables aleatorias, Función de Distribución de probabilidad, Función de Densidad de Probabilidad, entre otros. Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Reglas.html">Sesión 1 – Reglas.</a></span></h5>
+<p><a href="Reglas.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/sesion1.png" alt="" width="410" height="267" /></a></p>
+<p>&nbsp;</p>
+<h1>Sesión 2 - Introduccion 1R y KNN</h1>
+<p>&nbsp;</p>
+<h5 style="text-align: justify;"><span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="intro_1R_y_KNN.html">Sesión 2– Introducción 1R y KNN</a></span></h5>
+<p><a href="intro_1R_y_KNN.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Sesion2.png" alt="" width="360" height="219" /></a></p>
+<h1>Sesión 3 - Predicción y KNN</h1>
+<p>&nbsp;</p>
+<h5 style="text-align: justify;"><span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Teoria_prediccion.html">Sesión 3 - Predicción y KNN</a></span></h5>
+<p><a href="Teoria_prediccion.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Sesion3.png" alt="" width="326" height="258" /></a></p>

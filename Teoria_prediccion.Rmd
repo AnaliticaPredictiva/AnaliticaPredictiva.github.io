@@ -1,0 +1,240 @@
+---
+title: "Sesión 3- 21 de Mayo de 2020"
+---
+<h5><strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la&nbsp;Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em></h5>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Ilustracción de la teoría de la predicción mediante simulación
+Dada una muestra $L\left\{(X_1,Y_1),...,(X_n,Y_n)\right\}$, con $X_i$ toma valores en $\mathbb{R}^p$ y $Y_i$ toma valores en $\mathbb{R}$ y provienen de una distribución conjunta con densidad  $f_{Y,X}\left(y,x\right)$, la función $g(\cdot)$ que minimiza $E[(Y-g(X))^2]$ es $E[Y|X]$. La pérdida cuadrática de $g(\cdot)$ es $E[V[Y|X]]$.
+
+### Construcción del ejemplo de simulación
+
+En este ejemplo nos enfocaremos en un caso simple:
+
+1. $X$ es una varible uniforme discreta, $X \sim U_D[1,5]$
+2. $Y|X \sim N\left(X,(\frac{10+X}{10})^2 \right)$
+
+El siguiente código simula $X$:
+
+```{r}
+set.seed(20200521) # se fija la semilla para obtener resultados reproducibles
+N<-2000 # Número de simulaciones
+X<-ceiling(runif(n=N,min=0,max=5))
+```
+
+A continuación se explora la distribución muestral de $X$ con un gráfico de barras:
+
+```{r}
+X_freq_abs<-table(X) # Calcula las frecuencias absolutas
+X_freq_rel<-prop.table(X_freq_abs) # Calcula las frecuencias relativas
+barplot(X_freq_rel,legend.text =1:5,ylim=c(0,0.6),las=1) # Gráfico de barras de las frecuencias relativas
+# barplot(c(X_freq_rel,NA),legend.text =c(1:5,NA),las=1) # Tarea: explorar qué hace esta línea de código.
+title(xlab="Etiqueta",ylab="Frecuencia relativa",
+      main="Distribución muestral de X")
+```
+
+El siguiente código simula $Y|X$:
+
+```{r}
+Y<-rnorm(N,mean=X,sd=(10+X)/10)
+```
+
+
+Veamos la distribución de $Y|X$:
+
+```{r}
+par(mfrow=c(3,2))
+hist(Y[X==1],freq=FALSE,main = "Y|X=1",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="")
+lines(density(Y[X==1],bw=0.5),col=2,lwd=2)
+hist(Y[X==2],freq=FALSE,main = "Y|X=2",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="")
+lines(density(Y[X==2],bw=0.5),col=3,lwd=2)
+hist(Y[X==3],freq=FALSE,main = "Y|X=3",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="")
+lines(density(Y[X==3],bw=0.5),col=4,lwd=2)
+hist(Y[X==4],freq=FALSE,main = "Y|X=4",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="")
+lines(density(Y[X==4],bw=0.5),col=5,lwd=2)
+hist(Y[X==4],freq=FALSE,main = "Y|X=5",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="")
+lines(density(Y[X==5],bw=0.5),col=6,lwd=2)
+plot(density(Y[X==1],bw=0.5),col=2,lwd=2,las=1,xlim=c(-2,9),ylim=c(0,0.4),
+     main="Comparación de densidades",xlab = "Valores de Y")
+lines(density(Y[X==2],bw=0.5),col=3,lwd=2)
+lines(density(Y[X==3],bw=0.5),col=4,lwd=2)
+lines(density(Y[X==4],bw=0.5),col=5,lwd=2)
+lines(density(Y[X==5],bw=0.5),col=6,lwd=2)
+```
+
+Otra forma de ver la distribución de $Y|X$:
+
+```{r}
+# Tomado de:
+# https://www.r-graph-gallery.com/2-two-histograms-with-melt-colors.html
+hist(Y[X==1],freq=FALSE,border=2,main = "Y|X=x",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="",col=rgb(col2rgb(2)[1,1]/255,col2rgb(2)[2,1]/255,col2rgb(2)[3,1]/255,alpha=0.3))
+
+hist(Y[X==2],freq=FALSE,border=3,main = "Y|X=1",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="",col=rgb(col2rgb(3)[1,1]/255,col2rgb(3)[2,1]/255,col2rgb(3)[3,1]/255,alpha=0.3),add=TRUE)
+
+hist(Y[X==3],freq=FALSE,border=4,main = "Y|X=1",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="",col=rgb(col2rgb(4)[1,1]/255,col2rgb(4)[2,1]/255,col2rgb(4)[3,1]/255,alpha=0.3),add=TRUE)
+
+hist(Y[X==4],freq=FALSE,border=5,main = "Y|X=1",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="",col=rgb(col2rgb(5)[1,1]/255,col2rgb(5)[2,1]/255,col2rgb(5)[3,1]/255,alpha=0.3),add=TRUE)
+
+hist(Y[X==5],freq=FALSE,border=6,main = "Y|X=1",xlim=c(-2,9),ylim=c(0,0.4),las=1,xlab="",col=rgb(col2rgb(6)[1,1]/255,col2rgb(6)[2,1]/255,col2rgb(6)[3,1]/255,alpha=0.3),add=TRUE)
+
+legend("topright",legend=paste0("Y|X=",1:5),col=2:6,lty=1)
+```
+
+
+
+Veamos la distribución incondicional de $Y$:
+
+```{r}
+hist(Y,freq=FALSE,las=1,main="Histograma de Y",
+     xlab="Valores de Y", ylab="Frecuencia relativa",
+     xlim=c(-2,9),ylim=c(0,0.25),border="orange")
+lines(density(Y,bw=0.5),col="orange",lwd=2)
+```
+
+Ahora veamos la distribución conjunta de $X$ e $Y$:
+
+```{r}
+plot(X,Y,las=1,xlab="X",ylab="Y",main="X vs Y",col=X+1)
+grid()
+```
+
+Otra forma de ver esta distribución es con el boxplot:
+
+```{r}
+boxplot(Y~X,col=2:6,las=1,main="Boxplot de Y|X")
+```
+
+Otra alternativa es con las densidades estimadas. Para ello se calculan primero las densidades:
+
+```{r}
+# Estas densidades se calcularon arriba, pero no se guardaron en objetos. Así que hay que volverlas a calcular. Hay que pensar siempre en guardar los cálculos en objetos para evitar los reprocesos.
+d1<-density(Y[X==1],bw=0.5)
+d2<-density(Y[X==2],bw=0.5)
+d3<-density(Y[X==3],bw=0.5)
+d4<-density(Y[X==4],bw=0.5)
+d5<-density(Y[X==5],bw=0.5)
+```
+
+Ahora se grafican los puntos y se superponen las densidades: 
+
+```{r}
+plot(X,Y,las=1,xlab="X",ylab="Y",main="X vs Y",col=X+1,ylim=c(-2,9),xlim=c(0.5,5.5))
+lines(d1$y+1,d1$x,col=2,lwd=2)
+lines(d2$y+2,d2$x,col=3,lwd=2)
+lines(d3$y+3,d3$x,col=4,lwd=2)
+lines(d4$y+4,d4$x,col=5,lwd=2)
+lines(d5$y+5,d5$x,col=6,lwd=2)
+```
+
+
+
+Las medias condicionales de la variable $Y$ para los diferentes valores de la variable $X$ se pueden obtener así:
+
+```{r}
+(Y_avg_cond<-aggregate(Y~X,FUN=mean))
+```
+
+Lo anterior representa $\hat E[Y|X=x]$, con $x \in {1,2,3,4,5}$
+
+De manera análoga se pueden calcular las desviaciones estándar condicionales:
+
+```{r}
+(Y_sd_cond<-aggregate(Y~X,FUN=sd))
+```
+
+Lo anterior representa $\hat \sigma_{Y|X=x}=\sqrt{\hat V[Y|X=x]}$.
+
+```{r}
+(Y_param<-merge(Y_avg_cond,Y_sd_cond,by="X",suffixes = c("_mean","_sd")))
+```
+
+
+¿Cuál es el mínimo valor de la función de costo? Este valor teóricamente es $E[V[Y|X]]$:
+
+```{r}
+(L_teo<-mean(Y_sd_cond$Y^2))
+```
+
+¿Cómo se acerca el modelo de regresión lineal a este valor? Primero se ajusta el modelo lineal:
+
+```{r}
+modelo_lm<-lm(Y~X)
+```
+
+Ahora veamos el error cuadrático medio del modelo lineal:
+
+```{r}
+(L_lm<-mean(residuals(modelo_lm)^2))
+```
+
+### ¿Cómo lo haría un árbol de regresión?
+
+El siguiente código entrena un árbol de regresión:
+
+```{r}
+library(rpart)
+modelo_rt<-rpart(Y~X)
+```
+
+El siguiente código grafica el árbol obtenido:
+
+```{r}
+plot(modelo_rt,margin=0.03, main="Resultado de un árbol de regresión")
+text(modelo_rt)
+```
+
+¿Cuál es el valor de la pérdida cuadrática del árbol?
+
+```{r}
+(L_rt<-mean(residuals(modelo_rt)^2))
+```
+
+### ¿Cómo lo hacen los K vecios más cercanos?
+
+El siguiente código entrena un árbol de regresión:
+
+```{r message=FALSE}
+library(caret)
+modelo_knn<-knnreg(Y~X,data=data.frame(X,Y),k=5)
+```
+
+¿Cuál es la pérdida cuadrática de los KNN con K=5?
+
+```{r}
+errores_knn<-Y-predict(modelo_knn)
+(L_knn<-mean(errores_knn^2))
+```
+
+### ¿Cómo lo hace un modelo lineal con varianza variable?
+
+Se entrena un modelo que considera que la varianza de cada observación es una función de $X$:
+
+```{r}
+library(nlme)
+modelo_gls<-gls(Y~X,weights=~X)
+```
+
+<!-- El resultado del modelo es el siguiente: -->
+
+<!-- ```{r} -->
+<!-- summary(modelo_gls) -->
+<!-- ``` -->
+
+¿Cuál es la pérdida cuadrática del modelo lineal con varianza variable?
+
+```{r}
+(L_gls<-mean(residuals(modelo_gls)^2))
+```
+
+## ¿Cómo se comparan las diferentes pérdidas?
+
+Veamos cómo se comparan las pérdidas de los modelos anteriores:
+
+```{r}
+cbind(L_teo,L_lm,L_knn,L_rt,L_gls)
+```
+
+<h1 style="text-align: right;"><a href="Sesion3Practica.html"><span style="color: #000000; font-size: 14pt;"><strong>SEGUNDA APLICACIÓN EN R&nbsp;</strong></span></a></h1>

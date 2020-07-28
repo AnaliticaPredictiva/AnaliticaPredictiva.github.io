@@ -1,0 +1,585 @@
+---
+title: "Sesión 2- 14 de Mayo de 2020"
+---
+<h5><strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la&nbsp;Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em></h5>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# 1R y Vecinos más cercanos
+
+## Introducción a los vecinos más cercanos
+
+En este método se tiene un conjunto de referencia $(X,y)$, donde $X$ es una matriz cuyas filas representan individuos y cuyas columnas representan características, y $y$ es un vector cuyas entradas corresponden a las respuestas asociadas a las filas de $X$.
+
+## Introducción a los vecinos más cercanos
+Para una nueva observación $x$, su predicción $\hat{y}$ se obtiene buscando las $k$ filas en $X$ más cercanas a la nueva observación, $x$, y promediando las respuestas correspondientes (en el caso de la regresión) o tomando la clase más frecuente (en el caso de la clasificación).
+
+### Conjuntos de datos para probar:
+
+A continuación se propone el siguiente conjunto de datos para desarrollar modelos de regresión: 
+
+[Real estate valuation data set Data Set](http://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set)
+
+**Citación:** Yeh, I. C., & Hsu, T. K. (2018). Building real estate valuation models with comparative approach through case-based reasoning. Applied Soft Computing, 65, 260-271.
+
+## Predicción de precios con KNN
+
+Lectura de la base de datos:
+
+```{r}
+precios <- read.csv("real_estate_valuation_dataset.csv",header = TRUE,sep=";",dec=",")
+```
+
+
+La definición de las variables es la siguiente:
+
+* X1: fecha de la transacción (por ejemplo 2013.250=2013 Marzo, * 2013.500=2013 Junio, etc.) 
+* X2: edad de la casa en años
+* X3: distancial al MRT (transporte masivo) más cercano en metros 
+* X4: número de tiendas de conveniencia en el vecindario (entero)
+* X5: latitud (unidad: grados) 
+* X6: longitude (unidad: grados) 
+* Y: precio por unidad de área (10000 Nuevos dólares taiwaneses/ 3.3 $m^2$) 
+
+La base tiene la siguiente estructura:
+
+```{r}
+head(precios)
+```
+
+
+Selección de la base de datos solo con las variables edad de la casa, distancia al MRT y tiendas de conveniencia cercanas y la variable respuesta:
+
+```{r}
+precios_red<-precios[,c("X2","X3","X4","Y")]
+```
+
+
+### Descripción básica:
+
+Estadísticos de resumen:
+
+```{r}
+summary(precios_red)
+```
+
+Cálculo de la desviación estándar:
+
+```{r}
+apply(precios_red,2,sd)
+```
+
+Gráfico de dispersión por pares:
+
+```{r}
+pairs(precios_red)
+```
+
+Cálculo de la correlación entre las variables:
+
+```{r}
+cor(precios_red)
+```
+
+Gráfica de precios versus la edad de la casa:
+
+```{r}
+plot(precios_red$X2,precios_red$Y,las=1,
+     xlab="Edad de la casa [años]",
+     ylab="Precio [log moneda]",
+     main="Edad de la casa vs Precio",
+     log="y")
+grid()
+```
+
+Gráfica de precios versus la distancia al MRT:
+
+```{r}
+plot(precios_red$X3,precios_red$Y,las=1,
+     xlab="Distancia al MRT [log m]",
+     ylab="Precio [log moneda]",
+     main="Distancia al MRT vs Precio",
+     log="xy")
+grid()
+```
+
+Precios versus cantidad de tiendas de conveniencia:
+
+```{r}
+boxplot(Y~X4,data=precios_red,
+        las=1,log="y",
+     xlab="Tiendas de conveniencia",
+     ylab="Precio [log moneda]",
+     main="Tiendas de conveniencia vs precio")
+```
+
+
+### Análisis de la variable respuesta:
+
+```{r message=FALSE, warning=FALSE}
+library(plotly)
+```
+
+```{r}
+hist(precios_red$Y,xlab="Precio",ylab="Frecuencia",las=1,
+     main="Histograma precio",freq = FALSE)
+```
+
+
+```{r}
+hist_Y<-plot_ly(x=precios_red$Y,type="histogram",
+                histnorm="probability")
+hist_Y<-layout(hist_Y,title='Histograma precio',
+        # xaxis = list(type = "log"),       
+         xaxis=list(title="Precio"
+                    # ,type="log"
+                    ),
+         yaxis=list(title="Frecuencia rel."))
+hist_Y
+```
+
+Categorización de la variable respuesta:
+
+```{r}
+precios_red$Y_cat<-cut(precios_red$Y,breaks=c(0,30,50,118),labels=c("bajo","medio","alto"))
+```
+
+Esto permite otro tipo de exploración:
+
+```{r}
+boxplot(X3~Y_cat,data=precios_red,las=1,#log="y",
+        xlab="Precio",
+        ylab="Distancia al MRT")
+```
+
+
+```{r}
+table(precios_red$Y_cat,precios_red$X4)
+```
+
+```{r}
+proportions(table(precios_red$Y_cat,precios_red$X4),margin=c(1))*100
+```
+
+
+```{r}
+chisq.test(table(precios_red$Y_cat,precios_red$X4))
+```
+
+```{r}
+
+precios_red$edad<-cut(precios_red$X2,breaks=c(0,5,10,50),labels = c("casi_nueva","usada","vieja"),right = FALSE)
+```
+
+
+```{r}
+precios_red$tiendas<-cut(precios_red$X4,breaks=c(0,3,6,11),labels = c("bajo","medio","alto"),right = FALSE)
+```
+
+```{r}
+table(precios_red$Y_cat,precios_red$tiendas)
+```
+
+```{r}
+cuts_dMRT<-quantile(precios_red$X3,probs = c(0,0.25,0.75,1))
+precios_red$dMRT<-cut(precios_red$X3,breaks=cuts_dMRT,labels = c("cerca","medio","lejos"),include.lowest=TRUE)
+```
+
+## Particionamiento del conjunto de datos:
+
+```{r}
+set.seed(20200513)
+N<-dim(precios_red)[1] # tamaño de la muestra original
+p<-0.2 # fracción reservada para validación
+id_vl<-sample(N,round(N*p),replace = FALSE)
+datos_vl<-precios_red[id_vl,]
+datos_tr<-precios_red[-id_vl,]
+```
+
+
+
+## Predicción con 1R
+
+
+
+```{r}
+library(OneR)
+```
+
+```{r}
+modelos_onerule<-OneR(Y_cat~edad+tiendas+dMRT,data=datos_tr) # Modelo con variables categóricas
+# modelos_onerule<-OneR(Y~X2+X3+X4,data=datos_tr) # Modelo con variables numéricas
+```
+
+```{r}
+summary(modelos_onerule)
+```
+
+¿Están todos los tipos de casas igualmente representados? Probablemente no. Las casas caras son más escasas. El desbalanceo de los datos puede estar llevando a un sesgo.
+
+<!-- ### Ejemplo con el conjunto `crabs` del paquete `MASS` -->
+
+<!-- En el siguiente ejemplo se usan las medidas morfométricas de cangrejos para clasificarlos según su especie con el método 1R. El sexo del cangrejo es una variable de confusión. -->
+
+<!-- ```{r} -->
+<!-- library(MASS) -->
+<!-- N_crabs<-nrow(crabs) -->
+<!-- ix_tr<-sample(N_crabs,floor(0.8*N_crabs),replace=FALSE) -->
+<!-- crabs_tr<-crabs[ix_tr,] -->
+<!-- crabs_vl<-crabs[-ix_tr,] -->
+<!-- crabs_1R<-OneR(sp~FL+RW+CL+BD,data = crabs_tr) -->
+<!-- summary(crabs_1R) -->
+<!-- ``` -->
+
+<!-- Validación: -->
+
+<!-- ```{r} -->
+<!-- pred_vl<-predict(crabs_1R,crabs_vl) -->
+<!-- eval_model(pred_vl, actual=crabs_vl$sp) -->
+<!-- ``` -->
+<!-- Aparentemente el sexo es una variable que necesita ser tenida en cuenta. Tarea: mirar el análisis descriptivo con la función `pairs()`. -->
+
+
+
+
+## Programación del método de los K vecinos más cercanos
+
+### Particionamiento de los datos en entrenamiento y validación
+
+Se cuenta con `r dim(precios_red)[1]` registros. Se tomará el 25% para validación. Para que este script sea reproducible se fija el valor de la semilla antes de simular números aleatorios:
+
+```{r}
+n<-dim(precios_red)[1]
+n_vl<-round(n*0.25)
+set.seed(20190930) # Se fija la semilla para obtener
+                   # resultados reproducibles
+ix_vl<-sample(1:n,n_vl,replace = FALSE)
+X_tr<-precios_red[-ix_vl,c("X2","X3","X4")]
+X_vl<-precios_red[ix_vl,c("X2","X3","X4")]
+Y_tr<-precios_red$Y[-ix_vl]
+Y_vl<-precios_red$Y[ix_vl]
+```
+
+#### Función para encontrar los k vecinos más cercanos y promediar sus respuestas:
+
+La siguiente función encuentra los $k$ vecinos más cercanos y promedia sus respuestas conrrespondientes:
+
+```{r}
+fknn<-function(x,k,X_tr,Y_tr){
+  # x: observación a predecir
+  # k: cuántos vecinos más cercanos se deben hallar
+  # X0: dataframe o matriz con los datos de entrenamiento
+  # Y0: respuesta asociada a X0
+  xX<-rbind(x,X_tr) # Se concatenan x y X
+  distancias<-as.matrix(dist(xX)) # Se calcula la matriz de distancias y se convierte a la clase matrix
+  d_vec<-distancias[1,-1] # Se selecciona la columna 1 que corresponde a todas las distancias con respecto a x
+  orden<-sort(d_vec,index.return=TRUE) # Se ordenan las distancias en forma ascendente
+  k_vecinos<-orden$ix[1:k] # se obtienen los índices de los k vecinos más cercanos
+  respuestas_knn<-Y_tr[k_vecinos] # se extraen las respuestas correspondientes a los k vecinos más cercanos
+  r_knn<-mean(respuestas_knn) # se promedian las respuestas de los k vecinos más cercanos
+  return(r_knn)
+}
+```
+
+
+<!-- Valores para prueba de escritorio: -->
+<!-- ```{r} -->
+<!-- k<-3 -->
+<!-- x<-X_vl[23,] -->
+<!-- X<-X_tr -->
+<!-- Y<-Y_tr -->
+<!-- ``` -->
+
+Prueba de la función:
+
+```{r}
+fknn(x=X_vl[1,],k=3,X_tr=X_tr,Y_tr=Y_tr)
+```
+
+
+### Predicción de los datos de validación
+
+#### Forma 1: usando un ciclo for
+
+Esta forma  no es tan eficiente en R, pero conviene ilustrar su uso:
+
+```{r}
+Y_vl_pred<-rep(NA,n_vl) # se crea un vector que alojará el cálculo de las predicciones
+for (i in 1:n_vl){
+  Y_vl_pred[i]<-fknn(x=X_vl[i,],k=3,X_tr=X_tr,Y_tr=Y_tr)
+}
+```
+
+#### Forma 2: usando apply
+
+La familia de funciones *apply* proporciona una mejor alternativa para aplicar métodos iterativos:
+
+```{r}
+Y_vl_pred<-apply(X_vl,1,fknn,k=3,X_tr=X_tr,Y_tr=Y_tr)
+```
+
+Cálculo del MSE:
+
+```{r}
+MSEk3<-mean((Y_vl_pred-Y_vl)^2)
+MSEk3
+```
+
+Gráfico de valores predichos vs observados para k=3:
+
+```{r}
+par(pty="s")
+plot(Y_vl_pred,Y_vl,xlab="Predichos [moneda]",ylab="Observados [moneda]",las=1)
+abline(a=0,b=1,lwd=2)
+grid()
+```
+
+
+
+### Número de vecinos óptimo
+
+A continuación se encuentra el número de vecinos óptimo variando $k$ y obteniendo para cada valor el MSE en el conjunto de validación.
+
+Para ello se crea primero una función que se pueda invocar fácilmente con *apply*:
+
+```{r}
+mse_knn_k<-function(k,X_tr,Y_tr,X_vl,Y_vl){
+  Y_vl_pred<-apply(X_vl,1,fknn,k=k,X_tr=X_tr,Y_tr=Y_tr)
+  MSEk<-mean((Y_vl_pred-Y_vl)^2)
+  return(MSEk)
+}
+
+```
+
+Prueba de la función:
+
+```{r}
+mse_knn_k(k=3,X_tr=X_tr,Y_tr=Y_tr,X_vl=X_vl,Y_vl=Y_vl)
+```
+
+Ahora se aplica la función para un rango de valores de $k$ entre 1 y 100:
+
+```{r}
+k<-1:100
+mse_vl_k<-sapply(k,mse_knn_k,X_tr=X_tr,Y_tr=Y_tr,X_vl=X_vl,Y_vl=Y_vl)
+```
+
+Gráfica del MSE vs $k$:
+
+```{r}
+plot(k,mse_vl_k,xlab="Número de vecinos",ylab="MSE de validación",las=1,type = "l")
+grid()
+```
+
+
+
+### Normalización de los datos
+
+La normalización de los datos puede mejorar el desempeño de la técnica y reducir la variabilidad del error de validación.
+
+Para normalizar se puede restar la media de cada variable y dividir por su desviación estándar. Esto puede hacerse con la función *scale*:
+
+```{r}
+precios_red_cent<-scale(precios_red[,c("X2","X3","X4","Y")],center=TRUE,scale=TRUE)
+centro<-attr(precios_red_cent,"center")
+escala<-attr(precios_red_cent,"scale")
+precios_red_cent<-as.data.frame(precios_red_cent)
+```
+
+Obtengamos el diagrama de dispersión por pares de los datos normalizados:
+
+```{r}
+pairs(precios_red_cent)
+```
+
+Ahora entrenemos el modelo con los datos normalizado Para ello dividamos el conjunto normalizado en entrenamiento y validación:
+
+```{r}
+n<-dim(precios_red)[1]
+n_vl<-round(n*0.25)
+set.seed(20190930) # Se fija la semilla para obtener
+                   # resultados reproducibles
+ix_vl<-sample(1:n,n_vl,replace = FALSE)
+X_tr<-precios_red_cent[-ix_vl,c("X2","X3","X4")]
+X_vl<-precios_red_cent[ix_vl,c("X2","X3","X4")]
+Y_tr<-precios_red_cent$Y[-ix_vl]
+Y_vl<-precios_red_cent$Y[ix_vl]
+```
+
+Ahora, obtengamos nuevamente el MSE en función de $k$:
+
+```{r}
+k<-1:100
+mse_vl_k<-sapply(k,mse_knn_k,X_tr=X_tr,Y_tr=Y_tr,X_vl=X_vl,Y_vl=Y_vl)
+```
+
+Gráfica del MSE vs $k$ para los datos normalizados:
+
+```{r}
+plot(k,mse_vl_k,xlab="Número de vecinos",ylab="MSE de validación",las=1,type = "l")
+grid()
+```
+
+
+### Knn con caret
+
+El paquete caret contiene una serie de funciones para el entrenamiento de métodos de aprendizaje de máquina.
+
+A continuación se entrena un modelo de los $k$ vecinos más cercanos utilizando las funciones *train()* y *trainControl()*:
+
+```{r message=FALSE}
+library(caret)
+set.seed(2019092)
+ctrl<-trainControl(method = "LGOCV",p=0.75,number = 20)
+modelo_entrenamiento<-train(Y ~ X2+X3+X4,
+             data       = precios_red,
+             method     = "knn",
+             preProcess = c("center","scale"),
+             tuneGrid   = expand.grid(k = 1:30),
+             trControl  = ctrl,
+             metric     = "RMSE")
+```
+
+
+```{r}
+print(modelo_entrenamiento)
+```
+
+
+
+Gráfico del RMSE vs k:
+
+```{r}
+plot(modelo_entrenamiento)
+```
+
+Importancia de las variables:
+
+```{r}
+importancia<-varImp(modelo_entrenamiento)
+dotPlot(importancia)
+```
+
+
+### Selección de variables
+
+Explicado en [StackOverFlow](https://stackoverflow.com/questions/51933704/feature-selection-with-caret-rfe-and-training-with-another-method)
+
+```{r message=FALSE}
+require(caret)
+set.seed(2019092) # Se fija la semilla para obtener resultados reproducibles.
+
+# Se configura el método de selección de variables. Se utiliza K-fold cross-validation con K=10.
+rctrl1 <- rfeControl(method = "cv",
+                     number = 10,
+                     returnResamp = "all",
+                     functions = caretFuncs,
+                     saveDetails = TRUE)
+
+# Selección de variables. Se configuar para obtener el mejor modelo con 1 y con 2 variables (sizes=c(1,2)):
+model_select <- rfe(Y ~ ., data = precios_red,
+             sizes = c(1,2),
+             method = "knn",
+             metric = "RMSE",
+             preProcess = c("center","scale"),
+             trControl = trainControl(method = "cv",number = 10),
+             tuneGrid = data.frame(k = 1:10),
+             rfeControl = rctrl1)
+```
+
+```{r}
+print(model_select)
+```
+
+```{r}
+plot(model_select, type = c("g", "o"))
+```
+
+### Gráfico de superficie
+
+Para ilustrar los gráficos de superficie se entrenará un modelo con las mejores dos variables, $X3$ y $X4$:
+
+```{r message=FALSE}
+library(caret)
+set.seed(2019092)
+ctrl<-trainControl(method = "cv",number = 10)
+modelo_X3X4<-train(Y ~ X3+X4,
+             data       = precios_red,
+             method     = "knn",
+             preProcess = c("center","scale"),
+             tuneGrid   = expand.grid(k = 1:30),
+             trControl  = ctrl,
+             metric     = "RMSE")
+```
+
+El resultado del modelo es el siguiente:
+
+```{r}
+plot(modelo_X3X4)
+```
+
+Observemos que los datos fueron preprocesados internamente usando los siguientes valores de medias y varianzas:
+
+```{r}
+(medias<-modelo_X3X4$preProcess$mean)
+(dsv_es<-modelo_X3X4$preProcess$std)
+```
+
+Para graficar la superficie de respuesta se obtienen las predicciones del modelo en un rango de valores típicos de $X3$ y $X4$. Primero se generan los valores típicos de las variables y luego, con el comando *expand.grid()* se generan todas las posibles combinaciones. El resultado final se guarda en un dataframe, llamado aquí *newdata*, que se usará para la predicción:
+
+```{r}
+X3<-seq(min(precios_red$X3),max(precios_red$X3),length.out = 100)
+X4<-0:10
+newdata<-expand.grid(X3,X4)
+names(newdata)<-c("X3","X4")
+```
+
+
+```{r}
+precios_predichos<-predict(modelo_X3X4,newdata = newdata)
+newdata$Y<-precios_predichos
+z<-matrix(precios_predichos,ncol=length(X4),nrow = length(X3))
+```
+
+```{r}
+par(mar=c(6,8,4,2),mgp=c(5,1,0))
+z_img<-t(z)
+image(z_img,xaxt='n',yaxt='n',xlab="Tiendas de conveniencia",ylab="Distancia al MRT (m)",col=gray.colors(20,rev=TRUE))
+labelsX3<-format(X3, digits = 4,decimal.mark = ",",big.mark = " ")
+axis(2,at=seq(0,1,by=1/(length(X3)-1)),labels =labelsX3,las=2)
+axis(1,at=seq(0,1,by=1/(length(X4)-1)),labels=X4,las=2)
+```
+<!-- Otra alternativa para lo anterior es la siguiente: -->
+
+<!-- ```{r} -->
+<!--  library(lattice) -->
+<!--  levelplot(z_img) -->
+<!-- ``` -->
+
+
+```{r}
+persp(X3,X4,z,xlab="Distancia al MRT",ylab="Tiendas de conveniencia",zlab="Precio",main="Superficie de respuesta para un modelo con dos variables",theta=45,shade=0.3)
+```
+
+```{r message=FALSE}
+library(plotly)
+```
+
+```{r}
+p <- plot_ly(x=X4,y=X3,z = z) 
+p <- add_surface(p)
+p<-layout(p,title='Precio vs dis MRT y número de comercios',
+         xaxis=list(title="Cantidad de comercios"),
+         yaxis=list(title="Distancia al MRT (m)"))
+p
+```
+
+### ¿Dónde es válida la superficie de respuesta?
+
+```{r}
+plot(precios_red$X3,precios_red$X4,xlab="Distancia al MRT (m)",ylab="Tiendas de conveniencia",las=1)
+grid()
+```
+
+<h1 style="text-align: right;"><a href="Sesion2practica.html"><span style="color: #000000; font-size: 14pt;"><strong>SEGUNDA APLICACIÓN EN R&nbsp;</strong></span></a></h1>

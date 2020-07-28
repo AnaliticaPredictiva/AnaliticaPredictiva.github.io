@@ -1,0 +1,212 @@
+---
+title: "Sesión 2- 14 de Mayo de 2020"
+---
+<h5><strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la&nbsp;Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em></h5>
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Clasificación de cangrejos
+
+En esta sesión se trabajará con el conjunto `crabs` de la librería `MASS`.
+
+```{r}
+library(MASS)
+```
+
+```{r}
+head(crabs) # muestra las primeras seis filas de un df
+```
+
+
+```{r}
+summary(crabs)
+```
+
+Se excluye la variable `index`:
+
+```{r}
+datos<-crabs[,-3]
+```
+
+## Análisis descriptivo
+
+```{r}
+summary(datos)
+```
+
+```{r}
+datos_colnum<-datos[,c("FL","RW","CL","CW","BD")] # se seleccionan las variables numéricas
+apply(datos_colnum,2,sd) # se obtienen las desv. est.
+```
+
+
+```{r}
+color_c<-ifelse(datos$sp=="B","blue","orange")
+marcador_sexo<-ifelse(datos$sex=="M",1,2)
+pairs(datos_colnum,col=color_c,pch=marcador_sexo,las=1)
+```
+
+
+
+```{r}
+par(mfrow=c(3,2))
+boxplot(FL~sp,data=datos)
+boxplot(RW~sp,data=datos)
+boxplot(CL~sp,data=datos)
+boxplot(CW~sp,data=datos)
+boxplot(BD~sp,data=datos)
+```
+
+
+
+## Construyendo un clasificador manualmente con una sola variable sin saber cómo hacer clasificadores
+
+
+```{r}
+hist(datos$CL)
+```
+
+
+```{r}
+summary(datos$CL)
+```
+
+Categorizar la variable CL:
+
+```{r}
+datos$CL_cat<-cut(datos$CL,breaks=c(14,32,48),labels = c("bajo","medio"))
+```
+
+```{r}
+table(datos$sp,datos$CL_cat)
+```
+
+```{r}
+clasificador=function(CL_cat)
+  if (CL_cat=="bajo"){ 
+    return("B")}else{
+      return("O")
+    }
+```
+
+```{r}
+prediccion<-sapply(datos$CL_cat,clasificador)
+```
+
+Matriz de confusión:
+
+```{r}
+(Matriz_conf<-table(datos$sp,prediccion))
+```
+
+Tasa de clasificación correcta: 
+
+```{r}
+(TCC<-sum(diag(Matriz_conf))/sum(Matriz_conf))
+```
+
+Sensibilidad:
+
+```{r}
+# TP/(TP+FN)
+(Sensibilidad<-Matriz_conf[1,1]/sum(Matriz_conf[1,]))
+```
+
+Especificidad:
+
+```{r}
+# TN/(TN+FP)
+(Especificidad<-Matriz_conf[2,2]/sum(Matriz_conf[,2]))
+```
+
+Lo vamos a hacer automáticamente para diferentes valores de corte de la variable CL:
+
+```{r}
+library(pROC)
+```
+
+Construyamos la curva ROC para la variable CL:
+
+```{r}
+roc_CL<-roc(sp~CL,data=datos)
+```
+
+```{r}
+print(roc_CL)
+```
+
+```{r}
+auc_CL<-auc(roc_CL)
+plot(roc_CL,identity=TRUE,print.auc=TRUE,grid=TRUE)
+```
+
+
+
+```{r}
+roc_RW<-roc(sp~RW,data=datos)
+roc_FL<-roc(sp~FL,data=datos)
+roc_CW<-roc(sp~CW,data=datos)
+roc_BD<-roc(sp~BD,data=datos)
+```
+
+```{r}
+plot(roc_CL,identity=TRUE,grid=TRUE,xlim=c(1,0))
+plot(roc_RW,add=TRUE,col="red")
+plot(roc_FL,add=TRUE,col="blue")
+plot(roc_CW,add=TRUE,col="green")
+plot(roc_BD,add=TRUE,col="orange")
+legend("bottomright",col=c("black","red","blue","green","orange"),
+       lty=1,
+       legend=c(paste0("CL - AUC = ",round(auc(roc_CL)*100,digits = 2),"%"),
+                paste0("RW - AUC = ",round(auc(roc_RW)*100,digits = 2),"%"),
+                paste0("FL - AUC = ",round(auc(roc_FL)*100,digits = 2),"%"),
+                paste0("CW - AUC = ",round(auc(roc_CW)*100,digits = 2),"%"),
+                paste0("BD - AUC = ",round(auc(roc_BD)*100,digits = 2),"%")))
+```
+
+Tarea: comparar las AUCs de los cinco clasificadores (uno a partir de cada variable)
+
+Acabamos de ver el clasificador 1R. Veamos cómo es su implementación en R.
+
+## Clasificador 1R
+
+Separar el conjunto de datos en entrenamiento y validación:
+
+```{r}
+N<-dim(datos)[1]
+p<-0.2 # fracción para validación
+set.seed(20200514)
+ix_vl<-sample(N,round(N*p),replace = FALSE)
+datos_tr<-datos[-ix_vl,-c(2,8)]
+datos_vl<-datos[ix_vl,-c(2,8)]
+```
+
+
+```{r}
+library(OneR)
+```
+
+```{r}
+crabs1R<-OneR(sp~.,data=datos_tr)
+```
+
+```{r}
+summary(crabs1R)
+```
+
+
+```{r}
+pred_vl<-ifelse(datos_vl$FL<=17.1,"B","O")
+```
+
+
+
+```{r}
+(mat_conf_vl<-table(datos_vl$sp,pred_vl))
+```
+
+```{r}
+(acc_vl<-sum(diag(mat_conf_vl))/sum(mat_conf_vl))
+```
+

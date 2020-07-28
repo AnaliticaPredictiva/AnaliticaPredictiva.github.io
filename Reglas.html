@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Sesión 1- 07 de Mayo de 2020</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Analítica Predictiva</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introducción</a>
+</li>
+<li>
+  <a href="about.html">Sesiones de clase</a>
+</li>
+<li>
+  <a href="Preguntasrespuestas.html">Preguntas y respuestas</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Sesión 1- 07 de Mayo de 2020</h1>
+
+</div>
+
+
+<h5>
+<strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em>
+</h5>
+<h1 style="text-align: justify;">
+<span style="color: #000000;">Introducción a las Reglas</span>
+</h1>
+<h5>
+ 
+</h5>
+<h5>
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Modelos1.png" alt="" /></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Los modelos se establecen a partir de las relaciones. En algún lugar se encuentran las verdaderas relaciones entre las entradas y las salidas. Pero el ideal es que con el conocimiento del dominio, podamos realizar modelos que tengan consistencia entre las entradas y las salidas. </span>
+</h5>
+<p>
+ 
+</p>
+<h5>
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Modelo2.png" alt="" width="939" height="144" /></span>
+</h5>
+<h5>
+ 
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">A partir de la imagen anterior, a las entradas se le asignará <span style="text-decoration: underline;">X</span> como un vector de varias entradas Varias entradas y Y como una sola salida. En la asignatura la respuesta o salida NO es un vector multivariado.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Generalmente X pertenece a los números reales, tal como se observa en la siguiente notación:</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"> <span style="text-decoration: underline;">X</span> ∈ RP</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"><em>Siendo P,</em> el número de variables predictoras.</span>
+</h5>
+<p style="text-align: center;">
+<span style="color: #808080; font-family: Roboto, sans-serif; font-size: 14px;">X =[ X(1) ,X(2) ,…, X(P)], X(j) ∈ R</span>
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">En caso de que sean variables categóricas, la respuesta se representa con variables binarias, como se puede observa a continuación.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Una variable categorica con K categorías se puede representar con K-1 variables indicadoras o variables Dummies.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Si <span style="text-decoration: underline;">X</span> ∈ RP, Y pertenece a los reales o pertenece a un conjunto de categorías con multiples posibilidades. En la asignatura se hablará de problemas de clasificación, donde Y puede tomar valores binarios de 0 y 1 o de -1 y 1.</span>
+</h5>
+<p>
+<span style="color: #808080; font-family: Roboto, sans-serif; font-size: 14px;">Las X y las Y se estudiará en el contexto de variables aleatorias, considerando estas como funciones. Es decir, es una función que asigna un valor numérico al resultado de un experimento aleatorio, cuando los resultados de observación se asocian con el subconjunto de números reales como en el lanzamiento de los dados, la temperatura, los ojos verdes, etc.</span>
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Existen variables aleatorias reales y multivariadas.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="text-decoration: underline; color: #808080;">X</span><span style="color: #808080;"> es un vector aleatorio si</span><span style="text-decoration: underline; color: #808080;"> <span>X</span></span><span style="color: #808080;"> = [X(1)</span><span style="color: #808080;">, X(2), X(J)], cada X(i), es una variable aleatoria.</span>
+</h5>
+<h5 style="text-align: center;">
+<span style="color: #808080;"></span>
+</h5>
+<table style="height: 66px; width: 477px; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr style="background-color: #d552eb;">
+<td>
+<h5 style="text-align: center;">
+<strong><span style="color: #000000;">La Función de Distribución de Probabilidad es la forma de calcular las probabilidades (P) de ocurrencia de algunos eventos.</span></strong>
+</h5>
+</td>
+</tr>
+</tbody>
+</table>
+<h5 style="text-align: center;">
+<span style="color: #808080;"></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Si X es una variable aleatoria, existe una función que se llama función de distribución de Probabilidad, que permite calcular:</span>
+</h5>
+<h5 style="text-align: center;">
+<span style="color: #808080;">P(X <span style="text-decoration: underline;">&lt;</span> x) = Fx (X)</span>
+</h5>
+<p>
+ 
+</p>
+<h5 style="text-align: center;">
+<em><span style="color: #808080;">Si se conoce la distribución de X conoce todo de X y se pueden tener predicciones de X.</span></em>
+</h5>
+<h5>
+ 
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Si <span style="text-decoration: underline;">X</span> es un vector aleatorio que también tiene una Función de Distribución de Probabilidad:</span>
+</h5>
+<h5 style="text-align: center;">
+<span style="color: #808080;">P ( X1 <span style="text-decoration: underline;">&lt;</span> Xi , X2<span style="text-decoration: underline;"> <span>&lt;</span></span> Xi) = F<span style="text-decoration: underline;"><span><span>X</span></span></span> (<span style="text-decoration: underline;"><span><span><span>X</span></span></span></span>)</span>
+</h5>
+<p>
+ 
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Las distribuciones de probabilidad conjuntas se denota asi:  P ( X1 <span style="text-decoration: underline;">&lt;</span> Xi , X2<span style="text-decoration: underline;"> <span>&lt;</span></span> Xi) = F<span style="text-decoration: underline;"><span><span>X</span></span></span> (<span style="text-decoration: underline;"><span><span><span>X</span></span></span></span>), se puede decir que es la función de distribución conjunta de X1 , X2. Es decir, una distribución multivariada es una distribución conjunta. </span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Si <span style="text-decoration: underline;">X</span> es un vector aleatorio y todos sus componentes son números reales, existe una función, la función de Densidad de Probabilidad que describe la probabilidad relativa en tomar un valor, denotada de la siguiente forma:</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/FuncionDensidadProbabilidad.PNG" alt="" width="240" height="92" /></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Un ejemplo de una función de densidad es la distribución normal conocida por ser un tipo de distribución de probabilidad continua para un valor real, la notación es:</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/DistribucionNormal.PNG" alt="" width="334" height="96" /></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Otro ejemplo es la distribución normal multivariada que es una generalización de la distribución normal a dimensiones superiores, a menudo se usa para describir aproximadamente cualquier conjunto de variables aleatorias correlacionadas de valor real.</span>
+</h5>
+<p>
+ 
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">El vector aleatorio X es normal p-dimensional con vector de medias µ y matriz de covarianzas Σ (notación: X ≡ Np(µ, Σ)) si tiene densidad dada por:</span>
+</h5>
+<h5>
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Distribucionnormalmultivariada.PNG" alt="" width="753" height="86" /></span>
+</h5>
+<h5>
+ 
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">A partir de lo anterior se puede mostrar que E <span style="text-decoration: underline;">X</span> =µ, siendo E la esperanza. Y D(<span style="text-decoration: underline;"><span>X</span></span>) = Σ, siendo D la dispersión.</span>
+</h5>
+<p>
+ 
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">En la asignatura se trabajará con modelos que tienen una estructura matemática que relacionan las entradas con la salida. En las entradas se está haciendo alusión a un vector multivariado. </span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Cuando nos enfocamos en una sola variable podemos extraer: 1) las medidas de tendencia central como la media aritmética, la mediana, la moda y el rango; 2) y las medidas de dispersión como el rango (dispersión entre valores extremos de una variable R = x(n) - x(1) ), la desviación media (mide el grado de dispersión de los datos con respecto a la media.  Se denota como la raíz cuadrada de la varianza), la varianza (Es otro parámetro para medir la dispersión de los valores de una variable respecto a la media. Corresponde a la media aritmética de los cuadrados de las desviaciones respecto a la media), coeficiente de variación (identifica con mayor claridad la dispersión de los datos), el Rango Intercuartil (es la estimación de la dispersión de una distribución de los datos, consiste en la diferencia entre el tercer y el primer cuartil) y el coeficiente de variación (mide la variabilidad de los datos con respecto a la media).</span>
+</h5>
+<p>
+ 
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">A partir de la Función de Densidad se puede definir la esperanza de X asi:</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Esperanzamatematica.PNG" alt="" width="252" height="96" /></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Para describir los datos se necesita las medidas de tendencia central especialmente la media o vector de medias y en la medida de dispersión se usará la matriz de covarianzas. La matriz de covarianzas se puede normalizar para tener la matriz de correlaciones.</span>
+</h5>
+<p>
+ 
+</p>
+<div id="medidas-de-tendencia-central-y-de-dispersión-en-r-introducción-a-la-matriz-de-covarianzas---práctica-en-r." class="section level2">
+<h2>Medidas de tendencia central y de Dispersión en R Introducción a la matriz de covarianzas - Práctica en R.</h2>
+<div id="análisis-del-conjunto-cars" class="section level3">
+<h3>Análisis del conjunto <code>cars</code></h3>
+<p>Se explora la relación entre velocidad y distancia para frenar totalmente:</p>
+<pre class="r"><code>#Descripción: Cars es el dataframe, es un conjunto de datos adaptado. Aqui se realiza un gráfico de Velocidad (X) y distancia (Y).Compartimos la utilidad de las etiquetas main (titulo), las (dirercción de las etiquetas), points (Graficar un punto particular, en este caso la media)
+
+plot(cars$speed,cars$dist,xlab=&quot;Velocidad [mph]&quot;,ylab=&quot;Distancia frenado [ft]&quot;,
+     main=&quot;Velocidad vs Distancia de frenado (1920)&quot;,las=1)
+points(mean(cars$speed),mean(cars$dist),col=&quot;red&quot;,lwd=3)
+grid()
+rad1 = 2
+rad2 = 20
+xcenter = mean(cars$speed)
+ycenter = mean(cars$dist)
+theta &lt;- seq(0, 2 * pi, length = 200)
+polygon(x=rad1 * cos(theta) + xcenter,
+        y=rad2 * sin(theta) + ycenter,
+        lwd=3)</code></pre>
+<p><img src="Reglas_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Encontremos la matriz de dispersión:</p>
+<pre class="r"><code>(S&lt;-cov(cars))</code></pre>
+<pre><code>##           speed     dist
+## speed  27.95918 109.9469
+## dist  109.94694 664.0608</code></pre>
+<pre class="r"><code># La matriz de dispersión muestra en la diagonal la varianza de cada variable y por fuera de la diagonal se tienen las covarianzas.</code></pre>
+<pre class="r"><code>apply(cars,2,var)</code></pre>
+<pre><code>##     speed      dist 
+##  27.95918 664.06082</code></pre>
+<pre class="r"><code># Se presenta las varianzas que aparecen en la diagonal. El 2 hace alusión a las columnas.</code></pre>
+<pre class="r"><code>apply(cars,2,mean)</code></pre>
+<pre><code>## speed  dist 
+## 15.40 42.98</code></pre>
+<p>Pasemos a más variables:</p>
+<pre class="r"><code>library(MASS)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:plotly&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code># Del paquete cargado se selecciona el dataset Cars93 y se seleccionan las variables Min.Price, Price, Max.Price, MPG.city, MPG.highway, EngineSize, Horsepower,  RPM, Rev.per.mile.
+
+Cars93_num&lt;-subset(Cars93,select = c(&quot;Min.Price&quot;, &quot;Price&quot;, &quot;Max.Price&quot;, &quot;MPG.city&quot;, &quot;MPG.highway&quot;, &quot;EngineSize&quot;, &quot;Horsepower&quot;,  &quot;RPM&quot;, &quot;Rev.per.mile&quot;))</code></pre>
+<pre class="r"><code># Para identificar los nombres de las columnas de un dataset
+
+names(Cars93_num)</code></pre>
+<pre><code>## [1] &quot;Min.Price&quot;    &quot;Price&quot;        &quot;Max.Price&quot;    &quot;MPG.city&quot;     &quot;MPG.highway&quot; 
+## [6] &quot;EngineSize&quot;   &quot;Horsepower&quot;   &quot;RPM&quot;          &quot;Rev.per.mile&quot;</code></pre>
+<pre class="r"><code># Para identificar el tipo de datos de cada columna de un data set.
+
+apply(Cars93_num, 2, class)</code></pre>
+<pre><code>##    Min.Price        Price    Max.Price     MPG.city  MPG.highway   EngineSize 
+##    &quot;numeric&quot;    &quot;numeric&quot;    &quot;numeric&quot;    &quot;numeric&quot;    &quot;numeric&quot;    &quot;numeric&quot; 
+##   Horsepower          RPM Rev.per.mile 
+##    &quot;numeric&quot;    &quot;numeric&quot;    &quot;numeric&quot;</code></pre>
+<pre class="r"><code># Identificar cuantas filas y columnas tiene el data set.
+
+dim(Cars93_num)</code></pre>
+<pre><code>## [1] 93  9</code></pre>
+<pre class="r"><code>#Grafico de dispersión por pares, que muestra las relaciones multivariadas pero de a dos atributos.
+pairs(Cars93_num)</code></pre>
+<p><img src="Reglas_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>Calculamos la matriz de dispersión:</p>
+<pre class="r"><code># La covarianza se saca con los atributos numericos, en caso contrario generaría un error.
+(S_cars&lt;-cov(Cars93_num))</code></pre>
+<pre><code>##                 Min.Price        Price    Max.Price    MPG.city MPG.highway
+## Min.Price       76.493022    81.998008    87.477202  -30.614972   -27.04464
+## Price           81.998008    93.304579   104.585337  -32.275316   -28.87584
+## Max.Price       87.477202   104.585337   121.670977  -33.958298   -30.73252
+## MPG.city       -30.614972   -32.275316   -33.958298   31.582281    28.28343
+## MPG.highway    -27.044635   -28.875842   -30.732515   28.283427    28.42730
+## EngineSize       5.856385     5.986403     6.121921   -4.139165    -3.46676
+## Horsepower     367.574053   398.764727   430.075900 -197.979897  -172.86547
+## RPM           -222.321178   -28.560659   164.652875 1217.478962   997.33520
+## Rev.per.mile -2042.671634 -2044.978086 -2048.416082 1941.631019  1555.24310
+##               EngineSize  Horsepower          RPM Rev.per.mile
+## Min.Price       5.856385    367.5741   -222.32118   -2042.6716
+## Price           5.986403    398.7647    -28.56066   -2044.9781
+## Max.Price       6.121921    430.0759    164.65288   -2048.4161
+## MPG.city       -4.139165   -197.9799   1217.47896    1941.6310
+## MPG.highway    -3.466760   -172.8655    997.33520    1555.2431
+## EngineSize      1.076122     39.7770   -339.16374    -424.4118
+## Horsepower     39.776999   2743.0788   1146.63394  -15610.7036
+## RPM          -339.163745   1146.6339 356088.70968  146589.3233
+## Rev.per.mile -424.411816 -15610.7036 146589.32328  246518.7295</code></pre>
+<pre class="r"><code># Hacer la matriz de correlaciones.
+R_cars&lt;-cor(Cars93_num)
+R_cars</code></pre>
+<pre><code>##                Min.Price        Price   Max.Price   MPG.city MPG.highway EngineSize
+## Min.Price     1.00000000  0.970601402  0.90675608 -0.6228754  -0.5799658  0.6454877
+## Price         0.97060140  1.000000000  0.98158027 -0.5945622  -0.5606804  0.5974254
+## Max.Price     0.90675608  0.981580272  1.00000000 -0.5478109  -0.5225607  0.5350120
+## MPG.city     -0.62287544 -0.594562163 -0.54781090  1.0000000   0.9439358 -0.7100032
+## MPG.highway  -0.57996581 -0.560680362 -0.52256074  0.9439358   1.0000000 -0.6267946
+## EngineSize    0.64548767  0.597425392  0.53501197 -0.7100032  -0.6267946  1.0000000
+## Horsepower    0.80244412  0.788217578  0.74444475 -0.6726362  -0.6190437  0.7321197
+## RPM          -0.04259816 -0.004954931  0.02501478  0.3630451   0.3134687 -0.5478978
+## Rev.per.mile -0.47039499 -0.426395113 -0.37402421  0.6958570   0.5874968 -0.8240086
+##               Horsepower          RPM Rev.per.mile
+## Min.Price     0.80244412 -0.042598158   -0.4703950
+## Price         0.78821758 -0.004954931   -0.4263951
+## Max.Price     0.74444475  0.025014782   -0.3740242
+## MPG.city     -0.67263615  0.363045129    0.6958570
+## MPG.highway  -0.61904368  0.313468728    0.5874968
+## EngineSize    0.73211973 -0.547897805   -0.8240086
+## Horsepower    1.00000000  0.036688212   -0.6003139
+## RPM           0.03668821  1.000000000    0.4947642
+## Rev.per.mile -0.60031387  0.494764211    1.0000000</code></pre>
+<pre class="r"><code>image(t(R_cars[9:1,]))</code></pre>
+<p><img src="Reglas_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Esta es la media de las columnas de las variables numéricas:</p>
+<pre class="r"><code>media_cars93_num&lt;-colMeans(Cars93_num)</code></pre>
+<p>Ilustración de la función agregate:</p>
+<pre class="r"><code>#Identificar el precio por fabricante con la función de agregación, la media.
+
+aggregate(Price~Cylinders*Manufacturer,data=Cars93,FUN=mean)</code></pre>
+<pre><code>##    Cylinders  Manufacturer    Price
+## 1          4         Acura 15.90000
+## 2          6         Acura 33.90000
+## 3          6          Audi 33.40000
+## 4          4           BMW 30.00000
+## 5          4         Buick 15.70000
+## 6          6         Buick 23.60000
+## 7          8      Cadillac 37.40000
+## 8          4     Chevrolet 13.56667
+## 9          6     Chevrolet 16.00000
+## 10         8     Chevrolet 28.40000
+## 11         6      Chrylser 18.40000
+## 12         4      Chrysler 15.80000
+## 13         6      Chrysler 29.50000
+## 14         4         Dodge 12.35000
+## 15         6         Dodge 22.40000
+## 16         4         Eagle 12.20000
+## 17         6         Eagle 19.30000
+## 18         4          Ford 11.74000
+## 19         6          Ford 20.05000
+## 20         8          Ford 20.90000
+## 21         3           Geo  8.40000
+## 22         4           Geo 12.50000
+## 23         4         Honda 16.46667
+## 24         4       Hyundai 10.47500
+## 25         8      Infiniti 47.90000
+## 26         6         Lexus 31.60000
+## 27         6       Lincoln 34.30000
+## 28         8       Lincoln 36.10000
+## 29         4         Mazda 12.13333
+## 30         6         Mazda 19.10000
+## 31    rotary         Mazda 32.50000
+## 32         4 Mercedes-Benz 31.90000
+## 33         6 Mercedes-Benz 61.90000
+## 34         4       Mercury 14.10000
+## 35         6       Mercury 14.90000
+## 36         4    Mitsubishi 10.30000
+## 37         6    Mitsubishi 26.10000
+## 38         4        Nissan 13.75000
+## 39         6        Nissan 20.30000
+## 40         4    Oldsmobile 14.90000
+## 41         6    Oldsmobile 20.10000
+## 42         4      Plymouth 14.40000
+## 43         4       Pontiac 10.05000
+## 44         6       Pontiac 20.20000
+## 45         4          Saab 28.70000
+## 46         4        Saturn 11.10000
+## 47         3        Subaru  8.40000
+## 48         4        Subaru 15.20000
+## 49         3        Suzuki  8.60000
+## 50         4        Toyota 17.27500
+## 51         4    Volkswagen 14.55000
+## 52         5    Volkswagen 19.70000
+## 53         6    Volkswagen 23.30000
+## 54         4         Volvo 22.70000
+## 55         5         Volvo 26.70000</code></pre>
+<pre class="r"><code>boxplot(Price~Manufacturer,data=Cars93)</code></pre>
+<p><img src="Reglas_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Entrenamiento de un modelo predictivo del precio:</p>
+<ol style="list-style-type: decimal">
+<li>Dividimos el conjunto de datos en entrenamiento y validación:</li>
+</ol>
+<pre class="r"><code>datos&lt;-subset(Cars93,select=c(&quot;Type&quot;,&quot;Price&quot;,&quot;MPG.city&quot;,&quot;Cylinders&quot;))
+nval&lt;-10
+set.seed(20200506)
+# id_val&lt;-sample(1:93,nval,replace=FALSE)
+ id_val&lt;-sample(1:dim(Cars93)[1],nval,replace=FALSE) # es una mala práctica llamar funciones dentro de funciones
+N_col&lt;-dim(Cars93)[1] # Se define el número de filas para establecer la muestra de entrenamiento
+id_val&lt;-sample(1:N_col,nval,replace=FALSE) # es una buena práctica definir los parámetros previamente y no como llamados de funciones dentro de la función
+datos_tr&lt;-datos[-id_val,]
+datos_vs&lt;-datos[id_val,]</code></pre>
+<p>Modelo básico con Random Forest: Este es un ejemplo, luego se verá este tema en otra sesión.</p>
+<pre class="r"><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
+<pre class="r"><code>modelo_rf&lt;-randomForest(Price~Type+MPG.city+Cylinders,data=datos_tr)</code></pre>
+<pre class="r"><code>(modelo_rf)</code></pre>
+<pre><code>## 
+## Call:
+##  randomForest(formula = Price ~ Type + MPG.city + Cylinders, data = datos_tr) 
+##                Type of random forest: regression
+##                      Number of trees: 500
+## No. of variables tried at each split: 1
+## 
+##           Mean of squared residuals: 28.14694
+##                     % Var explained: 54.77</code></pre>
+<p>Desempeño en entrenamiento:</p>
+<pre class="r"><code>y_pre&lt;-predict(modelo_rf)</code></pre>
+<p>Predichos vs observados</p>
+<pre class="r"><code>plot(y_pre,datos_tr$Price,main=&quot;predichos vs observados (ajuste)&quot;)
+abline(a=0,b=1,lwd=2,col=&quot;red&quot;,lty=3)</code></pre>
+<p><img src="Reglas_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<pre class="r"><code>error_pred&lt;-datos_tr$Price-y_pre
+(MSE&lt;-mean(error_pred^2))</code></pre>
+<pre><code>## [1] 28.14694</code></pre>
+<pre class="r"><code>(RMSE&lt;-sqrt(MSE))</code></pre>
+<pre><code>## [1] 5.305369</code></pre>
+<pre class="r"><code>y_vl&lt;-predict(modelo_rf,newdata = datos_vs)</code></pre>
+<p>Gráfico de predichos vs observados en validación:</p>
+<pre class="r"><code>plot(y_vl,datos_vs$Price,las=1)
+abline(a=0,b=1,lwd=2,col=&quot;red&quot;,lty=3)</code></pre>
+<p><img src="Reglas_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<p>Error cuadrático medio:</p>
+<pre class="r"><code>error_vl&lt;-datos_vs$Price-y_vl
+error_vl_p&lt;-(datos_vs$Price-y_vl)/datos_vs$Price
+(MSE_vl&lt;-mean(error_vl^2))</code></pre>
+<pre><code>## [1] 205.7567</code></pre>
+<pre class="r"><code>(RMSE_vl&lt;-sqrt(MSE_vl))</code></pre>
+<pre><code>## [1] 14.34422</code></pre>
+<pre class="r"><code>#Error cuadrático medio en los datos de entrenamiento y validación.
+(diagno&lt;-list(RMSE_tr=RMSE,RMSE_vl=RMSE_vl))</code></pre>
+<pre><code>## $RMSE_tr
+## [1] 5.305369
+## 
+## $RMSE_vl
+## [1] 14.34422</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
