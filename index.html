@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Analítica Predictiva</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Analítica Predictiva</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introducción</a>
+</li>
+<li>
+  <a href="about.html">Sesiones de clase</a>
+</li>
+<li>
+  <a href="Preguntasrespuestas.html">Preguntas y respuestas</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Analítica Predictiva</h1>
+
+</div>
+
+
+<h5>
+<strong><span style="color: #808080; font-family: Helvetica; font-size: 12px; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Juan David Ospina Arango</span></strong><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Profesor a cargo</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Departamento de Ciencias de la Computación y de la Decisión</span></em><br style="color: #000000; font-family: Helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;" /><em><span style="color: #808080; font-family: Helvetica; font-size: 12px; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff; float: none;">Universidad Nacional de Colombia</span></em>
+</h5>
+<h1 class="title toc-ignore" style="font-size: 38px; margin: 21px 0px 10.5px; font-family: &#39;News Cycle&#39;, &#39;Arial Narrow Bold&#39;, sans-serif; font-weight: bold; line-height: 1.1; color: #000000; font-style: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; background-color: #ffffff;">
+ 
+</h1>
+<h1 style="text-align: justify;">
+<span style="color: #000000;"><strong><span style="font-size: 14pt;">¿Qué es Analítica Predictiva?</span></strong></span>
+</h1>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Según IBM, es el uso de técnicas analíticas avanzadas que aprovechan los datos históricos para descubrir percepciones en tiempo real y predecir acontecimientos futuros.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Ahora bien, al definir predicción se puede decir que es una declaración precisa de lo que ocurrirá en determinadas condiciones. Las predicciones pueden tener un sentido de realidad, pero siempre se deben de realizar a partir de supuestos que se han considerado en el modelo.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">La predicción se hace a partir de modelos y estos modelos son representaciones del sistema, definiendo “Sistema” como un todo organizado y complejo. Es decir, los modelos se realizan a partir de lo que estamos interesados en indagar.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Las representaciones del sistema se dan de muchas maneras, dos de ellas son: <strong>1)</strong> las relaciones matemáticas funcionales en donde existe mucho conocimiento sobre los diferentes elementos que interactúan en el sistema; y <strong>2)</strong> Los ajustes de estructuras matemáticas o logarítmicas que buscan no solo bases empíricas sino también aquellas ideas, intuiciones y conjeturas. Las estructuras algoritmicas que se nombran en este punto son:</span>
+</h5>
+<p>
+ 
+</p>
+<ul style="text-align: justify;">
+<li>
+<h5>
+<span style="color: #808080;"><em>Reglas de asociación y algoritmo Apriori</em></span>
+</h5>
+</li>
+<li>
+<h5>
+<span style="color: #808080;"><em>Regresión estadística:</em></span>
+</h5>
+</li>
+<li>
+<h5>
+<span style="color: #808080;"><em>Modelos de aprendizaje de máquina (Support Vector Machines - Maquinas de soporte vectorial, Arboles de regresión y clasificación, Los bosques aleatorios, Las Redes Neuronales Artificiales, entre otras arquitecturas).</em></span>
+</h5>
+</li>
+</ul>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">A partir de lo anterior, la diferencia radica en que las relaciones matemáticas funcionales, a partir del conocimiento, establecen relaciones causales. Las relaciones causales se expresan de forma matemática a partir de las leyes de la fisica y termina con un modelo matemático que describe el comportamiento de un sistema.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"></span>
+</h5>
+</h5>
+<p>
+<strong><span style="color: #808080; font-family: News Cycle, sans-serif; font-size: 14px;"></span></strong>
+</p>
+<table style="height: 108px; width: 477px; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr style="background-color: #d552eb;">
+<td>
+<h5 style="text-align: center;">
+<strong><span style="color: #000000;"> Cuando se representa un sistema a través de un modelo, es muy complejo representarlo todo, por eso se hacen <span style="text-decoration: underline;">renuncias</span>. Es decir, siempre que estemos modelando, escogemos capturar algunos atributos o variables de interés de un sistema, por eso estamos renunciando. Siempre que estamos modelando decidimos renunciar a una parte de la realidad. La buena práctica es documentar e identificar las renuncias.</span></strong>
+</h5>
+</td>
+</tr>
+</tbody>
+</table>
+<p>
+<strong><span style="color: #808080;"></span></strong>
+</p>
+<p>
+ 
+</p>
+<h1 style="text-align: justify;">
+<span style="color: #000000;"><strong><span style="font-size: 14pt;">Información de la asignatura</span></strong></span>
+</h1>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">La asignatura se enfocará en el tipo de predicción a partir de la segunda categoría de modelos: Estructuras matemáticas o algorítmicas que se ajustan a partir de datos.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #000000;"><strong><span style="font-size: 14pt;"></span></strong></span>
+</h5>
+<h5>
+<strong><span style="color: #000000;">Objetivo</span></strong>: <span style="color: #808080;">Predecir</span>.
+</h5>
+<h5>
+<strong><span style="color: #000000;">Herramienta</span></strong>: <span style="color: #808080;">Los modelos matemáticos y estadísticos establecidos a partir de Observaciones de variables.</span>
+</h5>
+<h5>
+<span style="color: #808080;"><em>El curso tiene un componente práctico y teórico.</em></span>
+</h5>
+<h5>
+<span style="font-size: 12pt;"></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Volviendo al termino de predicción y sobre todo porque este es el objetivo de la asignatura, se establece la predicción como la esperanza matemática, por eso para la asignatura no habrá mucha diferencia entre regresión y clasificación. En la regresión la respuesta es numérica y en la clasificación la respuesta es categórica, pero desde el punto de vista matemático es lo mismo.</span>
+</h5>
+<h5 style="text-align: justify;">
+ 
+</h5>
+<h1 style="text-align: justify;">
+<strong><span style="color: #000000;">¿Qué se espera de los modelos?</span></strong>
+</h1>
+<h5>
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Modelos1.png" alt="" /></span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Los modelos se establecen a partir de las relaciones. En algún lugar se encuentran las verdaderas relaciones entre las entradas y las salidas. El ideal es que con el conocimiento, podamos realizar modelos que tengan consistencia entre las entradas y las salidas. </span>
+</h5>
+<p>
+ 
+</p>
+<h5>
+<span style="color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Modelo2.png" alt="" width="939" height="144" /></span>
+</h5>
+<h5>
+ 
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Los modelos son estructuras, las estructuras tienen diversos orígenes como:</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">-La matemática: Modelo de regresión líneal</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">-La estadística: Modelo de regresión lineal, Modelo de regresión lineal generalizada (Extiende el modelo de regresión lineal a otro tipo de problemas donde la variable respuesta no tiene que asumirse como una Distribución Normal Condicional).</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">-Aprendizaje de máquinas: Maquina de Soporte Vectorial (SVM), Redes Neuronales Artificiales (ANN).</span>
+</h5>
+<p>
+</p>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">En la asignatura se estudiaran los modelos de las estructuras matemáticas y el aprendizaje de máquinas.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">A partir de la imagen anterior, se puede identificar los conceptos de Aprendizaje supervisado y aprendizaje no supervisado.</span>
+</h5>
+<h2 style="text-align: justify;">
+<span style="color: #000000;"><strong>Aprendizaje supervisado:</strong> </span>
+</h2>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Es una técnica que tiene como propósito predecir el valor correspondiente a cualquier objeto de entrada después de haber visto una serie de eventos en los datos de entrenamiento.</span>
+</h5>
+<h5 style="text-align: justify;">
+<em><span style="color: #808080;">Ejemplos de aplicación:</span></em>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- La mercadoctenia para generar comunicaciones personalizadas.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- El Spam para determinar correo basura, correo no solicitado y mensaje basura.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- La Identificación de fraudes.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- El estudio de terremotos</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- Diagnósticos médicos basado en síntomas del paciente. </span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- La predicción de fallos de maquinaria.</span>
+</h5>
+<p>
+<span style="color: #808080; font-family: Roboto, sans-serif; font-size: 14px;"><em>Técnicas de clasificación:</em> Regresión Logística, Maquina de Soporte Vectorial (SVM), Redes Neuronales Artificiales (ANN), Bosques Aleatorios (RF) y los Arboles de Clasificación y Regresión (ART), 1R, KNN.</span>
+</p>
+<h2 style="text-align: justify;">
+<span style="color: #000000;">Aprendizaje No Supervisado: </span>
+</h2>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">No se presentan etiquetas al algoritmo de aprendizaje. Su objetivo permite descubrir patrones ocultos en los datos y su fin es el aprendizaje de características.</span>
+</h5>
+<h5 style="text-align: justify;">
+<em><span style="color: #808080;">Ejemplos de aplicación:</span></em>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- La Comercialización para encontrar grupos de clientes con comportamiento similar.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">- La selección de clientes potenciales basándose en los comportamientos que tienen en las redes sociales.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;"><em>Técnicas</em>:</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Kmeans clustering, KNN (K Vecinos más cercanos), Clustering Jerárquico, Bosques Aleatorios (RF), Máquinas de Soporte Vectorial.</span>
+</h5>
+<h5 style="text-align: justify;">
+<span style="color: #808080;">Nota: Normalmente, casi todos los métodos o técnicas que existen hoy para trabajo supervisado, tienen una versión, para trabajo No Supervisado.</span>
+</h5>
+<h1 style="text-align: right;">
+<a href="Reglas.html"><span style="color: #000000; font-size: 14pt;"><strong>PRIMERA SESIÓN  </strong></span></a>
+</h1>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
