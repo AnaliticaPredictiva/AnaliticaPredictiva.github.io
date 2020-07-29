@@ -1,0 +1,209 @@
+---
+title: "Sesión 04"
+author: "Juan David Ospina Arango"
+date: "6/4/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+```{r}
+library(readr)
+datos <- read_delim("real_estate_valuation_dataset.csv", 
+    ";", escape_double = FALSE, locale = locale(decimal_mark = ",", 
+        grouping_mark = ""), trim_ws = TRUE)
+```
+
+```{r}
+summary(datos)
+```
+
+No: número del registro
+X1: Año del negocio
+X2: edad de la casa (años)
+X3: distancia al transporte masivo (m)
+X4: número de tiendas de conveniencia alrededor
+X5: latitud
+X6: longitud
+Y:  variable respuesta, precio ($/m2)
+
+
+```{r}
+datos_an<-subset(datos,select=c("X2","X3","X4","Y"))
+# datos_an<-datos[,c(2:5,8)]
+# datos_an<-datos[,c("X2","X3","X4","Y")]
+head(datos_an)
+```
+
+
+Objetivos:
+1. Predecir el precio por metro cuadrado de una vivienda en función de ciertas características (edad de la propiedad, la distancia al transporte y el número de comercios alrededor)
+
+
+Preguntas:
+¿Afecta la edad de la casa su valor?
+¿Dónde se sitúan las casas con mejores características?
+¿Se están pagando impuestos correctamente?
+
+
+¿Tengo toda la información necesaria para resolver mi problema de predicción?
+No. Probablemente no tenemos toda la información para hacer el mejor modelo. Información como el número de baños y otras comodidades serían complementarias para hacer un buen modelo.
+
+
+```{r}
+panel.hist <- function(x, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h <- hist(x, plot = FALSE)
+    breaks <- h$breaks; nB <- length(breaks)
+    y <- h$counts; y <- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = "cyan", ...)
+}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+
+pairs(datos_an,lower.panel = panel.smooth,upper.panel = panel.cor)
+```
+
+
+```{r}
+plot(datos_an$X2,datos_an$Y,las=1,xlab="Edad de la casa (años)",
+     ylab="Precio ($/m2)",
+     main="Precio vs edad de la casa",log="xy")
+```
+
+```{r}
+plot(datos_an$X3,datos_an$Y,las=1,xlab="Distancia al transporte (ln m)",
+     ylab="Precio ($/m2)",
+     main="Precio vs distancia al transporte",log="xy")
+```
+
+La gráfica en escala logarítmica (para x) parece mostrar que la variabilidad en los precios disminuye a medida que las casas se sitúan lejos del transporte. Así mismo, pareciera que el precio disminuye con la distancia al transporte. Es decir, mientras más lejos del transporte menos valor tienen las casas y menos se diferencian probablemente por sus características.
+
+
+```{r}
+plot(datos_an$X4,datos_an$Y,las=1,xlab="Número de comercios",
+     ylab="Precio ($/m2)",
+     main="Precio vs número de comercios",log="xy")
+```
+
+
+Transformación logarítmica:
+
+```{r}
+datos_an$X2log<-log(datos_an$X2+1)
+datos_an$X3log<-log(datos_an$X3)
+datos_an$X4log<-log(datos_an$X4+1)
+datos_an$Ylog<-log(datos_an$Y)
+```
+
+
+Diagrama de dispersión por pares:
+
+```{r}
+pairs(datos_an,lower.panel = panel.smooth,upper.panel = panel.cor)
+```
+
+
+```{r}
+set.seed(20200604)
+fachada<-sample(c("muy buena","buena","regular"),414,replace=TRUE)
+```
+
+
+```{r}
+datos$fachada<-fachada
+```
+
+```{r}
+boxplot(Y~fachada,data=datos)
+```
+
+
+```{r}
+boxplot(Y~X4,data=datos_an)
+```
+
+
+
+Escalamiento de las variables:
+
+```{r}
+datos_an_scale<-scale(datos_an,center=TRUE,scale=TRUE)
+medias<-attr(datos_an_scale,"scaled:center")
+desv_Est<-attr(datos_an_scale,"scaled:scale")
+datos_an_scale<-as.data.frame(datos_an_scale)
+```
+
+Gráfico de dispersión por pares con las variables escaladas:
+
+```{r}
+pairs(datos_an_scale,lower.panel = panel.smooth,upper.panel = panel.cor)
+```
+
+
+
+
+## Calibración de un modelo lineal
+
+### Separación del conjunto de datos en entrenamiento y validación
+
+
+```{r}
+set.seed(20200604)
+p_vl<-0.2 # fracción de los datos usados para la validación
+N<-dim(datos_an_scale)[1] # cantidad de registros
+ix_vl<-sample(N,ceiling(p_vl*N),replace = FALSE)
+datos_tr<-datos_an_scale[-ix_vl,]
+datos_vl<-datos_an_scale[ix_vl,]
+```
+
+
+### Ajuste de un modelo lineal
+
+```{r}
+modelo_lm<-lm(Ylog~-1+X2log+X3log+X4log,data=datos_tr) # Ylog está centrada
+summary(modelo_lm)
+```
+
+```{r}
+plot(modelo_lm,which = 6)
+```
+
+
+```{r}
+modelo_lm_int<-lm(Ylog~-1+X2log+X3log+X4log+X3log:X4log,data=datos_tr) # Ylog está centrada
+summary(modelo_lm_int)
+```
+
+```{r}
+anova(modelo_lm_int,modelo_lm)
+```
+
+Predicciones del modelo:
+
+```{r}
+y_pred_tr_sc<-predict(modelo_lm_int) # predicciones en la e
+```
+
+
+Predichos versus observados:
+```{r}
+plot(y_pred_tr_sc,datos_tr$Ylog,las=1)
+abline(a=1,b=1,lwd=2,col="red")
+```
+
+

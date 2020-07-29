@@ -6,6 +6,18 @@ output:
  html_document:
   fig_caption: yes
 ---
+<p>&nbsp;</p>
+<p><span style="font-family: helvetica; color: #000000;"><strong><span style="font-size: 14pt;">Coeficientes</span></strong></span></p>
+<p><span style="color: #000000;"><strong><span style="font-family: helvetica; font-size: 14pt;">Modelos Lineales</span></strong></span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Coeficientes/1.png" alt="1" width="803" height="162" /></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Coeficientes/2.png" alt="2" width="751" height="88" /></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Coeficientes/3.png" alt="3" width="755" height="80" /></p>
+<p>&nbsp;</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Coeficientes/4.png" alt="4" width="815" height="122" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Coeficientes/5.png" alt="5" width="805" height="417" /></p>
+<p><span style="font-size: 12pt; font-family: helvetica;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
@@ -491,4 +503,4 @@ mapa_p<-addHeatmap(mapa_p,lat=~X5,lng=~X6,intensity = ~Y^(-0.8),max=0.5,blur=20,
 mapa_p
 ```
 
-<h1 style="text-align: right;"><a href="Sesion3Practica.html"><span style="color: #000000; font-size: 14pt;"><strong>SEGUNDA APLICACIÓN EN R&nbsp;</strong></span></a></h1>
+<h1 style="text-align: right;"><a href="codigo_clase.html"><span style="color: #000000; font-size: 14pt;"><strong>REGULARIZACIÓN;</strong></span></a></h1>
