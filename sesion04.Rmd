@@ -491,3 +491,4 @@ mapa_p<-addHeatmap(mapa_p,lat=~X5,lng=~X6,intensity = ~Y^(-0.8),max=0.5,blur=20,
 mapa_p
 ```
 
+<h1 style="text-align: right;"><a href="Sesion3Practica.html"><span style="color: #000000; font-size: 14pt;"><strong>SEGUNDA APLICACIÓN EN R&nbsp;</strong></span></a></h1>
