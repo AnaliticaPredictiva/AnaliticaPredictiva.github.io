@@ -1,0 +1,493 @@
+---
+title: "Sesión 04: Regresión lineal"
+author: "Juan David Ospina Arango <br> Universidad Nacional de Colombia <br> Facultad de Minas <br> Departamento de Ciencias de la Computación y de la Decisión"
+date: "5/21/2020"
+output: 
+ html_document:
+  fig_caption: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Modelos lineales para problemas no lineales
+
+En esta sesión se usa un modelo lineal para modelar un fenómeno lineal: los precios de la vivienda en Taiwan. El conjunto de datos es [Real estate valuation data set Data Set](http://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set).
+
+**Citación:** Yeh, I. C., & Hsu, T. K. (2018). Building real estate valuation models with comparative approach through case-based reasoning. Applied Soft Computing, 65, 260-271.
+
+Se comienza con la lectura de los datos:
+
+```{r}
+datos <- read.csv2("real_estate_valuation_dataset.csv")
+```
+
+A continuación se inspecciona visualmente el conjunto de datos con la función `head()`:
+
+```{r}
+head(datos)
+```
+
+La definición de las variables es la siguiente:
+
+* X1: fecha de la transacción (por ejemplo 2013.250=2013 Marzo, * 2013.500=2013 Junio, etc.) 
+* X2: edad de la casa en años
+* X3: distancial al MRT (transporte masivo) más cercano en metros 
+* X4: número de tiendas de conveniencia en el vecindario (entero)
+* X5: latitud (unidad: grados) 
+* X6: longitude (unidad: grados) 
+* Y: precio por unidad de área (10000 Nuevos dólares taiwaneses/ 3.3 $m^2$) 
+
+
+Para este problema se seleccionan solo las variables `X2`, `X3`, `X4` y `Y`:
+
+```{r}
+datos_an<-subset(datos,select = c("X2","X3","X4","Y"))
+head(datos_an)
+```
+
+Veamos un resumen de los datos con la función `summary()`:
+
+```{r}
+summary(datos_an)
+```
+
+Ahora se muestran 
+```{r}
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y,use="na.or.complete"))
+    txt <- format(c(r, 0.123456789), digits = digits)[1]
+    txt <- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+
+pairs(datos_an, lower.panel = panel.smooth, upper.panel = panel.cor)
+```
+
+#### Transformación de variables
+
+Ahora se explora la pertinencia de una transformación logarítmica:
+
+
+```{r}
+par(mfrow=c(1,3))
+plot(datos_an$X2+1,datos_an$Y,log="xy", # la respuesta en escala logarítmica
+     xlab="Edad de la casa [ln(1+años)]",
+     ylab="Precio [ln ($/m2)]")
+plot(datos_an$X3,datos_an$Y,log="xy",
+     xlab="Distancia al MRT [ln m]",
+     ylab="Precio [ln ($/m2)]")
+plot(datos_an$X4+1,datos_an$Y,log="yx",
+     xlab="Comercios de conveniencia cercanos [ln(1+n)]",
+     ylab="Precio [ln ($/m2)]")
+```
+
+El siguiente código crea las variables transformadas:
+
+```{r}
+datos_an$X2log<-log(datos_an$X2+1) #ln(1+x)
+datos_an$X3log<-log(datos_an$X3) # ln(x)
+datos_an$X4log<-log(datos_an$X4+1) #ln(1+x)
+datos_an$Ylog<-log(datos_an$Y) # ln(x)
+```
+
+
+Ahora se muestran las dispersiones por pares incluyendo las variables transformadas:
+
+```{r}
+pairs(datos_an, lower.panel = panel.smooth, upper.panel = panel.cor, 
+      main="Dispersión por pares con variables transformadas")
+```
+
+¿Qué permite concluir el gráfico anterior sobre la transformación de variables?
+
+
+### Escalamiento de las variables: 
+
+El siguiente código centra las variables en su respectiva media y las divide por su desviación estándar:
+
+```{r}
+datos_an_scale<-scale(datos_an,center = TRUE,scale = TRUE)
+medias<-attr(datos_an_scale,"scaled:center") # se guarda la media para procesos posteriores
+desv_est<-attr(datos_an_scale,"scaled:scale") # se guarda la sd para procesos posteriores
+datos_an_scale<-as.data.frame(datos_an_scale) # los datos escalados se ponen en un dataframe
+```
+
+A continuación se muestra el gráfico de dispersión por pares de los datos escalados:
+
+```{r}
+pairs(datos_an_scale, lower.panel = panel.smooth, upper.panel = panel.cor, 
+      main="Dispersión por pares con variables transformadas y escaladas")
+```
+
+### Calibración de un modelo lineal
+
+Primero se separa el conjunto de datos en entrenamiento y validación:
+
+```{r}
+set.seed(20200521)
+p_vl<-0.2
+N<-dim(datos_an)[1]
+ix_vl<-sample(N,round(0.2*N),replace = FALSE)
+datos_tr<-datos_an_scale[-ix_vl,]
+datos_vl<-datos_an_scale[ix_vl,]
+```
+
+
+
+
+#### Ajuste de un modelo lineal con interacciones
+
+El siguiente código muestra el ajuste de un modelo lineal con interacciones usando las variables en escala logarítmica y estandarizadas:
+
+```{r}
+modelo1<-lm(Ylog~-1+X2log+X3log+X4log+X4log:X3log,data=datos_tr)
+summary(modelo1)
+```
+
+
+##### Gráficos diagnósticos
+
+Residuales versus valores predichos:
+
+```{r}
+plot(modelo1,which=1)
+```
+
+Gráfico cuantil-cuantil de los residuales estandarizados vs los de una distribución normal:
+
+```{r}
+plot(modelo1,which=2)
+```
+
+Residuales estandarizados versus valores predichos:
+
+```{r}
+plot(modelo1,which=3)
+```
+
+Distancia de Cook de cada observación:
+
+```{r}
+plot(modelo1,which=4)
+```
+
+Residuales estandarizados versus leverage:
+
+```{r}
+plot(modelo1,which=5)
+```
+
+Distancia de Cook vs Leverage:
+
+```{r}
+plot(modelo1,which=6)
+```
+
+#### Ajuste de un modelo lineal sin interacciones
+
+El siguiente código ajusta un modelo lineal sin interacciones:
+
+```{r}
+modelo2<-lm(Ylog~-1+X2log+X3log+X4log,data=datos_tr)
+summary(modelo2)
+```
+
+Para comparar ambos modelos podemos usar la función `anova()`:
+
+```{r}
+anova(modelo2,modelo1)
+```
+
+De acuerdo a la prueba anterior, la interacción sí le aporta al modelo.
+
+### Construcción de la función de predicción en la escala natural
+
+El siguiente código calcula los parámetros del modelo en la escala natural de las variables. Es decir, calcula los parámetros de un modelo no lineal (las explicaciones se dan en la clase):
+
+```{r}
+m1coef<-coef(modelo1) # extrae los coeficientes
+b2s<-m1coef[1]
+b3s<-m1coef[2]
+b4s<-m1coef[3]
+b34s<-m1coef[4]
+b2p<-b2s*desv_est[8]/desv_est[5]
+b3p<-b3s*desv_est[8]/desv_est[6]
+b4p<-b4s*desv_est[8]/desv_est[7]
+b34p<-b34s*desv_est[8]/(desv_est[6]*desv_est[7])
+sigma<-summary(modelo1)$sigma
+b0<-medias[8]-b2p*medias[5]-b3p*medias[6]-b4p*medias[7]+b34p*medias[6]*medias[7]#+((sigma)^2)/2
+b3<-b3p-b34p*medias[7]
+b4<-b4p-b34p*medias[6]
+b<-c(b0,b2p,b3,b4,b34p) # ector con los coeficientes del modelo no lineal
+```
+
+
+En el siguiente código se define la función de predicción:
+
+```{r}
+fn_pred=function(x,b){
+  # Función de predicción derivada de un modelo lineal con variables con
+  # transformación logarítimica y centradas
+  y<-exp(b[1])*((x[1]+1)^b[2])*(x[2]^b[3])*((x[3]+1)^b[4])*((x[3]+1)^(b[5]*log(x[2])))
+  return(y)
+}
+```
+
+El siguiente código lleva a cabo una prueba de escritorio de la función de predicción:
+
+```{r}
+x0<-datos_tr[1,1:3]*desv_est[1:3]+medias[1:3] # este paso multiplica por la sd y suma la media
+x1<-(datos_an[-ix_vl,1:3])[1,]
+(fn_pred(x0,b))
+(fn_pred(x0,b))
+```
+Cálculo de los valores predichos en entrenamiento:
+
+```{r}
+y_pred_tr<-apply(datos_an[-ix_vl,1:3],1,fn_pred,b=b)
+```
+
+```{r}
+plot(datos_an$Y[-ix_vl],y_pred_tr,ylab="Predichos",xlab="Observados",
+     xlim=c(0,120),ylim=c(0,120),las=1,
+     main="Predichos vs observados (Entrenamiento)")
+abline(a=0,b=1,lwd=2,col="red")
+R_tr<-cor(datos_an$Y[-ix_vl],y_pred_tr)
+R_tr<-format(R_tr,digits = 2)
+rmse_tr<-sqrt(mean(datos_an$Y[-ix_vl]-y_pred_tr)^2)
+rmse_tr<-format(rmse_tr,digits = 2,nsmall = 2)
+grid()
+legend("topleft",legend=paste0(c("Cor: ","RMSE: "),c(R_tr,rmse_tr)), bty="n")
+```
+
+Cálculo de los valores predichos para el conjunto de validación:
+
+```{r}
+y_pred_vl<-apply(datos_an[ix_vl,1:3],1,fn_pred,b=b)
+```
+
+```{r}
+plot(datos_an$Y[ix_vl],y_pred_vl,ylab="Predichos",xlab="Observados",
+     xlim=c(0,120),ylim=c(0,120),las=1,
+     main="Predichos vs observados (Validación)")
+abline(a=0,b=1,lwd=2,col="red")
+R_vl<-cor(datos_an$Y[ix_vl],y_pred_vl)
+R_vl<-format(R_vl,digits = 2)
+rmse_vl<-sqrt(mean(datos_an$Y[ix_vl]-y_pred_vl)^2)
+rmse_vl<-format(rmse_vl,digits = 2,nsmall = 2)
+grid()
+legend("topleft",legend=paste0(c("Cor: ","RMSE: "),c(R_vl,rmse_vl)), bty="n")
+```
+
+### Construcción de la superficile de respuesta
+
+
+Primero se generara una superficie de respuesta que depende de las variables `X2` y `X3` y para la cual se considerará un valor fijo para `X4`.
+
+El siguiente código crea los puntos en los que se evaluará la superficie de respuesta:
+
+```{r}
+X2<-seq(0,43.8,length.out=100)
+X3<-seq(23.4,6488,length.out = 100)
+# X4<-0:10
+newdata<-expand.grid(X2,X3)
+names(newdata)<-c("X2","X3")
+```
+
+El código anterior produjo el dataframe `newdata` con los valores sobre los que se quiere evaluar la superficie de respuesta. A continuación se agrega un valor fijo para la variable `X4` (se fija en 5) y se calcula la respuesta para todos los puntos:
+
+```{r}
+X4_0<-5 # referencia para X4
+newdata$X4<-X4_0
+newdata$Y<-apply(newdata,1,fn_pred,b=b)
+```
+
+A continuación se representa los valores de la superficie de respuesta en una matriz `z`:
+
+```{r}
+z<-matrix(newdata$Y,ncol=length(X2),nrow = length(X3))
+```
+
+Con la matriz anterior se puede visualizar la superficie de respuesta con la función `image()`:
+
+```{r}
+par(mar=c(6,8,4,2),mgp=c(5,1,0))
+z_img<-t(z)
+image(z_img,xaxt='n',yaxt='n',xlab="Distancia al MRT [m]",ylab="Edad (años)",col=gray.colors(8,rev=TRUE))
+title(main=c("Representación de la superficie", "de respuesta en función de X2 y X3","(X4=5)"),
+      sub="X4=5")
+labelsX2<-format(X2, digits = 1,decimal.mark = ".",big.mark = " ")
+labelsX3<-format(X3, digits = 1,decimal.mark = ".",big.mark = " ")
+axis(2,at=seq(0,1,by=1/(length(X2)-1)),labels =labelsX2,las=2)
+axis(1,at=seq(0,1,by=1/(length(X3)-1)),labels = labelsX3,las=2)
+```
+
+
+```{r}
+contour(X2,X3,z,las=1,
+        ylab="Distancia al MRT [m]",
+        xlab="Edad (años)",
+        main=c("Representación de las curvas de nivel de la superficie", "de respuesta en función de X2 y X3 (X4=5)"))
+```
+
+A continuación se presenta la superficie de respuesta en 3D estática:
+
+```{r}
+persp(X2,X3,z,xlab="Edad de la casa",ylab="Distancia al MRT",zlab="Precio",main="Superficie de respuesta para un modelo con dos variables",theta=120,shade=0.25,sub="X4=5")
+```
+
+El siguiente código presenta la superficie de respuesta 3D con 
+`plotly`:
+
+```{r message=FALSE}
+library(plotly)
+Z<-z
+p<- plot_ly(x=X2,y=X3,z = z) 
+p<- add_surface(p)
+p<-layout(p,title='Precio vs dis MRT y número de comercios (X4=5)',
+          scene = list(
+            camera=list(eye = list(x=1.87, y=0.88, z=-0.64)),
+                        xaxis=list(title="X1"),
+                        yaxis=list(title="X2"),
+                        zaxis=list(title="Precio ($/m2)")
+                        ))
+p
+```
+
+### Intervalos de predicción
+
+#### Univariados
+
+Se creará un intervalo de predicción en función de la variable distancia al MRT (`X2`) para una casa que tenga 3 años de antigüedad y tenga cinco tiendas alrededor. Para ello se dan los siguientes pasos:
+
+Se crea un dataframe con los valores de las variables explicativas sobre los que se calcularán las predicciones y sus intervalos:
+
+```{r}
+datos_inter<-data.frame(X2=3,X3=X3,X4=5) 
+```
+
+Se aplican las mismas transformaciones que requiere el modelo. La primera es la tranformación logarítmica:
+
+```{r}
+datos_inter$X2log<-log(datos_inter$X2+1) #ln(1+x)
+datos_inter$X3log<-log(datos_inter$X3) # ln(x)
+datos_inter$X4log<-log(datos_inter$X4+1) #ln(1+x)
+```
+
+La segunda es el escalamiento:
+
+```{r}
+datos_inter_scaled<-scale(datos_inter,
+                          center=medias[-c(4,8)], # se quitan los valores de Y y Ylog
+                          scale = desv_est[-c(4,8)]# se quitan los valores de Y y Ylog
+                          )
+datos_inter_scaled<-as.data.frame(datos_inter_scaled)
+```
+
+
+Ahora se pueden utilizar los datos para hacer la predicción:
+
+```{r}
+pred_int<-predict(modelo1, newdata = datos_inter_scaled, interval = 'prediction')
+pred_int<-as.data.frame(pred_int)
+```
+
+```{r}
+ymin<-min(pred_int)
+ymax<-max(pred_int)
+plot(datos_inter_scaled$X3log,pred_int$fit,las=1,type="l",
+     col="red",ylim=c(ymin,ymax),xlab="ln(X3) estandarizada",
+     ylab="ln(Precio) estandarizado")
+lines(datos_inter_scaled$X3log,pred_int$lwr,col="blue",lty=2)
+lines(datos_inter_scaled$X3log,pred_int$upr,col="blue",lty=2)
+legend("topright",col=c("red","blue"),lty=1:2,legend=c("Predicción","95%CI"))
+```
+
+
+```{r}
+pred_int_escalanatural<-exp(pred_int*desv_est[8]+medias[8])
+```
+
+```{r}
+ymin<-min(pred_int_escalanatural)
+ymax<-max(pred_int_escalanatural)
+plot(X3,pred_int_escalanatural$fit,las=1,type="l",
+     col="red",ylim=c(ymin,ymax),xlab="Distancia al MRT [m]",
+     ylab="Precio [$/m2]",
+     main=c("Precios vs distancia al MRT","Edad: 3 años, Tiendas: 5"))
+lines(X3,pred_int_escalanatural$lwr,col="blue",lty=2)
+lines(X3,pred_int_escalanatural$upr,col="blue",lty=2)
+grid()
+legend("topright",col=c("red","blue"),lty=1:2,
+       legend=c("Predicción","95%CI"))
+```
+
+
+## Actividades:
+
+1. Genere un gif animado con las superficies de respuesta para los distintos valores de X4
+2. Genere un video que muestre rotando las diferentes superficies para los distintos valores de X4
+3. Cree un intervalo de predicción para los precios en función del número de tiendas asumiendo que las casas tienen 3 años y están a 1000 m del MRT
+4. Visualice los datos atípicos en un mapa
+
+
+Solución al punto 4
+
+```{r}
+library(rgdal)
+library(leaflet)
+library(leaflet.extras)
+```
+
+```{r}
+CD<-cooks.distance(modelo1)
+h<-influence(modelo1)$hat
+datos_aug<-datos
+datos_aug$CD<-NA
+datos_aug$h<-NA
+datos_aug[-ix_vl,"CD"]<-CD
+datos_aug[-ix_vl,"h"]<-h
+```
+
+
+```{r}
+popup<-paste0("Edad: ",format(datos_aug$X2[-ix_vl],digits = 2),
+              "<br>",
+              "Dist MRT: ",format(datos_aug$X2[-ix_vl],digits = 2),
+              "<br>",
+              "# Tiendas: ",format(datos_aug$X3[-ix_vl],digits = 2),
+              "<br>",
+              "Precio: ", format(datos_aug$Y,digits=2),
+              "<br>",
+              "h: ",format(datos_aug$h,digits=2))
+colorh<-ifelse(datos_aug$h>0.04 & !is.na(datos_aug$h),"#FF6666","#FFFF66")
+mapa<-leaflet()
+mapa<-addTiles(mapa)
+# mapa<-addTiles(mapa,urlTemplate="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png",
+#                attribution="<a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+#                )
+mapa<-addCircleMarkers(mapa,lat=datos_aug$X5[-ix_vl],lng = datos_aug$X6[-ix_vl],popup = popup,
+                       color=colorh,
+                        options=markerOptions(opacity = 0.3))
+mapa
+```
+
+¿Dónde es más caro el precio de la propiedad?
+
+```{r}
+mapa_p<-leaflet(data=datos)
+mapa_p<-addTiles(mapa_p)
+# mapa_p<-addTiles(mapa_p,urlTemplate="https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png",
+#                attribution="<a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+#                )
+mapa_p<-addHeatmap(mapa_p,lat=~X5,lng=~X6,intensity = ~Y^(-0.8),max=0.5,blur=20,radius=12)
+
+mapa_p
+```
+

@@ -27,3 +27,8 @@ title: "Sesiones de la Asignatura"
 <p>&nbsp;</p>
 <h5 style="text-align: justify;"><span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Teoria_prediccion.html">Sesión 3 - Predicción y KNN</a></span></h5>
 <p><a href="Teoria_prediccion.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Sesion3.png" alt="" width="326" height="258" /></a></p>
+
+<h1>Sesión 4 - Regresión Líneal</h1>
+<p>&nbsp;</p>
+<h5 style="text-align: justify;"><span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="sesion04.html">Sesión 4 - Regresión Lineal</a></span></h5>
+<p><a href="sesion04.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/Regresionlineal.png" alt="" width="326" height="258" /></a></p>
