@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Prof. Juan David Ospina ArangoUniversidad Nacional - Sede MedellínAnalítica PredictivaSemestre 2020-01" />
 
 
-<title>Sesiones de la Asignatura</title>
+<title>Ilustración Regularización</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -368,103 +369,101 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Sesiones de la Asignatura</h1>
+<h1 class="title toc-ignore">Ilustración Regularización</h1>
+<h4 class="author">Prof. Juan David Ospina Arango</br>Universidad Nacional - Sede Medellín</br>Analítica Predictiva</br>Semestre 2020-01</h4>
 
 </div>
 
 
 <p>
+ 
 </p>
-<h1>
-¡Antes de empezar! Programa R STUDIO
+<p>
+<span style="font-size: 12pt; font-family: helvetica;"></span>
+</p>
+<p>
+<span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Métodos de construcción de los coeficientes</span></strong></span>
+</p>
+<p>
+<span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Regularización</span></strong></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se tiene un modelo de la forma <img src="Images/Regulacion/1B.PNG" alt="1B" width="131" height="33" />.  Se define el error residual como <img src="Images/Regulacion/1C.PNG" alt="1C" width="191" height="37" /> y se busca</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/Regulacion/1.png" alt="1" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">La función <img src="Images/Regulacion/A.PNG" alt="A" width="185" height="51" />  es la función de costo<em><span style="font-size: 14pt;"> β=(β<sub>0</sub>,β<sub>1</sub>,…,β<sub>r</sub>)<sup>T</sup> ε R <sup>P+1</sup></span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">La regularización consiste en modificar<em><span style="font-size: 14pt;"> l(β)</span></em> sumándole un <span style="font-size: 14pt;"><em>p(β)</em></span>, donde <em><span style="font-size: 14pt;">P(<sub>0</sub>)</span></em> es un factor que depende de la magnitud de <em><span style="font-size: 14pt;">β</span></em> (o sea de su norma). La mera función de costo es <span style="font-size: 14pt;"><em>l<sub>p</sub> (β)=l(β)+λp(β) x≥0</em></span> es la constante de regularización.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplos:</span>
+</p>
+<ul>
+<li>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">i)  <img src="Images/Regulacion/2.png" alt="2" width="238" height="47" />  Lasso</span>
+</li>
+<li>
+ii)  <img src="Images/Regulacion/3.png" alt="3" width="250" height="46" /><span style="font-size: 12pt;"> <span style="color: #808080;">Ridge: Aquí hay un abuso de notación, porque el <em><span style="font-size: 14pt; font-family: helvetica;">β<sub style="color: #808080; font-family: helvetica; background-color: inherit; caret-color: auto;">0</sub></span></em><span style="font-family: helvetica; background-color: inherit; caret-color: auto;"> no se regulariza.</span></span></span>
+</li>
+<li>
+</li>
+<li>
+<span style="color: #808080; font-size: 12pt;">Cuando <span style="font-size: 14pt;"><em>λ=0</em></span> no hay regularización.</span>
+</li>
+<li>
+<span style="font-size: 12pt; color: #808080;">Cuando <em><span style="font-size: 14pt;">λ&gt;0</span></em> hay regularización.</span>
+</li>
+<li>
+</li>
+<li>
+<span style="font-size: 12pt; color: #808080; font-family: helvetica;"><em><span style="font-size: 14pt;">p(β)</span> </em>penaliza las variables con coeficientes grandes. Si la variable no reduce el error entonces se castiga que tenga un coeficiente grande.</span>
+</li>
+<li>
+</li>
+<li>
+<img src="Images/Regulacion/4.png" alt="4" />
+</li>
+<li>
+<span style="color: #808080; font-size: 12pt; font-family: helvetica;">Supongamos que <span style="font-size: 14pt;"><em>β=(β<sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">0</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">,β</span><sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">1</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">,β</span><sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">2</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">)</span></em></span></span>
+</li>
+<li>
+<img src="Images/Regulacion/5.png" alt="5" /><img src="Images/Regulacion/6.png" alt="6" />
+</li>
+<li>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Con predictores anlados se tiene</span>  <img src="Images/Regulacion/B.PNG" alt="B" width="185" height="45" />
+</li>
+<li>
+</li>
+<li>
+<span style="font-size: 12pt; color: #808080;">Nota: Tanto<em><span style="font-size: 14pt;"> ||.||<sub style="background-color: inherit; color: #808080; font-family: helvetica; text-align: justify; caret-color: auto;">1</sub></span></em><span style="background-color: inherit; font-family: helvetica; text-align: justify; caret-color: auto;"> como <span style="font-size: 14pt;"><em>||.||</em></span></span><sub style="background-color: inherit; color: #808080; font-family: helvetica; text-align: justify; caret-color: auto;"><span style="font-size: 14pt;"><em>2</em> </span> </sub><span style="background-color: inherit; font-family: helvetica; text-align: justify; caret-color: auto;">son sensibles a la escala. Esta aproximación solo debe usarse con variables estandarizadas (Centradas y escaladas).</span></span>
+</li>
+<li>
+</li>
+<li>
+<span style="font-size: 12pt; color: #808080;">¿Por qué Lasso es el mejor para selección de variables? Porque escoge rápido los coeficientes.</span>
+</li>
+<li>
+<img src="Images/Regulacion/7.png" alt="7" />
+</li>
+<li>
+<span style="font-size: 12pt; color: #808080; font-family: helvetica;">Denotemos por  <img style="color: #808080; font-family: helvetica; font-size: 12pt; text-align: justify; background-color: inherit; caret-color: auto;" src="Images/Regulacion/8.png" alt="8" width="136" height="57" /><span style="text-align: justify; background-color: inherit; caret-color: auto;">los estimadores <strong>Ridge</strong> y Lasso para un valor particular de <span style="font-size: 14pt;"><em>λ≠0 y β ̂  </em></span>  el estimador para λ=0 (Mínimos cuadrados o máxima verosimilitud).</span></span>
+</li>
+<li>
+</li>
+<li>
+<img src="Images/Regulacion/C.PNG" alt="C" width="60" height="47" /><span style="font-size: 12pt; color: #808080; font-family: helvetica;">es el estimador para el i-ésimo predictor (que debe estar estandarizada).</span>
+</li>
+<li>
+<img src="Images/Regulacion/9.png" alt="9" />
+</li>
+</ul>
+<h1 style="text-align: right;">
+<a href="regularizacion.html"><span style="color: #000000; font-size: 14pt;"><strong> Práctica en R de Regresión Líneal</strong></span></a>
 </h1>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">La asigntaura se desarrolla en su totalidad en el programa R Studio. </span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Este es un entorno popular para crear aplicaciones y procesar datos en el lenguaje de programación R. Inicialmente, puede realizar la descarga en el siguiente link: <a style="color: #808080;" href="https://rstudio.com/products/rstudio/download/#download">https://rstudio.com/products/rstudio/download/#download</a></span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;"></span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Aqui podrá observar las sesiones digidas hasta la fecha. Al dar click podrá ver especificamente cada temática desde la conceptualización, hasta la practica realizada en el programa R. </span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;"> Luego de la descarga, se puede generar un Notebook o un documento R Markdown (etiquetas) dando click a file, new file y luego escoger el tipo de documento  </span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;"> Durante las sesiones podrá observa el paso a paso y la descripción de cada algortitmo registrado. Aquí puede observar un resumen claro de cada sesión de la asignatura, puede entrar a la sesión que desee dando click a la imagen o en el enlace de la descripción.;</span>
-</h5>
-<p style="text-align: justify;">
-<span style="color: #808080;"></span>
-</p>
-<p>
- 
-</p>
-<h1>
-Sesión 1 - Reglas
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">En la sesión inicial el profesor realiza la introducción a la asignatura y presenta los conceptos iniciales. En esta sesión podrá aprender el término predicción, modelos, estructuras, notaciones matemáticas con respecto a variables aleatorias, Función de Distribución de probabilidad, Función de Densidad de Probabilidad, entre otros. Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Reglas.html">Sesión 1 – Reglas.</a></span>
-</h5>
-<p>
-<a href="Reglas.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/sesion1.PNG" alt="" width="410" height="267" /></a>
-</p>
-<p>
- 
-</p>
-<h1>
-Sesión 2 - Introduccion 1R y KNN
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="intro_1R_y_KNN.html">Sesión 2– Introducción 1R y KNN</a></span>
-</h5>
-<p>
-<a href="intro_1R_y_KNN.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Sesion2.png" alt="" width="360" height="219" /></a>
-</p>
-<h1>
-Sesión 3 - Predicción y KNN
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Teoria_prediccion.html">Sesión 3 - Predicción y KNN</a></span>
-</h5>
-<p>
-<a href="Teoria_prediccion.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Sesion3.PNG" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 4 - Regresión Líneal
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="sesion04.html">Sesión 4 - Regresión Lineal</a></span>
-</h5>
-<p>
-<a href="sesion04.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Regresionlineal.png" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 5 - Regresión Líneal 2
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="RegresionLineal2.html">Sesión 5 - Regresión Lineal 2</a></span>
-</h5>
-<p>
-<a href="RegresionLineal2.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Regresionlineal1.png" alt="" width="326" height="258" /></a>
-</p>
 
 
 

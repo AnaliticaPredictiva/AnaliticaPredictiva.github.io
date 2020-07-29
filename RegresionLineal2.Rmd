@@ -1,0 +1,39 @@
+---
+title: "Ilustración Regularización"
+author: "Prof. Juan David Ospina Arango</br>Universidad Nacional - Sede Medellín</br>Analítica Predictiva</br>Semestre 2020-01"
+output: html_document
+---
+<p>&nbsp;</p>
+<p><span style="font-size: 12pt; font-family: helvetica;"></span></p>
+<p><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Métodos de construcción de los coeficientes</span></strong></span></p>
+<p><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Regularización</span></strong></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se tiene un modelo de la forma <img src="images/Regulacion/1B.png" alt="1B" width="131" height="33" />. &nbsp;Se define el error residual como&nbsp;<img src="images/Regulacion/1C.png" alt="1C" width="191" height="37" />&nbsp;y se busca</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/Regulacion/1.png" alt="1" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">La función&nbsp;<img src="images/Regulacion/A.png" alt="A" width="185" height="51" /> &nbsp;es la función de costo<em><span style="font-size: 14pt;"> β=(β<sub>0</sub>,β<sub>1</sub>,…,β<sub>r</sub>)<sup>T</sup> ε R <sup>P+1</sup></span></em></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">La regularización consiste en modificar<em><span style="font-size: 14pt;"> l(β)</span></em> sumándole un <span style="font-size: 14pt;"><em>p(β)</em></span>, donde <em><span style="font-size: 14pt;">P(<sub>0</sub>)</span></em> es un factor que depende de la magnitud de <em><span style="font-size: 14pt;">β</span></em> (o sea de su norma). La mera función de costo es <span style="font-size: 14pt;"><em>l<sub>p</sub> (β)=l(β)+λp(β) x≥0</em></span> es la constante de regularización.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplos:</span></p>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">i)&nbsp;&nbsp;<img src="images/Regulacion/2.png" alt="2" width="238" height="47" />&nbsp; Lasso</span></li>
+<li>ii)&nbsp; <img src="images/Regulacion/3.png" alt="3" width="250" height="46" /><span style="font-size: 12pt;">&nbsp;<span style="color: #808080;">Ridge: Aquí hay un abuso de notación, porque el <em><span style="font-size: 14pt; font-family: helvetica;">β<sub style="color: #808080; font-family: helvetica; background-color: inherit; caret-color: auto;">0</sub></span></em><span style="font-family: helvetica; background-color: inherit; caret-color: auto;"> no se regulariza.</span></span></span></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;">Cuando <span style="font-size: 14pt;"><em>λ=0</em></span> no hay regularización.</span></li>
+<li><span style="font-size: 12pt; color: #808080;">Cuando <em><span style="font-size: 14pt;">λ&gt;0</span></em> hay regularización.</span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080; font-family: helvetica;"><em><span style="font-size: 14pt;">p(β)</span> </em>penaliza las variables con coeficientes grandes. Si la variable no reduce el error entonces se castiga que tenga un coeficiente grande.</span></li>
+<li></li>
+<li><img src="images/Regulacion/4.png" alt="4" /></li>
+<li><span style="color: #808080; font-size: 12pt; font-family: helvetica;">Supongamos que <span style="font-size: 14pt;"><em>β=(β<sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">0</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">,β</span><sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">1</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">,β</span><sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">2</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">)</span></em></span></span></li>
+<li><img src="images/Regulacion/5.png" alt="5" /><img src="images/Regulacion/6.png" alt="6" /></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Con predictores anlados se tiene</span>&nbsp;&nbsp;<img src="images/Regulacion/B.png" alt="B" width="185" height="45" /></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;">Nota: Tanto<em><span style="font-size: 14pt;"> ||.||<sub style="background-color: inherit; color: #808080; font-family: helvetica; text-align: justify; caret-color: auto;">1</sub></span></em><span style="background-color: inherit; font-family: helvetica; text-align: justify; caret-color: auto;"> como <span style="font-size: 14pt;"><em>||.||</em></span></span><sub style="background-color: inherit; color: #808080; font-family: helvetica; text-align: justify; caret-color: auto;"><span style="font-size: 14pt;"><em>2</em> </span>&nbsp;</sub><span style="background-color: inherit; font-family: helvetica; text-align: justify; caret-color: auto;">son sensibles a la escala. Esta aproximación solo debe usarse con variables estandarizadas (Centradas y escaladas).</span></span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;">¿Por qué Lasso es el mejor para selección de variables? Porque escoge rápido los coeficientes.</span></li>
+<li><img src="images/Regulacion/7.png" alt="7" /></li>
+<li><span style="font-size: 12pt; color: #808080; font-family: helvetica;">Denotemos por&nbsp; <img style="color: #808080; font-family: helvetica; font-size: 12pt; text-align: justify; background-color: inherit; caret-color: auto;" src="images/Regulacion/8.png" alt="8" width="136" height="57" /><span style="text-align: justify; background-color: inherit; caret-color: auto;">los estimadores <strong>Ridge</strong> y Lasso para un valor particular de <span style="font-size: 14pt;"><em>λ≠0 y β ̂ &nbsp;</em></span>&nbsp;&nbsp;el estimador para λ=0 (Mínimos cuadrados o máxima verosimilitud).</span></span></li>
+<li></li>
+<li><img src="images/Regulacion/C.png" alt="C" width="60" height="47" /><span style="font-size: 12pt; color: #808080; font-family: helvetica;">es el estimador para el i-ésimo predictor (que debe estar estandarizada).</span></li>
+<li><img src="images/Regulacion/9.png" alt="9" /></li>
+</ul>
+
+<h1 style="text-align: right;"><a href="regularizacion.html"><span style="color: #000000; font-size: 14pt;"><strong> Práctica en R de Regresión Líneal</strong></span></a></h1>
