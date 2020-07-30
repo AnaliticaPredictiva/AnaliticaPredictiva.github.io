@@ -6,6 +6,186 @@ output:
  html_document:
   fig_caption: yes
 ---
+<p><span style="font-size: 12pt; font-family: helvetica;">&nbsp;&nbsp;</span></p>
+<p><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Modelo Lineal</span></strong></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Sea&nbsp;<img src="images/ModelolinealgeneralMAE/A.png" alt="A" width="230" height="33" />&nbsp;con xi ϵ R<sup>p</sup> y&nbsp; y<sub>i</sub>&nbsp; ϵ&nbsp; R.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Queremos predecir&nbsp;<img src="images/ModelolinealgeneralMAE/D.png" alt="D" width="31" height="32" />&nbsp;a partir de <img src="images/ModelolinealgeneralMAE/E.png" alt="E" width="42" height="34" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Dejamos <img src="images/ModelolinealgeneralMAE/F.png" alt="F" width="35" height="37" />como la predicción a partir de <span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/E.png" alt="E" width="42" height="34" />U</span>na solución es <img src="images/ModelolinealgeneralMAE/G.png" alt="G" width="207" height="48" />, el error es <img src="images/ModelolinealgeneralMAE/H.png" alt="H" width="164" height="41" />. En forma vectorial esta puede escribirse como:</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/1.png" alt="1" width="671" height="208" /></p>
+<p style="text-align: justify;"><span style="font-size: 12pt; font-family: helvetica; color: #808080;">A partir de lo siguiente:</span></p>
+<p><img src="images/ModelolinealgeneralMAE/2.png" alt="2" width="73" height="86" /></p>
+<p><span style="font-size: 12pt;">El vector de error es <img src="images/ModelolinealgeneralMAE/I.png" alt="I" width="117" height="40" />. Una solución para encontrar&nbsp;<img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="23" height="39" /> es minimizar <img src="images/ModelolinealgeneralMAE/K.png" alt="K" width="49" height="36" />, pero esto es lo mismo que minimizar&nbsp;<img src="images/ModelolinealgeneralMAE/3.png" alt="3" width="116" height="61" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Así,&nbsp;<img src="images/ModelolinealgeneralMAE/4.png" alt="4" width="608" height="97" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que:</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/5.png" alt="5" width="737" height="176" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Luego</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/6.png" alt="6" width="508" height="146" /></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Igualando esta derivada a cero se obtiene:</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/7.png" alt="7" width="485" height="64" /></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">A (2) se le conoce como ecuación normal.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que <img src="images/ModelolinealgeneralMAE/8.png" alt="8" width="276" height="65" />, luego el <img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="27" height="44" />que satisface (2) es un mínimo si&nbsp;<img src="images/ModelolinealgeneralMAE/9.png" alt="9" width="103" height="42" /> es definida positiva.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Como calcular&nbsp;<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="25" height="39" /></span> :</span></p>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">1) Si <img src="images/ModelolinealgeneralMAE/10.png" alt="10" width="117" height="35" />existe entonces <img src="images/ModelolinealgeneralMAE/11.png" alt="11" width="206" height="54" />.</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">2) Si <span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/10.png" alt="10" width="117" height="35" /></span>no existe , se puede usar la pseuda-inversa. Si <img src="images/ModelolinealgeneralMAE/13.png" alt="13" />, entonces su pseudo-inversa es una matriz <img src="images/ModelolinealgeneralMAE/14.png" alt="14" />que satisface:</span></li>
+<li><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/15.png" alt="15" width="700" height="47" /></li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/16.png" alt="16" width="243" height="40" />&nbsp;entonces&nbsp;<img src="images/ModelolinealgeneralMAE/17.png" alt="17" width="194" height="38" /> es la solución de mínima norma. Observemos que <img src="images/ModelolinealgeneralMAE/18.png" alt="18" width="103" height="38" />puede no existir si hay más variables que observaciones o si hay variables linealmente independientes.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Además, se puede definir con <img src="images/ModelolinealgeneralMAE/19.png" alt="19" width="257" height="36" />donde<em><span style="font-size: 14pt;"> ‖.‖</span> </em>&nbsp;es una norma matricial. Si cond (A) es muy grande, errores pequeños en los datos pueden llevar a grandes errores en la solución.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica;">3) Una alternativa numéricamente eficiente es la descomposición QR. Se puede mostrar que si A ϵ R<sup>n*m</sup> entonces A=QR, con Q ϵ R<sup>n*n</sup> ortonormal (i.e Q<sup>T</sup> Q=I<sub>n*n</sub>) y R matriz triangular superior.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si A ϵ R<sup>m*n</sup>, m≥n, entonces A=QR, con Q ϵ R<sup>n*m</sup> y R ϵ R<sup>m*n</sup> triangular superior.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se puede escribir <img src="images/ModelolinealgeneralMAE/20.png" alt="20" width="114" height="41" />, con R<sub>1</sub>&nbsp; ϵ R<sup>n*n</sup>&nbsp; triangular superior y θϵ R<sup>(m-n)*n</sup> matriz de ceros.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">También se puede escribir Q= [Q<sub>1</sub> Q<sub>2</sub>] con Q<sub>1</sub>&nbsp; ϵ R<sup>m*n</sup> y Q<sub>2</sub> ϵ R<sup>m*(m-n)</sup>. Así:</span><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><br /><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/21.png" alt="21" width="326" height="74" /></span></p>
+<p>&nbsp;</p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Esta descomposición no es única. La descomposición QR se puede hallar usando el algoritmo de Gramm-schmidt.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para los modelos lineales se tiene X=QR con Q ϵ R<sup>n*n</sup> &nbsp;&nbsp;&nbsp;y&nbsp; <img src="images/ModelolinealgeneralMAE/22.png" alt="22" width="89" height="45" />con R<sub>1</sub> ϵ R<sup>(p+1)*(p+1)</sup> y θ ϵ R<sup>(n-p-1)*(p+1)</sup> matriz de ceros.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que&nbsp;<img src="images/ModelolinealgeneralMAE/23.png" alt="23" width="172" height="31" /> se puede escribir como R<sup>T</sup> Q<sup>T</sup> QRβ= R<sup>T</sup> Qy.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Así R<sup>T</sup> Rβ= R<sup>T</sup> Q<sup>T</sup> y, que se puede re-escribir como:</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/24.png" alt="24" width="609" height="105" />&nbsp;&nbsp;</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">De esta forma R<sub>1</sub><sup>T</sup> R<sub>1</sub> β= R<sub>1</sub><sup>T</sup> Q<sub>1</sub><sup>T</sup> y. Si se define C=R<sub>1</sub>β <em><strong>y b=R<sub>1</sub><sup>T</sup> Q<sub>1</sub><sup>T</sup> </strong></em></span><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><strong>Y&nbsp;</strong></em></span><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><strong>entonces el problema se puede resolver en dos pasos:</strong></em></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><strong>&nbsp;i)</strong></em></span><span style="font-size: 12pt;"><span style="font-family: helvetica; color: #808080;"><em><strong>&nbsp;</strong></em></span>R<sub>1</sub><sup>T</sup> c = b se resuelve para <span style="text-decoration: underline;">c</span> (fácilmente porque R<sub>1</sub><sup>T</sup> es matriz triangular superior).</span></p>
+<p><span style="font-size: 12pt;">ii) R<sub>1</sub>β = <span style="text-decoration: underline;">c</span> se resuelve para <span style="text-decoration: underline;">β</span> <em><strong>(</strong></em>fácilmente por que R<sub>1</sub> es matriz triangular superior<em><strong>).</strong></em></span></p>
+<p><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Cosas maravillosas</span></strong></span></p>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">1) Si&nbsp;&nbsp;<img src="images/ModelolinealgeneralMAE/25.png" alt="25" width="204" height="33" />&nbsp;entonces&nbsp;<img src="images/ModelolinealgeneralMAE/26.png" alt="26" width="81" height="36" /> es <img src="images/ModelolinealgeneralMAE/27.png" alt="27" width="245" height="30" />. Si se define <img src="images/ModelolinealgeneralMAE/28.png" alt="28" width="206" height="24" />, entonces <img src="images/ModelolinealgeneralMAE/29.png" alt="29" width="95" height="36" />.</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">A&nbsp;&nbsp;<img src="images/ModelolinealgeneralMAE/30.png" alt="30" width="27" height="27" />se le llama matriz sombrero porque pone un “^” sobre <img src="images/ModelolinealgeneralMAE/31.png" alt="31" width="160" height="32" />.&nbsp;&nbsp;<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/30.png" alt="30" width="27" height="27" /></span>es simétrica y&nbsp;<img src="images/ModelolinealgeneralMAE/33.png" alt="33" width="108" height="33" />.</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/34.png" alt="34" width="113" height="33" />. Además&nbsp;<img src="images/ModelolinealgeneralMAE/35.png" alt="35" width="106" height="32" /> también es simétrica e idempotente.</span></li>
+</ul>
+<ul>
+<li></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">2) <img src="images/ModelolinealgeneralMAE/36.png" alt="36" width="355" height="47" />&nbsp;luego <img src="images/ModelolinealgeneralMAE/37.png" alt="37" width="476" height="38" />. Este segundo</span>&nbsp;resultado quiere decir <span style="font-size: 12pt;">que se pueden conocer los errores del modelo sin conocer los coeficientes.</span></li>
+<li></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">3) Si se reemplaza&nbsp;<img src="images/ModelolinealgeneralMAE/M.png" alt="M" width="28" height="38" /> por&nbsp;<img src="images/ModelolinealgeneralMAE/38.png" alt="38" width="56" height="35" /> y luego&nbsp;<img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="25" height="44" />&nbsp;&nbsp;por <img src="images/ModelolinealgeneralMAE/39.png" alt="39" width="106" height="33" />es la función de costo se tiene:</span></li>
+<li></li>
+<li style="text-align: center;"><img src="images/ModelolinealgeneralMAE/40.png" alt="40" width="664" height="275" /></li>
+</ul>
+<ul>
+<li></li>
+<li></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Luego el valor mínimo del error cuadrático medio también se puede conocer antes de calcular <img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="26" height="43" />.</span></li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="font-size: 14pt; color: #000000;"><strong><span style="font-family: helvetica;">Propiedades distribucionales</span></strong></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si <em><span style="font-size: 14pt;">y<sub>i</sub>=β<sub>0</sub>+x<sub>i</sub><sup>T</sup> βx+ε<sub>i</sub></span></em> &nbsp;con&nbsp;<img src="images/ModelolinealgeneralMAE/41.png" alt="41" width="224" height="42" /> entonces <img src="images/ModelolinealgeneralMAE/42.png" alt="42" width="172" height="40" />, con <img src="images/ModelolinealgeneralMAE/43.png" alt="43" width="216" height="43" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Luego <img src="images/ModelolinealgeneralMAE/44.png" alt="44" width="286" height="45" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Como <img src="images/ModelolinealgeneralMAE/45.png" alt="45" width="241" height="43" />, entonces&nbsp; <img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="26" height="44" />&nbsp; sigue una distribución normal&nbsp;<img src="images/ModelolinealgeneralMAE/N.png" alt="N" width="73" height="35" /> &nbsp;variada con</span></p>
+<p style="text-align: center;"><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/46.png" alt="46" width="675" height="302" /><br /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Además, como&nbsp;<img src="images/ModelolinealgeneralMAE/47.png" alt="47" width="239" height="39" /></span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/48.png" alt="48" width="671" height="155" /></p>
+<p><span style="font-size: 14pt; color: #000000;"><strong><span style="font-family: helvetica;">Leverage</span></strong></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/49.png" alt="49" width="231" height="58" />&nbsp;luego&nbsp;<img src="images/ModelolinealgeneralMAE/50.png" alt="50" width="131" height="54" />&nbsp;es tal que <img src="images/ModelolinealgeneralMAE/51.png" alt="51" width="103" height="56" />. A <em><span style="font-size: 14pt;">h<sub>ii</sub></span></em> se le denomina leverage.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Un valor de<em><span style="font-size: 14pt;"> h<sub>ii</sub></span></em> muy alto implica que pequeños centros en y<sub>i</sub> <sub>&nbsp;&nbsp;</sub>provocan grandes centros en <img src="images/ModelolinealgeneralMAE/F.png" alt="F" width="33" height="35" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Los puntos con alto leverage son sospechosos de ser atípicos. Un alto leverage indica un valor extraño para y<sub>i</sub>.</span></p>
+<p><strong><span style="font-size: 14pt; font-family: helvetica; color: #000000;">Puntos influyentes</span></strong></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Son aquellos que tienen un alto impacto en <img src="images/ModelolinealgeneralMAE/J.png" alt="J" width="24" height="39" />. Se pueden encontrar con las distancias de Cook D<sub>i</sub>:</span></p>
+<p style="text-align: center;"><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/52.png" alt="52" width="644" height="131" /><br /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">y&nbsp; <img src="images/ModelolinealgeneralMAE/R.png" alt="R" width="63" height="48" />es la predicción para <em><span style="font-size: 14pt;">y<sub>j</sub></span></em> &nbsp;a partir de un modelo estimado con la muestra&nbsp;<img src="images/ModelolinealgeneralMAE/S.png" alt="S" width="192" height="43" /> &nbsp;.</span></p>
+<p><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Residuales</span></strong></span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/53.png" alt="53" width="652" height="97" /></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se define el residual estudentizado <em><span style="font-size: 14pt;">t<sub>i</sub></span></em> como</span></p>
+<p><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/54.png" alt="54" width="646" height="70" /></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Usando <span style="font-size: 14pt;"><em>t<sub>i</sub></em></span>, puede escribirse<em><span style="font-size: 14pt;"> D<sub>i</sub></span></em> como:</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/ModelolinealgeneralMAE/55.png" alt="55" width="243" height="98" />.&nbsp;&nbsp;&nbsp;</span></p>
+<p><span style="font-size: 14pt; color: #000000;"><strong><span style="font-family: helvetica;">Diagnósticos</span></strong></span></p>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">1) Residuales (y) VS ajustados (x).</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">2) Normal Q-Q plot: percentiles de los residuales estandarizados VS los de la normal estándar.</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">3) Localización – Escala:&nbsp;<img src="images/ModelolinealgeneralMAE/56.png" alt="56" width="212" height="39" /> (y) VS ajustados (x).</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">4) Residuales (y) VS Leverage (x): <em><span style="font-size: 14pt;">t<sub>i</sub></span></em> VS <em><span style="font-size: 14pt;">h<sub>ii</sub></span></em></span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">5) Distancia de Cook.</span></li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">Prueba de hipótesis</span></strong></span></p>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">1) Significancia de la regresión</span></li>
+<li><span style="font-size: 12pt; color: #808080;">Total son ejemplos Squares SST</span></li>
+<li><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/57.png" alt="57" width="640" height="282" /></li>
+</ul>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">a) De las ecuaciones normales se tiene:</span></li>
+<li><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/58.png" alt="58" width="655" height="140" /></li>
+</ul>
+<ul>
+<li><span style="font-size: 12pt; color: #808080;"><span style="font-family: helvetica;">b) Como <img src="images/ModelolinealgeneralMAE/59.png" alt="59" width="126" height="40" />, entonces <img src="images/ModelolinealgeneralMAE/60.png" alt="60" width="126" height="48" />, donde&nbsp;<img src="images/ModelolinealgeneralMAE/61.png" alt="61" />&nbsp;</span>Es la i-ésima columna de <span style="font-family: helvetica;"><img src="images/ModelolinealgeneralMAE/61.png" alt="61" /></span>. En particular <img src="images/ModelolinealgeneralMAE/63.png" alt="63" width="101" height="44" />, luego&nbsp;<img src="images/ModelolinealgeneralMAE/64.png" alt="64" width="116" height="38" /> .</span></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;">De esta manera la suma de cuadrados totales se puede escribir como:</span></li>
+<li><span style="color: #808080; font-size: 12pt;"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/65.png" alt="65" width="600" height="103" /></span></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;">SST tiene <em><span style="font-size: 14pt;">n-1</span></em> grados de libertad.</span></li>
+<li><span style="color: #808080; font-size: 12pt;">SSR (Suma de cuadrados del modelo) tiene p grados de libertad.</span></li>
+<li><span style="color: #808080; font-size: 12pt;">SSE (Suma de Cuadrados del Error) tiene<em><span style="font-size: 14pt;"> n-p-1</span></em> grados de libertad.</span></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;">En forma vectorial</span></li>
+<li><span style="font-size: 12pt; color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/66.png" alt="66" width="719" height="273" /></span></li>
+<li><span style="color: #808080; font-size: 12pt;">(*) Observemos que <img src="images/ModelolinealgeneralMAE/67.png" alt="67" width="154" height="59" />, luego&nbsp;<img src="images/ModelolinealgeneralMAE/68.png" alt="68" width="404" height="58" /></span></li>
+<li><span style="color: #808080; font-size: 12pt;">.</span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;">En forma vectorial SSE es&nbsp;</span></li>
+<li><span style="font-size: 12pt; color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/69.png" alt="69" width="383" height="179" /></span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;">En forma vectorial SSR es:&nbsp;</span></li>
+<li><span style="font-size: 12pt; color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/70.png" alt="70" width="484" height="236" /></span></li>
+<li><span style="font-size: 12pt; color: #808080;">(*) Se utiliza el hecho de que <img src="images/ModelolinealgeneralMAE/71.png" alt="71" width="195" height="54" />, lo que se deduce del hecho de que <img src="images/ModelolinealgeneralMAE/72.png" alt="72" width="135" height="38" />.</span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;">Así <em><span style="font-size: 14pt;">SST= SSR + SSE</span></em> implica que</span></li>
+<li><img src="images/ModelolinealgeneralMAE/73.png" alt="73" width="702" height="59" /></li>
+</ul>
+<ul>
+<li><span style="color: #808080; font-size: 12pt; font-family: helvetica;">SST se interpreta como la desviación de la y<sub>i</sub> de su valor promedio <img src="images/ModelolinealgeneralMAE/M.png" alt="M" width="26" height="36" />.</span></li>
+<li><span style="color: #808080; font-size: 12pt; font-family: helvetica;">SSR se interpreta como la diferencia entre las predicciones del modelo lineal y aquellas del modelo nulo (solo tiene de intercepto <img src="images/ModelolinealgeneralMAE/P.png" alt="P" width="93" height="38" />).</span></li>
+</ul>
+<ul>
+<li><span style="color: #808080; font-size: 12pt; font-family: helvetica;">SSE es la diferencia entre los valores predichos por el modelo y los observados.</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Un valor de SSR pequeño indica que el modelo no hace mucho comparado con el modelo nulo.</span></li>
+<li></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se puede definir</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/74.png" alt="74" width="464" height="72" /></span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">El MSE es un estimador de&nbsp;<img src="images/ModelolinealgeneralMAE/75.png" alt="75" /></span></li>
+<li></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Cuando<span style="font-size: 14pt;"><em> βx≈0</em></span>, entonces&nbsp;&nbsp;y SSR≈0, luego <span style="font-size: 14pt;"><em>SST≈SSE</em></span>. Se define el estadístico <span style="font-size: 14pt;"><em>F<sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">0</sub></em></span><span style="text-align: justify; background-color: inherit; caret-color: auto;"><span style="font-size: 14pt;"><em>= MSR /MSE</em></span> para probar la hipótesis nula <img src="images/ModelolinealgeneralMAE/76.png" alt="76" width="335" height="43" /></span></span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><span style="text-align: justify; background-color: inherit; caret-color: auto;">Se rechaza <span style="font-size: 14pt;"><em>H<sub style="color: #808080; font-family: helvetica; background-color: inherit; caret-color: auto;">0</sub></em></span><span style="background-color: inherit; caret-color: auto;"> para valores grandes de <em><span style="font-size: 14pt;">F</span></em></span><sub style="color: #808080; font-family: helvetica; background-color: inherit; caret-color: auto;"><em><span style="font-size: 14pt;">0</span></em>. </sub><span style="background-color: inherit; caret-color: auto;">Bajo&nbsp;</span></span><span style="font-size: 14pt;"><em>H<sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">0</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;"> F</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">0</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;"> ~ F</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">p,n-p-1</sub></em></span><span style="text-align: justify; background-color: inherit; caret-color: auto;"><span style="font-size: 14pt;"><em>-</em></span>. Luego se rechaza <em><span style="font-size: 14pt;">H</span></em></span><em><span style="font-size: 14pt;"><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">0</sub></span></em><span style="text-align: justify; background-color: inherit; caret-color: auto;"> a nivel α si <span style="font-size: 14pt;"><em>F</em></span></span><span style="font-size: 14pt;"><em><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">0</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;"> &gt; </span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">F1-α, p, n-p-1</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">.</span></em></span></span></li>
+<li></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se pueden probar las p hipótesis&nbsp;<img src="images/ModelolinealgeneralMAE/77.png" alt="77" width="382" height="54" /></span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para eso se define el estadístico <img src="images/ModelolinealgeneralMAE/78.png" alt="78" width="301" height="90" />, con&nbsp; t<sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">i</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;"> ~ t</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">n-p-1.</sub></span></li>
+<li></li>
+<li></li>
+<li><span style="color: #000000;"><strong><span style="font-size: 14pt;">La matriz H</span></strong></span></li>
+<li><span style="font-size: 12pt;"><img src="images/ModelolinealgeneralMAE/79.png" alt="79" width="639" height="263" /></span></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;"><span style="font-family: helvetica;">Para<em><span style="font-size: 14pt;"> A ϵ R<sup style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">n*n</sup></span><span style="text-align: justify; background-color: inherit; caret-color: auto;">, <span style="font-size: 14pt;">A*A= A</span></span><span style="font-size: 14pt;"><sup style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">2</sup><span style="text-align: justify; background-color: inherit; caret-color: auto;">=B=(b</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">ij</sub><span style="text-align: justify; background-color: inherit; caret-color: auto;">)</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">ij</sub></span></em></span><span style="font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;"> con<img src="images/ModelolinealgeneralMAE/80.png" alt="80" width="218" height="48" />&nbsp;. Si<em><span style="font-size: 14pt;"> i=j</span>,</em> entonces.&nbsp;<img src="images/ModelolinealgeneralMAE/81.png" alt="81" /></span></span></li>
+<li></li>
+<li><span style="color: #808080; font-family: helvetica; font-size: 12pt; text-align: justify; background-color: inherit; caret-color: auto;">Si A es simétrica entonces&nbsp;<span style="font-size: 14pt;"><em> a<sub style="background-color: inherit; caret-color: auto;">ik</sub><span style="background-color: inherit; caret-color: auto;">=a</span><sub style="background-color: inherit; caret-color: auto;">ki</sub></em></span><span style="background-color: inherit; caret-color: auto;"> &nbsp;y&nbsp;<img src="images/ModelolinealgeneralMAE/82.png" alt="82" width="391" height="46" /></span></span></li>
+<li></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;">Si <span style="font-size: 14pt;"><em>A=AA</em></span>, entonces&nbsp;<img src="images/ModelolinealgeneralMAE/83.png" alt="83" width="318" height="43" /> .</span></li>
+<li></li>
+<li><span style="color: #808080; font-size: 12pt;">Como&nbsp;<img src="images/ModelolinealgeneralMAE/84.png" alt="83" width="203" height="40" />&nbsp;entonces <img src="images/ModelolinealgeneralMAE/85.png" alt="85" />, de donde <img src="images/ModelolinealgeneralMAE/86.png" alt="86" width="159" height="36" />.</span></li>
+<li></li>
+<li><span style="font-size: 12pt;">De lo anterior se tiene que&nbsp;<img src="images/ModelolinealgeneralMAE/87.png" alt="87" width="116" height="49" />&nbsp; y&nbsp;&nbsp;<img src="images/ModelolinealgeneralMAE/88.png" alt="88" width="138" height="51" />.</span></li>
+<li></li>
+<li><span style="font-size: 12pt;">¿Cuál es el efecto de tener observaciones duplicadas?</span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;"><img src="images/ModelolinealgeneralMAE/89.png" alt="89" width="694" height="166" /></span></li>
+<li></li>
+<li><span style="font-size: 12pt; color: #808080;">Pero si <img src="images/ModelolinealgeneralMAE/90.png" alt="90" width="144" height="41" />, entonces&nbsp;<img src="images/ModelolinealgeneralMAE/91.png" alt="91" width="153" height="39" /> y se tiene que <img src="images/ModelolinealgeneralMAE/92.png" alt="92" width="414" height="39" />, de donde&nbsp;<img src="images/ModelolinealgeneralMAE/93.png" alt="93" width="192" height="40" /> y así&nbsp;<img src="images/ModelolinealgeneralMAE/94.png" alt="94" width="183" height="37" /> , de donde <img src="images/ModelolinealgeneralMAE/95.png" alt="95" width="113" height="38" />. Es decir que el duplicar un vector de características su leverage se divide por 2. Observemos que se asume que <em><span style="font-size: 14pt;">x<sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">i</sub><span style="font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">=x</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">j</sub></span></em><span style="font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">, pero no que <em><span style="font-size: 14pt;">y</span></em></span><em><span style="font-size: 14pt;"><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">i</sub><span style="font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">=y</span><sub style="color: #808080; font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">j</sub></span></em><span style="font-family: helvetica; text-align: justify; background-color: inherit; caret-color: auto;">,</span></span></li>
+<li></li>
+<li></li>
+<li><span style="color: #000000;"><strong><span style="font-size: 14pt; font-family: helvetica;">El <em>R<sup style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">2</sup></em><span style="text-align: justify; background-color: inherit; caret-color: auto;">, <em>C</em></span><em><sub style="color: #888888; text-align: justify; background-color: inherit; font-family: inherit; caret-color: auto;">P</sub></em><span style="text-align: justify; background-color: inherit; caret-color: auto;">, AIC Y BIC</span></span></strong></span></li>
+<li></li>
+<li><span style="font-size: 12pt;">Se define como</span></li>
+<li>&nbsp;<img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/96.png" alt="96" width="501" height="121" /></li>
+<li><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/97.png" alt="97" width="610" height="341" /></li>
+<li></li>
+<li><strong><span style="font-size: 14pt; font-family: helvetica; color: #000000;">Inflación de la varianza</span></strong></li>
+<li></li>
+<li><img style="display: block; margin-left: auto; margin-right: auto;" src="images/ModelolinealgeneralMAE/99.png" alt="99" width="328" height="83" /></li>
+<li><span style="font-size: 12pt;"><img src="images/ModelolinealgeneralMAE/100.png" alt="100" width="110" height="43" />es el <em><span style="font-size: 14pt;">R<sup>2</sup> </span></em>de la regresión donde <em><span style="font-size: 14pt;">x<sub>j</sub> </span></em>es la variable respuesta y todos los otros predictores son variables explicativas.</span></li>
+</ul>
+<p><span style="font-size: 12pt; font-family: helvetica;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+
+
 <p>&nbsp;</p>
 <p><span style="font-family: helvetica; color: #000000;"><strong><span style="font-size: 14pt;">Coeficientes</span></strong></span></p>
 <p><span style="color: #000000;"><strong><span style="font-family: helvetica; font-size: 14pt;">Modelos Lineales</span></strong></span></p>
