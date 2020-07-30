@@ -563,6 +563,11 @@ polygon(x=rad1 * cos(theta) + xcenter,
 ## 15.40 42.98</code></pre>
 <p>Pasemos a más variables:</p>
 <pre class="r"><code>library(MASS)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;MASS&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:plotly&#39;:
+## 
+##     select</code></pre>
 <pre class="r"><code># Del paquete cargado se selecciona el dataset Cars93 y se seleccionan las variables Min.Price, Price, Max.Price, MPG.city, MPG.highway, EngineSize, Horsepower,  RPM, Rev.per.mile.
 
 Cars93_num&lt;-subset(Cars93,select = c(&quot;Min.Price&quot;, &quot;Price&quot;, &quot;Max.Price&quot;, &quot;MPG.city&quot;, &quot;MPG.highway&quot;, &quot;EngineSize&quot;, &quot;Horsepower&quot;,  &quot;RPM&quot;, &quot;Rev.per.mile&quot;))</code></pre>
@@ -712,6 +717,13 @@ datos_tr&lt;-datos[-id_val,]
 datos_vs&lt;-datos[id_val,]</code></pre>
 <p>Modelo básico con Random Forest: Este es un ejemplo, luego se verá este tema en otra sesión.</p>
 <pre class="r"><code>library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
 <pre class="r"><code>modelo_rf&lt;-randomForest(Price~Type+MPG.city+Cylinders,data=datos_tr)</code></pre>
 <pre class="r"><code>(modelo_rf)</code></pre>
 <pre><code>## 
