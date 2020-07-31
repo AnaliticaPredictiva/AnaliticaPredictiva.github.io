@@ -478,6 +478,12 @@ boxplot(BD~sp,data=datos)</code></pre>
 <pre><code>## [1] 0.58</code></pre>
 <p>Lo vamos a hacer automáticamente para diferentes valores de corte de la variable CL:</p>
 <pre class="r"><code>library(pROC)</code></pre>
+<pre><code>## Type &#39;citation(&quot;pROC&quot;)&#39; for a citation.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;pROC&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     cov, smooth, var</code></pre>
 <p>Construyamos la curva ROC para la variable CL:</p>
 <pre class="r"><code>roc_CL&lt;-roc(sp~CL,data=datos)</code></pre>
 <pre><code>## Setting levels: control = B, case = O</code></pre>
