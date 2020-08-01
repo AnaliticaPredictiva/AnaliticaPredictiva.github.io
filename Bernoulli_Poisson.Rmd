@@ -1,0 +1,90 @@
+<p><span style="color: #333333;"><strong><span style="font-size: 14pt; font-family: helvetica;">Modelo de Regresión Líneal general</span></strong></span></p>
+<p><span style="font-size: 14pt; color: #808080;"><em><span style="font-family: helvetica;">L = { (X<sub>1</sub>, Y<sub>1</sub>), … , (X<sub>n</sub>, Y<sub>n</sub>) }</span></em></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/1.png" alt="1" width="644" height="211" /></span></p>
+<p><span style="color: #808080;"><strong><span style="font-size: 14pt; font-family: helvetica;">Modelo de regresión lineal generalizado</span></strong></span></p>
+<p><em><span style="font-size: 14pt; font-family: helvetica; color: #808080;">L = { (X<sub>1</sub>, Y<sub>1</sub>), … , (X<sub>n</sub>, Y<sub>n</sub>) }</span></em></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><strong><span style="font-size: 14pt;">Modelo probabilístico:</span> </strong>Distribuciones de la clase exponencial.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplos: Normal, binomial, Poisson, Gamma.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><span style="color: #333333;"><strong><span style="font-size: 14pt;"><span style="color: #808080;">Modelo para la media</span> :</span></strong></span>&nbsp;<img src="images/TeoriaintroduccionGLM/2.png" alt="2" width="158" height="37" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/3.png" alt="3" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">g monótona y diferenciable.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/4.png" alt="4" width="349" height="51" /></span></p>
+<p><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplo:</span></em></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/5.png" alt="5" width="353" height="40" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/6.png" alt="6" width="369" height="44" /><img src="images/TeoriaintroduccionGLM/7.png" alt="7" width="138" height="44" /></span></p>
+<p><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplo:&nbsp;</span></em></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/8.png" alt="8" width="172" height="42" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/9.png" alt="9" width="615" height="140" /></span></p>
+<p><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplo:</span></em></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/10.png" alt="10" width="187" height="42" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/11.png" alt="11" width="598" height="121" /></span></p>
+<p><span style="color: #808080;"><strong><span style="font-size: 14pt; font-family: helvetica;">¿Por qué la clase exponencial?</span></strong></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Estas distribuciones se dejan parametrizar de una manera que permita calcular la función de costo, es derivada y el Hessiano de una manera fácil.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Estimación: Ejemplo</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Sea&nbsp;<em><span style="font-size: 14pt;"> { (X<sub>1</sub>, Y<sub>1</sub>), … , (X<sub>n</sub>, Y<sub>n</sub>) }&nbsp;</span></em>con&nbsp;<span style="font-size: 14pt;"><em> y<sub>i</sub>~Bernoulli (p<sub>i</sub>)</em>,</span> independientes <span style="font-size: 14pt;"><em>Ey<sub>i</sub>=p<sub>i</sub></em> y</span>&nbsp; <img src="images/TeoriaintroduccionGLM/12.png" alt="12" />&nbsp;<em>,&nbsp;</em>&nbsp;<em>i=1, . . . , n</em></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Como<span style="font-size: 14pt;"><em> y<sub>i</sub>~Bernoulli (p<sub>i</sub>)</em></span> su función de masa está dada por&nbsp;<img src="images/TeoriaintroduccionGLM/13.png" alt="13" width="181" height="35" /> <em>, <span style="font-size: 14pt;">yϵ{0,1}</span>.</em></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">La función de masa de la muestra es el producto de las funciones de masa (por dependencia)</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/14.png" alt="14" width="583" height="537" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para maximizar<span style="font-size: 14pt;"><em>&nbsp;l(n<sub>i</sub>)</em></span> con respecto a <img src="images/TeoriaintroduccionGLM/A.png" alt="A" width="41" height="30" />&nbsp; &nbsp;debemos hallar&nbsp;</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/17.png" alt="17" width="310" height="74" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Pero&nbsp;</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/18.png" alt="18" width="564" height="95" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Asi,&nbsp;</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/19.png" alt="19" width="658" height="202" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Asi, se forma el vector&nbsp;</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/20.png" alt="20" width="298" height="44" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Con&nbsp; <img src="images/TeoriaintroduccionGLM/21.png" alt="21" width="103" height="53" />,&nbsp; si&nbsp; <img src="images/TeoriaintroduccionGLM/22.png" alt="22" width="189" height="34" />,</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Entonces&nbsp;<img src="images/TeoriaintroduccionGLM/21.png" alt="21" width="108" height="55" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">A <em><span style="text-decoration: underline; font-size: 14pt;">v</span></em> se le llama el vector Score. El estimador de máxima verosimilitud de<em> <span style="font-size: 14pt;"><span style="text-decoration: underline;">β</span> , β ̂,</span></em> es la solución del sistema <em><span style="font-size: 14pt;"><span style="text-decoration: underline;">v</span>=0</span></em>, que tiene <em><span style="font-size: 14pt;">p+1</span></em> ecuaciones y <span style="font-size: 14pt;"><em>p+1</em></span> incógnitas. Se puede mostrar que <img src="images/TeoriaintroduccionGLM/23.png" alt="23" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">La matriz Hessiana es <img src="images/TeoriaintroduccionGLM/24.png" alt="24" width="71" height="54" />, pero se prefiere</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/25.png" alt="25" width="639" height="63" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><strong><span style="font-size: 14pt;">Nota:</span></strong> Nos permitimos el abuso de notación<span style="font-size: 14pt;"><em> l(<span style="text-decoration: underline;">β</span>),l(<span style="text-decoration: underline;">n</span>)</em></span>, para indicar la misma cantidad, aunque realmente n es una función <span style="font-size: 14pt;"><em>β</em></span>.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se define la matriz de información como &nbsp;<span style="font-size: 14pt;"><em>E{J}=:I</em></span>&nbsp; se puede mostrar que <img src="images/TeoriaintroduccionGLM/26.png" alt="26" width="108" height="36" />(la inversa de la información).</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para resolver el sistema<em><span style="font-size: 14pt;"> <span style="text-decoration: underline;">v</span>=0</span> </em>se puede usar métodos iterativos con <em><span style="font-size: 14pt;">J</span></em> o con <span style="font-size: 14pt;"><em>I</em></span>:</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/27.png" alt="27" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Esto requiere tener <img src="images/TeoriaintroduccionGLM/A.png" alt="A" width="50" height="37" />. <span style="font-size: 14pt;"><em>I</em></span> es una propiedad del modelo y <em><span style="font-size: 14pt;">J</span></em> tiene una estrecha más compleja en general. Se puede mostrar que para el método de máxima verosimilitud.</span></p>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si<span style="font-size: 14pt;"><em> F</em></span> es una función uno a uno&nbsp;<img src="images/TeoriaintroduccionGLM/28.png" alt="28" width="128" height="33" /></span></li>
+</ul>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/29.png" alt="29" width="141" height="36" /></span></li>
+</ul>
+<ul>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/30.png" alt="30" width="288" height="37" />y equivalentemente a&nbsp;</span></li>
+<li><span style="font-size: 12pt; font-family: helvetica; color: #808080;">&nbsp;<img src="images/TeoriaintroduccionGLM/31.png" alt="31" width="234" height="46" /></span></li>
+</ul>
+<p>&nbsp;</p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se tiene tres estadísticas:</span></p>
+<p><em><strong><span style="font-size: 12pt; font-family: helvetica; color: #808080;">1) Wald:</span></strong></em></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">&nbsp;<img style="background-color: inherit; color: inherit; font-family: inherit; font-size: 1rem; caret-color: auto;" src="images/TeoriaintroduccionGLM/32.png" alt="32" width="314" height="49" /></span></p>
+<p><em><strong><span style="font-size: 12pt; font-family: helvetica; color: #808080;">2) Score:&nbsp;</span></strong></em></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/33.png" alt="33" width="319" height="42" /></span></p>
+<p><strong><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">3) Test de razón de verosimilitud:</span></em></strong></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/34.png" alt="34" width="374" height="49" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para los test de Wald y Score, además se tiene:</span></p>
+<p><strong><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">- Wald:&nbsp;</span></em></strong></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/35.png" alt="35" width="448" height="47" /></span></p>
+<p><strong><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">- Score:</span></em></strong></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/36.png" alt="36" width="442" height="52" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Un criterio importante de ajuste es el deviance. Esta cantidad surge al expresar el modelo de la familia exponencial en la forma&nbsp;</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/37.png" alt="37" width="536" height="60" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Donde <em><span style="font-size: 14pt;">a(y,∅)</span></em> es una función normalizada,&nbsp;<img src="images/TeoriaintroduccionGLM/38.png" alt="38" width="74" height="33" /> se llama la función constante (Cumulant function), <em><span style="font-size: 14pt;">θ</span></em> es el parámetro canónico y <span style="font-size: 14pt;"><em>∅</em> </span>es la dispersión. Se puede mostrar que <span style="font-size: 14pt;"><em>Ey(y)=h( θ )</em></span>, con la monótona creciente.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Además&nbsp; <img src="images/TeoriaintroduccionGLM/39.png" alt="39" width="88" height="43" />&nbsp;y <img src="images/TeoriaintroduccionGLM/40.png" alt="40" width="185" height="39" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">A partir de esta parametrizada se define la función</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/41.png" alt="41" />, donde <em><span style="font-size: 14pt;">ϴ</span></em> a una función de y que es el valor esperado de <span style="font-size: 14pt;"><em>y</em></span>. </span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Asi,&nbsp;<img src="images/TeoriaintroduccionGLM/42.png" alt="42" width="315" height="30" />. El deviance se define como&nbsp;<img src="images/TeoriaintroduccionGLM/43.png" alt="43" width="332" height="37" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/44.png" alt="44" width="690" height="93" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se puede mostrar que <img src="images/TeoriaintroduccionGLM/45.png" alt="45" width="145" height="44" />. Ahora se define el deviance total como&nbsp;<img src="images/TeoriaintroduccionGLM/46.png" alt="46" /> , donde los wi son ponderadores para cada observación. El deviance escalado es <img src="images/TeoriaintroduccionGLM/47.png" alt="47" />.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si los modelos A y B tienen <em><span style="font-size: 14pt;">P<sub>A</sub></span></em> y P<sub>B</sub> parámetros, con <em><span style="font-size: 14pt;">P<sub>A</sub></span></em> &lt;P<sub>B</sub> - y B contiene todas las variables que tienen el modelo A, se dice que A esta anidado en <em><span style="font-size: 14pt;">B</span></em>. </span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><span style="font-size: 14pt;">B</span></em> es más complejo que <span style="font-size: 14pt;"><em>A</em></span>.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para evaluar si la complejidad de <em><span style="font-size: 14pt;">B</span></em> le representa un beneficio con respecto a <em><span style="font-size: 14pt;">A</span></em> se utiliza</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="images/TeoriaintroduccionGLM/48.png" alt="48" /></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si <span style="font-size: 14pt;"><em>H<sub>0</sub>: A y B</em></span> son iguales VS <span style="font-size: 14pt;"><em>H<sub>a</sub>: A y B</em></span> son diferentes, entonces <img src="images/TeoriaintroduccionGLM/49.png" alt="49" width="131" height="51" />. Si se rechaza <span style="font-size: 14pt;"><em>H<sub>0</sub></em></span>, se prefiere a <em><span style="font-size: 14pt;">B</span></em> sobre <span style="font-size: 14pt;"><em>A</em></span>.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Cuando<span style="font-size: 14pt;"><em> ф</em></span> no es conocido (es decir, siempre) se lleva a cabo la prueba anterior usando un estadístico <em><span style="font-size: 14pt;">F</span></em>.</span></p>
+<p><span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><span style="font-size: 14pt;">Ejemplo</span></em>: Registro de Autos.</span></p>
+<p>&nbsp;</p>
+
+<p><span style="font-size: 12pt; font-family: helvetica;"></span></p>
+<p><span style="font-size: 12pt; font-family: helvetica;">Aplicación</span></p>
+<p><a href="ilustracion_poisson.html"><img src="images/Imagen_2.png" alt="Poisson" /></a><a href="ilustracion_Bernoulli.html"><img src="images/Imagen_1.png" alt="Bernoulli" /></a></p>
+<p>&nbsp;</p>

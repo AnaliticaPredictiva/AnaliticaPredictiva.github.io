@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Bernoulli_Poisson.utf8</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Analítica Predictiva</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introducción</a>
+</li>
+<li>
+  <a href="about.html">Sesiones de clase</a>
+</li>
+<li>
+  <a href="Preguntasrespuestas.html">Preguntas y respuestas</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<p>
+<span style="color: #333333;"><strong><span style="font-size: 14pt; font-family: helvetica;">Modelo de Regresión Líneal general</span></strong></span>
+</p>
+<p>
+<span style="font-size: 14pt; color: #808080;"><em><span style="font-family: helvetica;">L = { (X<sub>1</sub>, Y<sub>1</sub>), … , (X<sub>n</sub>, Y<sub>n</sub>) }</span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/1.png" alt="1" width="644" height="211" /></span>
+</p>
+<p>
+<span style="color: #808080;"><strong><span style="font-size: 14pt; font-family: helvetica;">Modelo de regresión lineal generalizado</span></strong></span>
+</p>
+<p>
+<em><span style="font-size: 14pt; font-family: helvetica; color: #808080;">L = { (X<sub>1</sub>, Y<sub>1</sub>), … , (X<sub>n</sub>, Y<sub>n</sub>) }</span></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><strong><span style="font-size: 14pt;">Modelo probabilístico:</span> </strong>Distribuciones de la clase exponencial.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplos: Normal, binomial, Poisson, Gamma.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><span style="color: #333333;"><strong><span style="font-size: 14pt;"><span style="color: #808080;">Modelo para la media</span> :</span></strong></span> <img src="Images/TeoriaintroduccionGLM/2.png" alt="2" width="158" height="37" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/3.png" alt="3" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">g monótona y diferenciable.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/4.png" alt="4" width="349" height="51" /></span>
+</p>
+<p>
+<em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplo:</span></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/5.png" alt="5" width="353" height="40" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/6.png" alt="6" width="369" height="44" /><img src="Images/TeoriaintroduccionGLM/7.png" alt="7" width="138" height="44" /></span>
+</p>
+<p>
+<em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplo: </span></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/8.png" alt="8" width="172" height="42" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/9.png" alt="9" width="615" height="140" /></span>
+</p>
+<p>
+<em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">Ejemplo:</span></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/10.png" alt="10" width="187" height="42" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/11.png" alt="11" width="598" height="121" /></span>
+</p>
+<p>
+<span style="color: #808080;"><strong><span style="font-size: 14pt; font-family: helvetica;">¿Por qué la clase exponencial?</span></strong></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Estas distribuciones se dejan parametrizar de una manera que permita calcular la función de costo, es derivada y el Hessiano de una manera fácil.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Estimación: Ejemplo</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Sea <em><span style="font-size: 14pt;"> { (X<sub>1</sub>, Y<sub>1</sub>), … , (X<sub>n</sub>, Y<sub>n</sub>) } </span></em>con <span style="font-size: 14pt;"><em> y<sub>i</sub>~Bernoulli (p<sub>i</sub>)</em>,</span> independientes <span style="font-size: 14pt;"><em>Ey<sub>i</sub>=p<sub>i</sub></em> y</span>  <img src="Images/TeoriaintroduccionGLM/12.png" alt="12" /> <em>, </em> <em>i=1, . . . , n</em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Como<span style="font-size: 14pt;"><em> y<sub>i</sub>~Bernoulli (p<sub>i</sub>)</em></span> su función de masa está dada por <img src="Images/TeoriaintroduccionGLM/13.png" alt="13" width="181" height="35" /> <em>, <span style="font-size: 14pt;">yϵ{0,1}</span>.</em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">La función de masa de la muestra es el producto de las funciones de masa (por dependencia)</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/14.png" alt="14" width="583" height="537" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para maximizar<span style="font-size: 14pt;"><em> l(n<sub>i</sub>)</em></span> con respecto a <img src="Images/TeoriaintroduccionGLM/A.PNG" alt="A" width="41" height="30" />   debemos hallar </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/17.png" alt="17" width="310" height="74" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Pero </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/18.png" alt="18" width="564" height="95" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Asi, </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/19.png" alt="19" width="658" height="202" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Asi, se forma el vector </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/20.png" alt="20" width="298" height="44" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Con  <img src="Images/TeoriaintroduccionGLM/21.png" alt="21" width="103" height="53" />,  si  <img src="Images/TeoriaintroduccionGLM/22.png" alt="22" width="189" height="34" />,</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Entonces <img src="Images/TeoriaintroduccionGLM/21.png" alt="21" width="108" height="55" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">A <em><span style="text-decoration: underline; font-size: 14pt;">v</span></em> se le llama el vector Score. El estimador de máxima verosimilitud de<em> <span style="font-size: 14pt;"><span style="text-decoration: underline;">β</span> , β ̂,</span></em> es la solución del sistema <em><span style="font-size: 14pt;"><span style="text-decoration: underline;">v</span>=0</span></em>, que tiene <em><span style="font-size: 14pt;">p+1</span></em> ecuaciones y <span style="font-size: 14pt;"><em>p+1</em></span> incógnitas. Se puede mostrar que <img src="Images/TeoriaintroduccionGLM/23.png" alt="23" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">La matriz Hessiana es <img src="Images/TeoriaintroduccionGLM/24.png" alt="24" width="71" height="54" />, pero se prefiere</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/25.png" alt="25" width="639" height="63" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><strong><span style="font-size: 14pt;">Nota:</span></strong> Nos permitimos el abuso de notación<span style="font-size: 14pt;"><em> l(<span style="text-decoration: underline;">β</span>),l(<span style="text-decoration: underline;">n</span>)</em></span>, para indicar la misma cantidad, aunque realmente n es una función <span style="font-size: 14pt;"><em>β</em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se define la matriz de información como  <span style="font-size: 14pt;"><em>E{J}=:I</em></span>  se puede mostrar que <img src="Images/TeoriaintroduccionGLM/26.png" alt="26" width="108" height="36" />(la inversa de la información).</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para resolver el sistema<em><span style="font-size: 14pt;"> <span style="text-decoration: underline;">v</span>=0</span> </em>se puede usar métodos iterativos con <em><span style="font-size: 14pt;">J</span></em> o con <span style="font-size: 14pt;"><em>I</em></span>:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/27.png" alt="27" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Esto requiere tener <img src="Images/TeoriaintroduccionGLM/A.PNG" alt="A" width="50" height="37" />. <span style="font-size: 14pt;"><em>I</em></span> es una propiedad del modelo y <em><span style="font-size: 14pt;">J</span></em> tiene una estrecha más compleja en general. Se puede mostrar que para el método de máxima verosimilitud.</span>
+</p>
+<ul>
+<li>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si<span style="font-size: 14pt;"><em> F</em></span> es una función uno a uno <img src="Images/TeoriaintroduccionGLM/28.png" alt="28" width="128" height="33" /></span>
+</li>
+</ul>
+<ul>
+<li>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/29.png" alt="29" width="141" height="36" /></span>
+</li>
+</ul>
+<ul>
+<li>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/30.png" alt="30" width="288" height="37" />y equivalentemente a </span>
+</li>
+<li>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"> <img src="Images/TeoriaintroduccionGLM/31.png" alt="31" width="234" height="46" /></span>
+</li>
+</ul>
+<p>
+ 
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se tiene tres estadísticas:</span>
+</p>
+<p>
+<em><strong><span style="font-size: 12pt; font-family: helvetica; color: #808080;">1) Wald:</span></strong></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"> <img style="background-color: inherit; color: inherit; font-family: inherit; font-size: 1rem; caret-color: auto;" src="Images/TeoriaintroduccionGLM/32.png" alt="32" width="314" height="49" /></span>
+</p>
+<p>
+<em><strong><span style="font-size: 12pt; font-family: helvetica; color: #808080;">2) Score: </span></strong></em>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/33.png" alt="33" width="319" height="42" /></span>
+</p>
+<p>
+<strong><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">3) Test de razón de verosimilitud:</span></em></strong>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/34.png" alt="34" width="374" height="49" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para los test de Wald y Score, además se tiene:</span>
+</p>
+<p>
+<strong><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">- Wald: </span></em></strong>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/35.png" alt="35" width="448" height="47" /></span>
+</p>
+<p>
+<strong><em><span style="font-size: 12pt; font-family: helvetica; color: #808080;">- Score:</span></em></strong>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/36.png" alt="36" width="442" height="52" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Un criterio importante de ajuste es el deviance. Esta cantidad surge al expresar el modelo de la familia exponencial en la forma </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/37.png" alt="37" width="536" height="60" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Donde <em><span style="font-size: 14pt;">a(y,∅)</span></em> es una función normalizada, <img src="Images/TeoriaintroduccionGLM/38.png" alt="38" width="74" height="33" /> se llama la función constante (Cumulant function), <em><span style="font-size: 14pt;">θ</span></em> es el parámetro canónico y <span style="font-size: 14pt;"><em>∅</em> </span>es la dispersión. Se puede mostrar que <span style="font-size: 14pt;"><em>Ey(y)=h( θ )</em></span>, con la monótona creciente.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Además  <img src="Images/TeoriaintroduccionGLM/39.png" alt="39" width="88" height="43" /> y <img src="Images/TeoriaintroduccionGLM/40.png" alt="40" width="185" height="39" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">A partir de esta parametrizada se define la función</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/41.png" alt="41" />, donde <em><span style="font-size: 14pt;">ϴ</span></em> a una función de y que es el valor esperado de <span style="font-size: 14pt;"><em>y</em></span>. </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Asi, <img src="Images/TeoriaintroduccionGLM/42.png" alt="42" width="315" height="30" />. El deviance se define como <img src="Images/TeoriaintroduccionGLM/43.png" alt="43" width="332" height="37" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/44.png" alt="44" width="690" height="93" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Se puede mostrar que <img src="Images/TeoriaintroduccionGLM/45.png" alt="45" width="145" height="44" />. Ahora se define el deviance total como <img src="Images/TeoriaintroduccionGLM/46.png" alt="46" /> , donde los wi son ponderadores para cada observación. El deviance escalado es <img src="Images/TeoriaintroduccionGLM/47.png" alt="47" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si los modelos A y B tienen <em><span style="font-size: 14pt;">P<sub>A</sub></span></em> y P<sub>B</sub> parámetros, con <em><span style="font-size: 14pt;">P<sub>A</sub></span></em> &lt;P<sub>B</sub> - y B contiene todas las variables que tienen el modelo A, se dice que A esta anidado en <em><span style="font-size: 14pt;">B</span></em>. </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><span style="font-size: 14pt;">B</span></em> es más complejo que <span style="font-size: 14pt;"><em>A</em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Para evaluar si la complejidad de <em><span style="font-size: 14pt;">B</span></em> le representa un beneficio con respecto a <em><span style="font-size: 14pt;">A</span></em> se utiliza</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/TeoriaintroduccionGLM/48.png" alt="48" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Si <span style="font-size: 14pt;"><em>H<sub>0</sub>: A y B</em></span> son iguales VS <span style="font-size: 14pt;"><em>H<sub>a</sub>: A y B</em></span> son diferentes, entonces <img src="Images/TeoriaintroduccionGLM/49.png" alt="49" width="131" height="51" />. Si se rechaza <span style="font-size: 14pt;"><em>H<sub>0</sub></em></span>, se prefiere a <em><span style="font-size: 14pt;">B</span></em> sobre <span style="font-size: 14pt;"><em>A</em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Cuando<span style="font-size: 14pt;"><em> ф</em></span> no es conocido (es decir, siempre) se lleva a cabo la prueba anterior usando un estadístico <em><span style="font-size: 14pt;">F</span></em>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><em><span style="font-size: 14pt;">Ejemplo</span></em>: Registro de Autos.</span>
+</p>
+<p>
+ 
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;"></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica;">Aplicación</span>
+</p>
+<p>
+<a href="ilustracion_poisson.html"><img src="images/Imagen_2.png" alt="Poisson" /></a><a href="ilustracion_Bernoulli.html"><img src="images/Imagen_1.png" alt="Bernoulli" /></a>
+</p>
+<p>
+ 
+</p>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
