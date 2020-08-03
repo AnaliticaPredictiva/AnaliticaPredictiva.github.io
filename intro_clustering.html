@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Juan David Ospina Arango   Universidad Nacional de Colombia - Sede Medellín   Departamento de Ciencias de la Computación y de la Decisión   Analítica predictiva" />
+
+
+<title>Introducción al análisis de grupos</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Analítica Predictiva</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introducción</a>
+</li>
+<li>
+  <a href="about.html">Sesiones de clase</a>
+</li>
+<li>
+  <a href="Preguntasrespuestas.html">Preguntas y respuestas</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Introducción al análisis de grupos</h1>
+<h4 class="author">Juan David Ospina Arango <br/> Universidad Nacional de Colombia - Sede Medellín <br/> Departamento de Ciencias de la Computación y de la Decisión <br/> Analítica predictiva</h4>
+<h4 class="date">Semestre 01-2020</h4>
+
+</div>
+
+
+<p>Este documento trabaja el análisis de grupos como una ténica de <a href="https://en.wikipedia.org/wiki/Unsupervised_learning">aprendizaje no supervisado</a>. Se consideran métodos no supervisados porque las observaciones no tienen una clasificación <em>a priori</em>. En lugar de ello queremos ver si las observaciones se agrupan de manera natural.</p>
+<div id="el-problema-del-agrupamiento" class="section level1">
+<h1>El problema del agrupamiento</h1>
+<p>Dadas las observaciones <span class="math inline">\(\mathbf{x_1}\)</span>, …, <span class="math inline">\(\mathbf{x_n}\)</span>, que pertenecen a <span class="math inline">\(\mathbb{R}^d\)</span> queremos agruparlos de manera que:</p>
+<ul>
+<li>Las observaciones de un mismo grupo sean muy similares</li>
+<li>Las observaciones de dos grupos diferentes sean muy diferentes.</li>
+</ul>
+<p>Esto requiere dos cosas:</p>
+<ul>
+<li>Un criterio (o medida) de similaridad</li>
+<li>Una estrategia para crear los grupos que optimice este criterio para obtener grupos.</li>
+</ul>
+<p>Una manera de crear los grupos es utilizando <a href="https://en.wikipedia.org/wiki/Recursive_partitioning">métodos de particionamiento</a>, como por ejemplo <a href="https://en.wikipedia.org/wiki/Decision_tree_learning">árboles de decisión</a> o <a href="https://en.wikipedia.org/wiki/Random_forest">bosques aleatorios</a>. Estos métodos tiene la ventaja de poder considerar simultáneamente variables cualitativas y cuantitativas. En este documento nos enfocaremos en los métodos de <a href="https://en.wikipedia.org/wiki/Hierarchical_clustering">agrupamiento jerárquico</a> y <a href="https://en.wikipedia.org/wiki/K-means_clustering">K-means</a>.</p>
+<p>La siguiente figura ilustra el objetivo del agrupamiento:</p>
+<p><img src="intro_clustering_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div id="similaridad" class="section level2">
+<h2>Similaridad</h2>
+<p>Comenzaremos por tratar la noción de similaridad. En términos matemáticos, dos observaciones son similares si están cerca en términos de una función de distancia. De esta manera las nociones de cercanía y similaridad son prácticamente equivalentes en el análisis de grupos.</p>
+<p>Una distancia en <span class="math inline">\(\mathbb{R}^d\)</span> es una función <span class="math inline">\(d: \mathbb{R}^d \times \mathbb{R}^d \rightarrow [0,+\infty)\)</span> tal que para las observaciones <span class="math inline">\(\mathbf{x_1}\)</span>, <span class="math inline">\(\mathbf{x_2}\)</span> y <span class="math inline">\(\mathbf{x_3}\)</span>, entonces:</p>
+<ul>
+<li><span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})\geq 0\)</span>, para todo <span class="math inline">\(\mathbf{x_1}\)</span> y <span class="math inline">\(\mathbf{x_2}\)</span></li>
+<li><span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})=0\)</span> si y solo si <span class="math inline">\(\mathbf{x_1}=\mathbf{x_2}\)</span>,</li>
+<li><span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})=d(\mathbf{x_2},\mathbf{x_1})\)</span>,</li>
+<li><span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})\leq d(\mathbf{x_1},\mathbf{x_3})+d(\mathbf{x_3},\mathbf{x_2})\)</span>.</li>
+</ul>
+<p>La similaridad se define en términos de una función de distancia y la disimilaridad en términos de la similaridad.</p>
+<p>Ejemplos de medidas de similaridad son la aplicación de las normas conocidas sobre la diferencia entre dos observaciones:</p>
+<ol style="list-style-type: decimal">
+<li>Norma-p: <span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})=(\sum_{j=1}^{d}|x_j^{(1)}-x_j^{(2)}|)^{1/2}\)</span>. Esta norma es sensible a las escalas de las variables.</li>
+<li>Norma infinito: <span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})=sup_{1\leq j \leq d} |x_j^{(1)}-x_j^{(2)}|\)</span>. Esta norma es sensible a las escalas de las variables.</li>
+<li>Mahalanobis: <span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})=(\mathbf{x_1}-\mathbf{x_2})^TS^{-1}(\mathbf{x_1}-\mathbf{x_2})\)</span>, donde <span class="math inline">\(S\)</span> es la matriz de varianzas y covarianzas de las observaciones. Esta distancia es invariante a transformaciones de la forma <span class="math inline">\(A\mathbf{x}+\mathbf{b}\)</span> (A matriz).</li>
+<li>Canberra: <span class="math inline">\(d(\mathbf{x_1},\mathbf{x_2})=\frac{1}{d}\sum_{j}\frac{|x_j^{(1)}-x_j^{(2)}|}{|x_j^{(1)}+x_j^{(2)}|}\)</span>. Esta norma se utiliza sobre todo para objetos binarios.</li>
+</ol>
+</div>
+<div id="métodos-aglomerativos" class="section level2">
+<h2>Métodos aglomerativos</h2>
+<p>En estos métodos los grupos más cercanos se fusionan, por lo que es necesario definir la distancia entre grupos. Algunas distancias entre grupos son <span class="math inline">\(G_1\)</span> y <span class="math inline">\(G_2\)</span>:</p>
+<ul>
+<li>Single linkage: <span class="math inline">\(\Delta(G_1,G_2)=\min_{\mathbf{x} \in G_1,\mathbf{y} \in G_2,} d(\mathbf{x},\mathbf{y})\)</span></li>
+<li>Complete linkage: <span class="math inline">\(\Delta(G_1,G_2)=\max_{\mathbf{x} \in G_1,\mathbf{y} \in G_2,} d(\mathbf{x},\mathbf{y})\)</span></li>
+<li>Centroide: <span class="math inline">\(\Delta(G_1,G_2)=d(\mathbf{\bar {x}}_{G_1},\mathbf{\bar {x}}_{G_2})\)</span>, donde <span class="math inline">\(\mathbf{\bar {x}}_{G_1}\)</span> y <span class="math inline">\(\mathbf{\bar {x}}_{G_2}\)</span> son los centroides de los grupos <span class="math inline">\(G_1\)</span> y <span class="math inline">\(G_2\)</span> respectivamente, que se pueden definir como la observación promedio de cada grupo. El centroide del grupo resultante de la unión de los grupos <span class="math inline">\(G_1\)</span> y <span class="math inline">\(G_2\)</span> se puede definir como <span class="math inline">\(\mathbf{\bar {x}}_{G_1,G_2}=\frac{|G_1| \mathbf{\bar {x}}_{G_1} +|G_2| \mathbf{\bar {x}}_{G_2}}{|G_1|+|G_2|}\)</span>, donde <span class="math inline">\(|G_i|\)</span> es el número de observaciones en el grupo <span class="math inline">\(i\)</span>.</li>
+<li>Suma de cuadrados incremental (Ward): se fusionan los grupos <span class="math inline">\(G_1\)</span> y <span class="math inline">\(G_2\)</span> que minimicen el funcional <span class="math inline">\(I(G_1,G_2)\)</span>: <span class="math display">\[I(G_1,G_2)=\sum_{\mathbf{x} \in G_1 \cup G_2}{d^2(\mathbf{x},\mathbf{\bar {x}}_{G_1,G_2})}-\{\sum_{\mathbf{x} \in G_1 }{d^2(\mathbf{x},\mathbf{\bar {x}}_{G_1})}+\sum_{\mathbf{x} \in G_2}{d^2(\mathbf{x},\mathbf{\bar {x}}_{G_2})} \}.\]</span></li>
+</ul>
+<p>Si se tienen <span class="math inline">\(n\)</span> observaciones <span class="math inline">\(\mathbf{x_1}\)</span>, …, <span class="math inline">\(\mathbf{x_n}\)</span>, se comienza con <span class="math inline">\(n\)</span> grupos y con la matriz de distancias <span class="math inline">\(D=(d_{ij})=d(\mathbf{x}_i,\mathbf{x}_j)\)</span>. En este método se “aglomeran” las observaciones, es decir que si varias observaciones se agrupan entonces ellas se reemplazan por una nueva observación que las represente (i.e el promedio de todas ellas).</p>
+<p>Como se dijo antes, se comienza con <span class="math inline">\(n\)</span> grupos donde cada observación es un grupo. A partir de esto los pasos son los siguientes:</p>
+<ol style="list-style-type: decimal">
+<li>Se fusionan los dos grupos más cercanos. Así se tienen <span class="math inline">\(n-2\)</span> grupos que contienen una observación y un grupo que contiene dos observaciones. En total hay <span class="math inline">\(n-1\)</span> grupos.</li>
+<li>Se fusionan los dos grupos más cercanos para obtener <span class="math inline">\(n-2\)</span> grupos.</li>
+<li>Se continúa de esta manera hasta llegar a un solo grupo.</li>
+</ol>
+<div id="ejemplo-single-linkage" class="section level3">
+<h3>Ejemplo (single linkage):</h3>
+<p>Consideremos la siguiente matriz de distancias:</p>
+<pre><code>##   1 2 3 4 5
+## 1 0 7 1 9 8
+## 2 7 0 6 3 5
+## 3 1 6 0 8 7
+## 4 9 3 8 0 4
+## 5 8 5 7 4 0</code></pre>
+<ol style="list-style-type: decimal">
+<li>Los dos grupos más cercanos son los conformados por el grupo que tiene la observación 1 y el que tiene la observación 3. La distancia entre estos grupos es <span class="math inline">\(h=1\)</span>. Estos dos grupos constituirán un nuevo grupo. Así, la nueva matriz de distancias es:</li>
+</ol>
+<pre><code>##     G13 2 4 5
+## G13   0 6 8 7
+## 2     6 0 3 5
+## 4     8 3 0 4
+## 5     7 5 4 0</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Ahora son el grupo conformado por la observación 2 y el grupo conformado por la observación 4 los más cercanos. La distancia entre estos dos grupos es <span class="math inline">\(h=3\)</span>. Al fusionarlos tenemos la siguiente matriz de distancias:</li>
+</ol>
+<pre><code>##     G13 G24 5
+## G13   0   6 5
+## G24   6   0 4
+## 5     5   4 0</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Ahora son el grupo conformado por la observación 5 y el grupo G24 los que se fusionarán. La distancia entre estos dos grupos es <span class="math inline">\(h=4\)</span>. La matriz de distancias actualizada es:</li>
+</ol>
+<pre><code>##      G12 G245
+## G12    0    5
+## G245   5    0</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Finalmente, la distancia entre los dos grupos resultantes es de <span class="math inline">\(h=5\)</span>.</li>
+</ol>
+<p>Podemos representar esto con ayuda de un dendograma, así:</p>
+<pre class="r"><code>D_dist=as.dist(D)
+d_tree=hclust(D_dist,method=&quot;single&quot;)
+plot(d_tree, main=&quot;Dendograma&quot;)</code></pre>
+<p><img src="intro_clustering_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="ejemplo-con-los-datos-simulados" class="section level3">
+<h3>Ejemplo con los datos simulados</h3>
+<pre class="r"><code>d_sim &lt;- dist(posiciones)
+d_sim_clust &lt;- hclust(d_sim)
+d_sim_grupos &lt;- cutree(d_sim_clust,k=3)</code></pre>
+<pre class="r"><code>par(pty=&quot;s&quot;,mfrow=c(1,2))
+plot(posiciones,pch=NA,xaxt=&#39;n&#39;,yaxt=&#39;n&#39;,xlab=&quot;X1&quot;,ylab=&quot;X2&quot;,main=&quot;Sin agrupar&quot;)
+text(posiciones,labels=as.character(1:(n1+n2+n3)),cex=0.8)
+plot(d_sim_clust,cex=0.8)</code></pre>
+<p><img src="intro_clustering_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>par(pty=&quot;s&quot;,mfrow=c(1,2))
+plot(posiciones,pch=3,xaxt=&#39;n&#39;,yaxt=&#39;n&#39;,xlab=&quot;X1&quot;,ylab=&quot;X2&quot;,main=&quot;Complete Linkage&quot;,col=d_sim_grupos+1)
+# text(posiciones,labels=as.character(1:(n1+n2+n3)),cex=0.8)
+plot(d_sim_clust,cex=0.8)
+rect.hclust(d_sim_clust, k = 3, border = c(1:3)+1)</code></pre>
+<p><img src="intro_clustering_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="ejemplo-usarrest" class="section level3">
+<h3>Ejemplo: USArrest</h3>
+<p>Consideremos la base de datos <em>USArrest</em> que contiene información tasas de crímene en ciudades de Estados Unidos:</p>
+<pre class="r"><code>data(&quot;USArrests&quot;)
+head(USArrests)</code></pre>
+<pre><code>##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7</code></pre>
+<p>Apliquemos la metodología anterior:</p>
+<pre class="r"><code>USArrests_dist=dist(USArrests)
+USArrests_clust=hclust(USArrests_dist,method=&quot;single&quot;)
+plot(USArrests_clust)</code></pre>
+<p><img src="intro_clustering_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Si queremos segmentar el conjunto de ciudades, por ejemplo en seis grupos, podemos proceder así:</p>
+<pre class="r"><code>USArrests_clust_4=cutree(USArrests_clust,k=6)
+plot(USArrests_clust)
+rect.hclust(USArrests_clust,k=6)</code></pre>
+<p><img src="intro_clustering_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+<div id="k-medias-k-means" class="section level2">
+<h2>K-medias (<em>K-means</em>)</h2>
+<p><a href="https://en.wikipedia.org/wiki/K-means_clustering">K-medias</a> es un método no determinístico.En estos métodos se opera con la noción de centroide. El centroide es el representante de cada grupo. El número de grupos es definido de antemano por el usuario.</p>
+<p>En términos generales el algoritmo de K-medias se puede plantear así:</p>
+<ol start="0" style="list-style-type: decimal">
+<li>Definición del número de grupos</li>
+<li>Inicialización de los centroides</li>
+<li>Se asigna cada observación al centroide más cercano</li>
+<li>Se recalculan los centroides</li>
+<li>Se repiten los pasos 2 y 3 hasta satisfacer algún criterio de parada</li>
+</ol>
+<p>Dentro de los criterios de parada se tiene por ejemplo alcanzar un número máximo de iteraciones (recálculo de centroides) o que las observaciones se asignen a los mismos grupos (todas o un alto porcentaje).</p>
+<p>Para el cálculo de los centroides han diferentes alternativas. Una bastante común es calcular el centroide como el promedio de las observaciones del grupo.</p>
+<div id="ejemplo-usarrest-con-k-means" class="section level3">
+<h3>Ejemplo USArrest con K-means</h3>
+<p>Veamos la aplicación de K-meadias al mismo problema: <code>USArrest</code>:</p>
+<pre class="r"><code>usarrest &lt;- kmeans(USArrests,3)</code></pre>
+<p>Los grupos obtenidos se muestran a continuación:</p>
+<pre class="r"><code>usarrest$cluster</code></pre>
+<pre><code>##        Alabama         Alaska        Arizona       Arkansas     California 
+##              3              3              3              2              3 
+##       Colorado    Connecticut       Delaware        Florida        Georgia 
+##              2              1              3              3              2 
+##         Hawaii          Idaho       Illinois        Indiana           Iowa 
+##              1              1              3              1              1 
+##         Kansas       Kentucky      Louisiana          Maine       Maryland 
+##              1              1              3              1              3 
+##  Massachusetts       Michigan      Minnesota    Mississippi       Missouri 
+##              2              3              1              3              2 
+##        Montana       Nebraska         Nevada  New Hampshire     New Jersey 
+##              1              1              3              1              2 
+##     New Mexico       New York North Carolina   North Dakota           Ohio 
+##              3              3              3              1              1 
+##       Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina 
+##              2              2              1              2              3 
+##   South Dakota      Tennessee          Texas           Utah        Vermont 
+##              1              2              2              1              1 
+##       Virginia     Washington  West Virginia      Wisconsin        Wyoming 
+##              2              2              1              1              2</code></pre>
+<p>Los centroides se obtienen así:</p>
+<pre class="r"><code>usarrest$centers</code></pre>
+<pre><code>##      Murder  Assault UrbanPop     Rape
+## 1  4.270000  87.5500 59.75000 14.39000
+## 2  8.214286 173.2857 70.64286 22.84286
+## 3 11.812500 272.5625 68.31250 28.37500</code></pre>
+</div>
+</div>
+<div id="actividad" class="section level2">
+<h2>Actividad</h2>
+<ol style="list-style-type: decimal">
+<li><p>¿Cómo seleccionar el número apropiado de grupos? Pista: en K-medias esto se puede obtener a partir de la estabilidad de los grupos al cambiar las condiciones iniciales. También se puede identificar la variación entre grupos e intragrupos como una función del número de grupos.</p></li>
+<li><p>¿Cómo visualizar los grupos cuando cada individuo está representado por dos o más variables?</p></li>
+</ol>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

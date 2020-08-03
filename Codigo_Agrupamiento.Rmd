@@ -1,0 +1,139 @@
+---
+title: "Caracterización de los tipos de arrestos en las ciudades de Estados Unidos"
+author: "Juan David Ospina Arango"
+date: "7/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## El conjunto de datos USArrest
+
+
+```{r}
+head(USArrests)
+```
+
+Actividad: hacer un dotchart para poner los tipos de crimen:
+
+
+
+```{r}
+summary(USArrests)
+```
+
+## Agrupamiento jerárquico
+
+Paso 1: escalar los datos
+
+```{r}
+usarrest_sc <- scale(USArrests)
+```
+
+Paso 2: calcular la matriz de distancias
+
+```{r}
+usarrest_dist <- dist(usarrest_sc)
+```
+
+Paso 3: agrupamiento jerárquico
+
+```{r}
+usarrest_hc <- hclust(usarrest_dist) # Por defecto se usa complete linkage
+```
+
+Veamos el dendograma:
+
+```{r}
+plot(usarrest_hc)
+```
+
+
+```{r}
+grupos_complete <- cutree(usarrest_hc,k=4)
+```
+
+
+```{r}
+plot(usarrest_hc)
+rect.hclust(usarrest_hc,k=4,border=1:4)
+```
+
+
+¿Cuántos estados conforman cada grupo?
+
+```{r}
+table(grupos_complete)
+```
+
+
+### Construyamos un relato sobre el agrupamiento
+
+```{r}
+datos <- USArrests
+datos$grupo <- grupos_complete
+```
+
+```{r}
+pairs(datos[,1:4],col=datos$grupo,lwd=2)
+```
+
+```{r}
+aggregate(datos$Murder~datos$grupo,FUN=mean)
+```
+Medias:
+
+```{r}
+aggregate(cbind(UrbanPop,Murder,Rape,Assault)~grupo,data=datos,FUN=mean)
+```
+
+```{r}
+grupos_hclust_lb <- ifelse(grupos_complete==1,"rural_violento",
+                           ifelse(grupos_complete==2,"urbano_violento",
+                                  ifelse(grupos_complete==3,"urbano_pacifico","rural_pacifico")))
+```
+
+Dispersión: 
+
+```{r}
+aggregate(cbind(UrbanPop,Murder,Rape,Assault)~grupo,data=datos,FUN=sd)
+```
+
+
+
+
+## K-Medias
+
+
+```{r}
+usarrest_kmeans <- kmeans(usarrest_sc,2)
+usarrest_kmeans$centers
+```
+
+```{r}
+usarrest_kmeans <- kmeans(usarrest_sc,4,nstart=5)
+usarrest_kmeans$centers
+```
+```{r}
+aggregate(cbind(UrbanPop,Murder,Rape,Assault)~usarrest_kmeans$cluster,data=USArrests,FUN=mean)
+```
+
+```{r}
+grupos_kmeans_lb <- ifelse(usarrest_kmeans$cluster==1,"rural_pacifico",
+                           ifelse(usarrest_kmeans$cluster==2,"rural_violento",
+                                  ifelse(usarrest_kmeans$cluster==3,"urbano_pacifico","urbano_violento")))
+```
+
+
+```{r}
+aggregate(cbind(UrbanPop,Murder,Rape,Assault)~grupos_kmeans_lb,data=USArrests,FUN=mean)
+```
+
+
+
+```{r}
+table(grupos_kmeans_lb,grupos_hclust_lb)
+```
+<h1 style="text-align: right;"><a href="intro_clustering.html"><span style="color: #000000; font-size: 14pt;"><strong> SEGUNDA APLICACIÓN: introducción clustering</strong></span></a></h1>

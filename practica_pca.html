@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Juan David Ospina Arango   Analítica Predictiva   Universidad Nacional de Colombia" />
+
+
+<title>Práctica de Análisis de Componentes Principales</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Analítica Predictiva</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Introducción</a>
+</li>
+<li>
+  <a href="about.html">Sesiones de clase</a>
+</li>
+<li>
+  <a href="Preguntasrespuestas.html">Preguntas y respuestas</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Práctica de Análisis de Componentes Principales</h1>
+<h4 class="author">Juan David Ospina Arango <br> Analítica Predictiva <br> Universidad Nacional de Colombia</h4>
+<h4 class="date">2 de julio de 2020</h4>
+
+</div>
+
+
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"> <em><span style="font-size: 14pt;">x’~f(u,Σ)</span></em> tal que <em><span style="font-size: 14pt;">E[x’ ]=u y D(x’ )=Σ</span></em>. Sea <em><span style="font-size: 14pt;">x=x’-u</span></em>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><span style="font-size: 14pt;"><em>E[x]=0</em></span>. Sea <span style="font-size: 14pt;"><em>z<sub>1</sub>=c<sub>1</sub><sup>T</sup> x</em></span>. Queremos maximizar <span style="font-size: 14pt;"><em>Var (Z<sub>1</sub>) =c<sub>1</sub><sup>T</sup> Σc<sub>1</sub></em></span>. Observemos que maximizar<span style="font-size: 14pt;"><em> Var (Z<sub>1</sub> )</em></span>  es lo mismo que maximizar <img src="Images/ComponentesPrincipales/A.PNG" alt="A" width="85" height="48" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Pero</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/1.png" alt="1" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Luego el valor de <em><span style="font-size: 14pt;">c<sub>1</sub> </span></em>que maximizar <span style="font-size: 14pt;"><em>Var (Z<sub>1</sub>)</em></span> es la solución del sistema<span style="font-size: 14pt;"><em> Σc<sub>1</sub>=0.</em></span> Esto es el espacio nulo de la matriz <span style="font-size: 14pt;"><em>Σ</em></span> (En este caso un conjunto infinito).</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que el Hessiano de <img src="Images/ComponentesPrincipales/2.png" alt="2" width="134" height="60" />es <img src="Images/ComponentesPrincipales/3.png" alt="3" /> y que bajo el supuesto de que <span style="font-size: 14pt;"><em>Σ</em></span> es definida positiva el determinante del Hessiano es positivo.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Busquemos ahora un <span style="font-size: 14pt;"><em>c<sub>1</sub></em></span> de norma unitaria. Es decir, tal que <span style="font-size: 14pt;"><em>c<sub>1</sub><sup>T</sup> c<sub>1</sub>=‖C<sub>1</sub> ‖<sup>2</sup>=1</em></span>. Ahora maximizaremos</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/4.png" alt="4" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Los valores propios y vectores propios de una matriz satisfacen <span style="font-size: 14pt;"><em>Av<sub>i</sub>= λ<sub>i</sub> v<sub>i</sub>.</em></span> Los <em><span style="font-size: 14pt;">λ<sub>i</sub> </span></em>son los valores propios y los <span style="font-size: 14pt;"><em>v<sub>i</sub></em></span> son los vectores propios.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que si dejamos la función <img src="Images/ComponentesPrincipales/B.PNG" alt="B" width="162" height="28" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"> <img src="Images/ComponentesPrincipales/5.png" alt="5" width="169" height="58" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">entonces <span style="font-size: 14pt;"><em>∀a∈R</em> </span>se tiene que:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/7.png" alt="7" />.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Así que sin pérdida de generalidad puede asumirse que <span style="font-size: 14pt;"><em>‖C<sub>1</sub> ‖=1</em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Luego maximizaremos  <img src="Images/ComponentesPrincipales/C.PNG" alt="C" width="17" height="26" /> sujeto a <span style="font-size: 14pt;"><em>‖C‖<sup>2</sup>=Σc<sub>i</sub><sup>2</sup>=1</em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">El lagrnagano será:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/8.png" alt="8" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Los valores de <em><span style="text-decoration: underline; font-size: 14pt;">c</span></em> y <span style="font-size: 14pt;"><em>β</em></span> que satisfacen esta ecuación son los vectores y valores propios de <span style="font-size: 14pt;"><em>Σ</em></span>, digamos <span style="font-size: 14pt;"><em>d<sub>1</sub>,d<sub>2</sub>…d<sub>p</sub> y λ<sub>1</sub>,λ<sub>2</sub>…λ<sub>p</sub></em></span> .</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que si <span style="font-size: 14pt;"><em>d<sub>i</sub></em></span> es un vector propio de <em><span style="font-size: 14pt;">Σ</span></em> entonces <span style="font-size: 14pt;"><em>d<sub>i</sub><sup>T</sup> Σ d<sub>i</sub>=d<sub>i</sub><sup>T</sup> (λ<sub>i</sub> d<sub>i</sub> )= λ<sub>i</sub> d<sub>i</sub><sup>T</sup> d<sub>i</sub></em></span>, asumiendo que <span style="font-size: 14pt;"><em>‖d<sub>i</sub> ‖=1</em></span>, entonces se tiene que var <span style="font-size: 14pt;"><em>(d<sub>i</sub><sup>T</sup> d<sub>i</sub> )=λ<sub>i</sub></em></span>. Luego debemos escoger <em><span style="font-size: 14pt;">d<sub>i</sub></span></em>. correspondiente al máximo valor propio.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Sea  <span style="font-size: 14pt;"><em>z<sub>i</sub>=d<sub>i</sub><sup>T</sup> x  y z<sub>j</sub>=d<sub>j</sub> x </em></span>, entonces</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/9.png" alt="9" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/10.png" alt="10" />, pues los vectores propios son ortogonales. Para verlo notemos que:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/11.png" alt="11" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Esto es cierto para todo <span style="font-size: 14pt;"><em>i,j</em> </span>si  y solo si <span style="font-size: 14pt;"><em>d<sub>j</sub><sup>T</sup> d<sub>i</sub>=0</em></span>, pues <span style="font-size: 14pt;"><em>λ<sub>i</sub>≠λ<sub>j</sub></em></span> en general.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">De esta manera definimos</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/12.png" alt="12" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/13.png" alt="13" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Donde <img src="Images/ComponentesPrincipales/14.png" alt="14" width="155" height="35" /> es la descomposición espectral de <span style="font-size: 14pt;"><em>Σ</em></span>. Con <span style="font-size: 14pt;"><em>Σ</em></span> es simétrica <span style="font-size: 14pt;"><em>D<sup>-1</sup>=D<sup>T</sup></em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/15.png" alt="15" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Así, </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/16.png" alt="16" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/17.png" alt="17" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Observemos que: </span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/18.png" alt="18" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">La varianza de la suma de los<span style="font-size: 14pt;"><em> z<sub>i</sub></em></span> es la suma de los <span style="font-size: 14pt;"><em>λ<sub>i</sub>.</em></span></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Por otro lado, si <span style="font-size: 14pt;"><em><span style="text-decoration: underline;">Z</span>=D<sup>T</sup> X</em></span> entonces <em><span style="font-size: 14pt;"><span style="text-decoration: underline;">X</span>=D<span style="text-decoration: underline;">Z.</span></span></em></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Sea <span style="font-size: 14pt;"><em><span style="text-decoration: underline;">Z</span><sub>q</sub></em></span> los primeros <em><span style="font-size: 14pt;">q</span></em> elementos del vector <span style="font-size: 14pt;"><em>Z(q&lt;p)</em></span>.</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Así,  <span style="font-size: 14pt;"><em>Z<sub>q</sub>=D<sub>q</sub><sup>T</sup> X</em></span>. Dejamos la reconstrucción de <span style="font-size: 14pt;"><em>x</em> </span>como  <img src="Images/ComponentesPrincipales/D.PNG" alt="D" width="121" height="35" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"> Observemos que <img src="Images/ComponentesPrincipales/19.png" alt="19" /> o sea que <img src="Images/ComponentesPrincipales/20.png" alt="20" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/21.png" alt="21" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Esto quiere decir que <span style="font-size: 14pt;"><em><span style="text-decoration: underline;">x</span></em></span> se puede representar usando los componentes principales:</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/22.png" alt="22" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Luego los <em><span style="font-size: 14pt;">d<sub>i</sub></span></em> forman un diccionario para representar a los datos.</span>
+</p>
+<p>
+<strong><span style="font-size: 14pt; font-family: helvetica; color: #000000;">Reducción de la dimensionalidad</span></strong>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Consideremos aproximar<em><span style="font-size: 14pt;"> Σ</span></em> por <span style="font-size: 14pt;"><em>Σ<sub>l</sub> </em></span>donde <img src="Images/ComponentesPrincipales/23.png" alt="23" /> donde</span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/24.png" alt="24" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"><img src="Images/ComponentesPrincipales/25.png" alt="25" /></span>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;">Entonces, <img src="Images/ComponentesPrincipales/E.PNG" alt="E" width="88" height="30" /> es la representación de <em><span style="text-decoration: underline; font-size: 14pt;">X</span></em> en el espacio de primeros <span style="font-size: 14pt;"><em>l</em></span> componentes principales y <img src="Images/ComponentesPrincipales/F.PNG" alt="F" width="85" height="29" /> es la reconstrucción de<span style="font-size: 14pt;"><em> <span style="text-decoration: underline;">x</span></em></span>  usando los primeros <span style="font-size: 14pt;"><em>l</em></span> Componentes Principales.</span>
+</p>
+<p>
+<strong><span style="font-size: 14pt; font-family: helvetica; color: #808080;">¿Cuál es la calidad de la reconstrucción?</span></strong>
+</p>
+<p>
+<span style="font-size: 12pt; font-family: helvetica; color: #808080;"> <img src="Images/ComponentesPrincipales/26.png" alt="26" width="322" height="56" /></span>
+</p>
+<div id="arrestos-en-los-estados-de-estados-unidos" class="section level2">
+<h2>Arrestos en los estados de Estados Unidos</h2>
+<p>Consideremos el conjunto <code>USArrests</code> que contiene las estadísticas de arrestos por tipo de crimen por cada cien mil habitantes en los estados de Estados Unidos en 1973.</p>
+<pre class="r"><code>head(USArrests)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Murder"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Assault"],"name":[2],"type":["int"],"align":["right"]},{"label":["UrbanPop"],"name":[3],"type":["int"],"align":["right"]},{"label":["Rape"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"13.2","2":"236","3":"58","4":"21.2","_rn_":"Alabama"},{"1":"10.0","2":"263","3":"48","4":"44.5","_rn_":"Alaska"},{"1":"8.1","2":"294","3":"80","4":"31.0","_rn_":"Arizona"},{"1":"8.8","2":"190","3":"50","4":"19.5","_rn_":"Arkansas"},{"1":"9.0","2":"276","3":"91","4":"40.6","_rn_":"California"},{"1":"7.9","2":"204","3":"78","4":"38.7","_rn_":"Colorado"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Este conjunto tiene las siguientes dimensiones:</p>
+<pre class="r"><code>dim(USArrests)</code></pre>
+<pre><code>## [1] 50  4</code></pre>
+<p>Las cuatro variables son:</p>
+<pre class="r"><code>names(USArrests)</code></pre>
+<pre><code>## [1] &quot;Murder&quot;   &quot;Assault&quot;  &quot;UrbanPop&quot; &quot;Rape&quot;</code></pre>
+<p>Veamos algunas relaciones por pares con ayuda de la función <code>pairs()</code>:</p>
+<pre class="r"><code># Tomado de la ayuda de pairs()
+panel.hist &lt;- function(x, ...)
+{
+    usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+    par(usr = c(usr[1:2], 0, 1.5) )
+    h &lt;- hist(x, plot = FALSE)
+    breaks &lt;- h$breaks; nB &lt;- length(breaks)
+    y &lt;- h$counts; y &lt;- y/max(y)
+    rect(breaks[-nB], 0, breaks[-1], y, col = &quot;cyan&quot;, ...)
+}
+panel.cor &lt;- function(x, y, digits = 2, prefix = &quot;&quot;, cex.cor, ...)
+{
+    usr &lt;- par(&quot;usr&quot;); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r &lt;- abs(cor(x, y))
+    txt &lt;- format(c(r, 0.123456789), digits = digits)[1]
+    txt &lt;- paste0(prefix, txt)
+    if(missing(cex.cor)) cex.cor &lt;- 0.8/strwidth(txt)
+    text(0.5, 0.5, txt, cex = cex.cor * r)
+}
+pairs(USArrests, lower.panel = panel.smooth, upper.panel = panel.cor,
+      gap=0, row1attop=FALSE)</code></pre>
+<p><img src="practica_pca_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="normalización-de-los-datos" class="section level2">
+<h2>Normalización de los datos</h2>
+<p>Veamos que pasa con las relaciones por pares cuando se centran y escalan los datos:</p>
+<pre class="r"><code># Centrado y escalado de los datos: se resta la media y se divide por la desviación estándar.
+datos_centrados&lt;-scale(USArrests,center = TRUE,scale = TRUE)
+# Misma gráfica anterior pero con los datos escalados:
+pairs(datos_centrados, lower.panel = panel.smooth, upper.panel = panel.cor,
+      gap=0, row1attop=FALSE)</code></pre>
+<p><img src="practica_pca_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Observemos que podemos obtener la media y la desviación estándar utilizados para escalar la matriz de la siguiente manera:</p>
+<pre class="r"><code>print(&quot;Media:&quot;)</code></pre>
+<pre><code>## [1] &quot;Media:&quot;</code></pre>
+<pre class="r"><code>(media&lt;-attr(datos_centrados,&quot;scaled:center&quot;))</code></pre>
+<pre><code>##   Murder  Assault UrbanPop     Rape 
+##    7.788  170.760   65.540   21.232</code></pre>
+<pre class="r"><code>print(&quot;Desviación estándar:&quot;)</code></pre>
+<pre><code>## [1] &quot;Desviación estándar:&quot;</code></pre>
+<pre class="r"><code>(desv_est&lt;-attr(datos_centrados,&quot;scaled:scale&quot;))</code></pre>
+<pre><code>##    Murder   Assault  UrbanPop      Rape 
+##  4.355510 83.337661 14.474763  9.366385</code></pre>
+</div>
+<div id="matriz-de-covarianzas" class="section level2">
+<h2>Matriz de covarianzas</h2>
+<p>Ahora obtengamos la matriz de varianzas y covarianzas:</p>
+<pre class="r"><code>(Sigma&lt;-cov(datos_centrados))</code></pre>
+<pre><code>##              Murder   Assault   UrbanPop      Rape
+## Murder   1.00000000 0.8018733 0.06957262 0.5635788
+## Assault  0.80187331 1.0000000 0.25887170 0.6652412
+## UrbanPop 0.06957262 0.2588717 1.00000000 0.4113412
+## Rape     0.56357883 0.6652412 0.41134124 1.0000000</code></pre>
+</div>
+<div id="descomposición-espectral-de-la-matriz-de-covarianzas" class="section level2">
+<h2>Descomposición espectral de la matriz de covarianzas</h2>
+<p>Ahora obtengamos la descomposición espectral de <code>Sigma</code>:</p>
+<pre class="r"><code>descomp_espectr&lt;-eigen(Sigma)
+lambdas&lt;-descomp_espectr$values
+D&lt;-descomp_espectr$vectors</code></pre>
+<p>Los valores propios son:</p>
+<pre class="r"><code>lambdas</code></pre>
+<pre><code>## [1] 2.4802416 0.9897652 0.3565632 0.1734301</code></pre>
+<p>Los vectores propios son:</p>
+<pre class="r"><code>D</code></pre>
+<pre><code>##            [,1]       [,2]       [,3]        [,4]
+## [1,] -0.5358995  0.4181809 -0.3412327  0.64922780
+## [2,] -0.5831836  0.1879856 -0.2681484 -0.74340748
+## [3,] -0.2781909 -0.8728062 -0.3780158  0.13387773
+## [4,] -0.5434321 -0.1673186  0.8177779  0.08902432</code></pre>
+</div>
+<div id="proyección-de-los-datos-en-el-espacio-de-componentes-principales" class="section level2">
+<h2>Proyección de los datos en el espacio de componentes principales</h2>
+<p>A continuación se proyectan los datos en el espacio de componentes principales:</p>
+<pre class="r"><code>datos_proyectados&lt;-t(t(D)%*%t(datos_centrados))
+# datos_proyectados&lt;-datos_centrados%*%D # Esto es una pista</code></pre>
+<p>Veamos cómo se ven las relaciones en el espacio de las componentes principales:</p>
+<pre class="r"><code>pairs(datos_proyectados, lower.panel = panel.smooth, upper.panel = panel.cor,
+      gap=0, row1attop=FALSE)</code></pre>
+<p><img src="practica_pca_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>La correlación entre las variables proyectadas es cero.</p>
+<p>Veamos cuál es el porcentaje de varianza explicado por cada componente:</p>
+<pre class="r"><code>porcentaje_exp&lt;-(lambdas)/sum(lambdas)*100
+barplot(porcentaje_exp,names.arg=paste0(&quot;comp&quot;,1:4),las=1)
+title(main=&quot;Porcentaje de variabilidad atribuido a cada componente&quot;)</code></pre>
+<p><img src="practica_pca_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Es decir, que si tomamos las dos primeras componentes principales tendríamos aproximadamente el 87% de la variabilidad del conjunto oringinal.</p>
+<p>Esto quiere decir que podríamos reemplazar el conjunto de datos original por el conjunto de datos proyectado incluyendo solo las dos primeras columnas, así:</p>
+<pre class="r"><code>datos_proyectados[,1:2]</code></pre>
+<pre><code>##                       [,1]        [,2]
+## Alabama        -0.97566045  1.12200121
+## Alaska         -1.93053788  1.06242692
+## Arizona        -1.74544285 -0.73845954
+## Arkansas        0.13999894  1.10854226
+## California     -2.49861285 -1.52742672
+## Colorado       -1.49934074 -0.97762966
+## Connecticut     1.34499236 -1.07798362
+## Delaware       -0.04722981 -0.32208890
+## Florida        -2.98275967  0.03883425
+## Georgia        -1.62280742  1.26608838
+## Hawaii          0.90348448 -1.55467609
+## Idaho           1.62331903  0.20885253
+## Illinois       -1.36505197 -0.67498834
+## Indiana         0.50038122 -0.15003926
+## Iowa            2.23099579 -0.10300828
+## Kansas          0.78887206 -0.26744941
+## Kentucky        0.74331256  0.94880748
+## Louisiana      -1.54909076  0.86230011
+## Maine           2.37274014  0.37260865
+## Maryland       -1.74564663  0.42335704
+## Massachusetts   0.48128007 -1.45967706
+## Michigan       -2.08725025 -0.15383500
+## Minnesota       1.67566951 -0.62590670
+## Mississippi    -0.98647919  2.36973712
+## Missouri       -0.68978426 -0.26070794
+## Montana         1.17353751  0.53147851
+## Nebraska        1.25291625 -0.19200440
+## Nevada         -2.84550542 -0.76780502
+## New Hampshire   2.35995585 -0.01790055
+## New Jersey     -0.17974128 -1.43493745
+## New Mexico     -1.96012351  0.14141308
+## New York       -1.66566662 -0.81491072
+## North Carolina -1.11208808  2.20561081
+## North Dakota    2.96215223  0.59309738
+## Ohio            0.22369436 -0.73477837
+## Oklahoma        0.30864928 -0.28496113
+## Oregon         -0.05852787 -0.53596999
+## Pennsylvania    0.87948680 -0.56536050
+## Rhode Island    0.85509072 -1.47698328
+## South Carolina -1.30744986  1.91397297
+## South Dakota    1.96779669  0.81506822
+## Tennessee      -0.98969377  0.85160534
+## Texas          -1.34151838 -0.40833518
+## Utah            0.54503180 -1.45671524
+## Vermont         2.77325613  1.38819435
+## Virginia        0.09536670  0.19772785
+## Washington      0.21472339 -0.96037394
+## West Virginia   2.08739306  1.41052627
+## Wisconsin       2.05881199 -0.60512507
+## Wyoming         0.62310061  0.31778662</code></pre>
+</div>
+<div id="reducción-de-la-dimensionalidad" class="section level1">
+<h1>Reducción de la dimensionalidad</h1>
+<p>Proyectemos los datos usando solo los dos primeros vectores propios:</p>
+<pre class="r"><code>D_red&lt;-D[,1:2]
+lambdas_red&lt;-lambdas[1:2]
+(datos_reducidos&lt;-datos_centrados%*%D_red) # Esto es igual a datos_proyectados[,1:2]</code></pre>
+<pre><code>##                       [,1]        [,2]
+## Alabama        -0.97566045  1.12200121
+## Alaska         -1.93053788  1.06242692
+## Arizona        -1.74544285 -0.73845954
+## Arkansas        0.13999894  1.10854226
+## California     -2.49861285 -1.52742672
+## Colorado       -1.49934074 -0.97762966
+## Connecticut     1.34499236 -1.07798362
+## Delaware       -0.04722981 -0.32208890
+## Florida        -2.98275967  0.03883425
+## Georgia        -1.62280742  1.26608838
+## Hawaii          0.90348448 -1.55467609
+## Idaho           1.62331903  0.20885253
+## Illinois       -1.36505197 -0.67498834
+## Indiana         0.50038122 -0.15003926
+## Iowa            2.23099579 -0.10300828
+## Kansas          0.78887206 -0.26744941
+## Kentucky        0.74331256  0.94880748
+## Louisiana      -1.54909076  0.86230011
+## Maine           2.37274014  0.37260865
+## Maryland       -1.74564663  0.42335704
+## Massachusetts   0.48128007 -1.45967706
+## Michigan       -2.08725025 -0.15383500
+## Minnesota       1.67566951 -0.62590670
+## Mississippi    -0.98647919  2.36973712
+## Missouri       -0.68978426 -0.26070794
+## Montana         1.17353751  0.53147851
+## Nebraska        1.25291625 -0.19200440
+## Nevada         -2.84550542 -0.76780502
+## New Hampshire   2.35995585 -0.01790055
+## New Jersey     -0.17974128 -1.43493745
+## New Mexico     -1.96012351  0.14141308
+## New York       -1.66566662 -0.81491072
+## North Carolina -1.11208808  2.20561081
+## North Dakota    2.96215223  0.59309738
+## Ohio            0.22369436 -0.73477837
+## Oklahoma        0.30864928 -0.28496113
+## Oregon         -0.05852787 -0.53596999
+## Pennsylvania    0.87948680 -0.56536050
+## Rhode Island    0.85509072 -1.47698328
+## South Carolina -1.30744986  1.91397297
+## South Dakota    1.96779669  0.81506822
+## Tennessee      -0.98969377  0.85160534
+## Texas          -1.34151838 -0.40833518
+## Utah            0.54503180 -1.45671524
+## Vermont         2.77325613  1.38819435
+## Virginia        0.09536670  0.19772785
+## Washington      0.21472339 -0.96037394
+## West Virginia   2.08739306  1.41052627
+## Wisconsin       2.05881199 -0.60512507
+## Wyoming         0.62310061  0.31778662</code></pre>
+<div id="reconstrucción-de-la-matriz-de-covarianzas" class="section level2">
+<h2>Reconstrucción de la matriz de covarianzas</h2>
+<p>Tabién se puede reconstruir la matriz de covarianzas escalada (luego es una matriz de correlación) y mirar la calidad de la reconstrucción:</p>
+<pre class="r"><code>Sigma_rec&lt;-D_red%*%diag(lambdas_red)%*%t(D_red)
+print(Sigma_rec)</code></pre>
+<pre><code>##             [,1]      [,2]        [,3]      [,4]
+## [1,] 0.885381647 0.8529519 0.008505004 0.6530550
+## [2,] 0.852951854 0.8785149 0.239989662 0.7549083
+## [3,] 0.008505004 0.2399897 0.945940139 0.5194997
+## [4,] 0.653054961 0.7549083 0.519499664 0.7601701</code></pre>
+</div>
+<div id="reconstrucción-de-los-datos-originales-a-partir-de-la-proyección-en-las-dos-primeras-componentes-principales" class="section level2">
+<h2>Reconstrucción de los datos originales a partir de la proyección en las dos primeras componentes principales</h2>
+<p>Reconstruyamos los datos escalados a partir de la proyección en las dos primeras componentes principales:</p>
+<pre class="r"><code>datos_reconstruidos_esc_cent&lt;-datos_reducidos%*%t(D_red)</code></pre>
+<p>Ahora reescalemos los datos reconstruidos para llevarlos a la escala orginal y ver la calidad de la reconstrucción. Para ello primero hay que multiplicar por la desviación estándar y luego sumar la media. La función <code>scale()</code> puede hacer esto, pero por defecto esta función primero centra y luego escala. Por esto debemos usarla primero para escalar y luego para centrar:</p>
+<pre class="r"><code>datos_reconstruidos_cent&lt;-scale(datos_reconstruidos_esc_cent,center =FALSE,scale = 1/desv_est)
+datos_reconstruidos&lt;-scale(datos_reconstruidos_cent,center =(-media),scale = FALSE)
+datos_reconstruidos&lt;-as.data.frame(datos_reconstruidos)
+datos_reconstruidos</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["V1"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["V2"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["V3"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["V4"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"12.108907","2":"235.75582","3":"55.29375","4":"24.439738","_rn_":"Alabama"},{"1":"14.229193","2":"281.23066","3":"59.89144","4":"29.393422","_rn_":"Alaska"},{"1":"10.517042","2":"244.02163","3":"81.89791","4":"31.273586","_rn_":"Arizona"},{"1":"9.480315","2":"181.32262","3":"50.97131","4":"18.782131","_rn_":"Arkansas"},{"1":"10.838010","2":"268.26639","3":"94.89828","4":"36.343663","_rn_":"California"},{"1":"9.506989","2":"228.31388","3":"83.92851","4":"30.395748","_rn_":"Colorado"},{"1":"2.685203","2":"88.50382","3":"73.74294","4":"16.075381","_rn_":"Connecticut"},{"1":"7.311590","2":"168.00949","3":"69.79935","4":"21.977168","_rn_":"Delaware"},{"1":"14.820838","2":"316.33397","3":"77.06020","4":"36.353369","_rn_":"Florida"},{"1":"13.881862","2":"269.46522","3":"56.07930","4":"27.507903","_rn_":"Georgia"},{"1":"2.847490","2":"102.49361","3":"81.54315","4":"19.069712","_rn_":"Hawaii"},{"1":"4.379388","2":"95.13675","3":"56.36473","4":"12.642008","_rn_":"Idaho"},{"1":"9.744771","2":"226.52855","3":"79.56429","4":"29.237928","_rn_":"Illinois"},{"1":"6.346772","2":"144.09034","3":"65.42064","4":"18.920200","_rn_":"Indiana"},{"1":"2.392980","2":"60.71726","3":"57.85772","4":"10.037677","_rn_":"Iowa"},{"1":"5.459552","2":"128.22997","3":"65.74228","4":"17.635785","_rn_":"Kansas"},{"1":"7.781172","2":"149.49843","3":"50.55995","4":"15.961600","_rn_":"Kentucky"},{"1":"12.974342","2":"259.55664","3":"60.88379","4":"27.765491","_rn_":"Louisiana"},{"1":"2.928417","2":"61.27947","3":"51.27816","4":"8.570826","_rn_":"Maine"},{"1":"12.633639","2":"262.23288","3":"67.22073","4":"29.453858","_rn_":"Maryland"},{"1":"4.005994","2":"124.50152","3":"82.04308","4":"21.069850","_rn_":"Massachusetts"},{"1":"12.379689","2":"269.79276","3":"75.88833","4":"32.097177","_rn_":"Michigan"},{"1":"2.736773","2":"79.51489","3":"66.70000","4":"13.683755","_rn_":"Minnesota"},{"1":"14.406774","2":"255.82900","3":"39.57384","4":"22.539391","_rn_":"Mississippi"},{"1":"8.923185","2":"200.19999","3":"71.61128","4":"25.151572","_rn_":"Missouri"},{"1":"6.016858","2":"122.05101","3":"54.09994","4":"14.425784","_rn_":"Montana"},{"1":"4.513834","2":"106.85882","3":"62.92054","4":"15.155568","_rn_":"Nebraska"},{"1":"13.031265","2":"297.02622","3":"86.69832","4":"36.918887","_rn_":"Nevada"},{"1":"2.246987","2":"55.78297","3":"56.26320","4":"9.247892","_rn_":"New Hampshire"},{"1":"5.593955","2":"157.01550","3":"84.39229","4":"24.395674","_rn_":"New Jersey"},{"1":"12.620723","2":"268.23969","3":"71.64636","4":"30.987398","_rn_":"New Mexico"},{"1":"10.191587","2":"238.94671","3":"82.54253","4":"30.987337","_rn_":"New York"},{"1":"14.401021","2":"259.36249","3":"42.15315","4":"23.435953","_rn_":"North Carolina"},{"1":"1.954257","2":"36.08760","3":"46.11917","4":"5.225178","_rn_":"North Dakota"},{"1":"5.927553","2":"148.37695","3":"73.92218","4":"21.244920","_rn_":"Ohio"},{"1":"6.548551","2":"151.29501","3":"67.89725","4":"20.107560","_rn_":"Oklahoma"},{"1":"6.948400","2":"165.20787","3":"72.54694","4":"22.369863","_rn_":"Oregon"},{"1":"4.705434","2":"119.15883","3":"69.14110","4":"17.641434","_rn_":"Pennsylvania"},{"1":"3.101956","2":"106.06276","3":"80.75648","4":"19.194278","_rn_":"Rhode Island"},{"1":"14.325832","2":"264.28842","3":"46.62428","4":"24.887390","_rn_":"South Carolina"},{"1":"4.679493","2":"87.89189","3":"47.31888","4":"9.938576","_rn_":"South Dakota"},{"1":"11.649166","2":"232.20175","3":"58.76635","4":"24.934924","_rn_":"Tennessee"},{"1":"10.175521","2":"229.56226","3":"76.10072","4":"28.700251","_rn_":"Texas"},{"1":"3.862585","2":"121.44951","3":"81.74894","4":"20.740713","_rn_":"Utah"},{"1":"3.843345","2":"57.72438","3":"36.83482","4":"4.940606","_rn_":"Vermont"},{"1":"7.925543","2":"169.22273","3":"62.65796","4":"20.436711","_rn_":"Virginia"},{"1":"5.537595","2":"145.27871","3":"76.80840","4":"21.644129","_rn_":"Washington"},{"1":"5.484903","2":"91.40798","3":"39.31448","4":"8.396647","_rn_":"West Virginia"},{"1":"1.880326","2":"61.21929","3":"64.89463","4":"11.700994","_rn_":"Wisconsin"},{"1":"6.912425","2":"145.45512","3":"59.01612","4":"17.562396","_rn_":"Wyoming"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="ejercicios" class="section level2">
+<h2>Ejercicios:</h2>
+<p>1- Reproduzca la expresión en componentes principales y la reducción de dimensionalidad usando la función <code>princomp()</code>.</p>
+<!-- 2- Lleve a cabo un agrupamiento jerárquico de las ciudades usando i) los datos centrados y escalados y ii) los datos proyectados en las dos primeras componentes principales. Utilice en ambos casos las mismas distancias entre individuos y entre grupos. Compare los grupos obtenidos. -->
+<p>3- Utilizando lo visto sobre la descomposición en valores propios reconstruya la matemática de la reducción de la dimensionalidad presentada en este documento.</p>
+<h1 style="text-align: right;">
+<a href="intro_acp_imag.html"><span style="color: #000000; font-size: 14pt;"><strong>SEGUNDA APLICACIÓN EN R </strong></span></a>
+</h1>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

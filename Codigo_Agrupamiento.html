@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Juan David Ospina Arango" />
 
 
-<title>Sesiones de la Asignatura</title>
+<title>Caracterización de los tipos de arrestos en las ciudades de Estados Unidos</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -368,138 +369,124 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Sesiones de la Asignatura</h1>
+<h1 class="title toc-ignore">Caracterización de los tipos de arrestos en las ciudades de Estados Unidos</h1>
+<h4 class="author">Juan David Ospina Arango</h4>
+<h4 class="date">7/23/2020</h4>
 
 </div>
 
 
-<p>
-</p>
-<h1>
-¡Antes de empezar! Programa R STUDIO
+<div id="el-conjunto-de-datos-usarrest" class="section level2">
+<h2>El conjunto de datos USArrest</h2>
+<pre class="r"><code>head(USArrests)</code></pre>
+<pre><code>##            Murder Assault UrbanPop Rape
+## Alabama      13.2     236       58 21.2
+## Alaska       10.0     263       48 44.5
+## Arizona       8.1     294       80 31.0
+## Arkansas      8.8     190       50 19.5
+## California    9.0     276       91 40.6
+## Colorado      7.9     204       78 38.7</code></pre>
+<p>Actividad: hacer un dotchart para poner los tipos de crimen:</p>
+<pre class="r"><code>summary(USArrests)</code></pre>
+<pre><code>##      Murder          Assault         UrbanPop          Rape      
+##  Min.   : 0.800   Min.   : 45.0   Min.   :32.00   Min.   : 7.30  
+##  1st Qu.: 4.075   1st Qu.:109.0   1st Qu.:54.50   1st Qu.:15.07  
+##  Median : 7.250   Median :159.0   Median :66.00   Median :20.10  
+##  Mean   : 7.788   Mean   :170.8   Mean   :65.54   Mean   :21.23  
+##  3rd Qu.:11.250   3rd Qu.:249.0   3rd Qu.:77.75   3rd Qu.:26.18  
+##  Max.   :17.400   Max.   :337.0   Max.   :91.00   Max.   :46.00</code></pre>
+</div>
+<div id="agrupamiento-jerárquico" class="section level2">
+<h2>Agrupamiento jerárquico</h2>
+<p>Paso 1: escalar los datos</p>
+<pre class="r"><code>usarrest_sc &lt;- scale(USArrests)</code></pre>
+<p>Paso 2: calcular la matriz de distancias</p>
+<pre class="r"><code>usarrest_dist &lt;- dist(usarrest_sc)</code></pre>
+<p>Paso 3: agrupamiento jerárquico</p>
+<pre class="r"><code>usarrest_hc &lt;- hclust(usarrest_dist) # Por defecto se usa complete linkage</code></pre>
+<p>Veamos el dendograma:</p>
+<pre class="r"><code>plot(usarrest_hc)</code></pre>
+<p><img src="Codigo_Agrupamiento_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>grupos_complete &lt;- cutree(usarrest_hc,k=4)</code></pre>
+<pre class="r"><code>plot(usarrest_hc)
+rect.hclust(usarrest_hc,k=4,border=1:4)</code></pre>
+<p><img src="Codigo_Agrupamiento_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>¿Cuántos estados conforman cada grupo?</p>
+<pre class="r"><code>table(grupos_complete)</code></pre>
+<pre><code>## grupos_complete
+##  1  2  3  4 
+##  8 11 21 10</code></pre>
+<div id="construyamos-un-relato-sobre-el-agrupamiento" class="section level3">
+<h3>Construyamos un relato sobre el agrupamiento</h3>
+<pre class="r"><code>datos &lt;- USArrests
+datos$grupo &lt;- grupos_complete</code></pre>
+<pre class="r"><code>pairs(datos[,1:4],col=datos$grupo,lwd=2)</code></pre>
+<p><img src="Codigo_Agrupamiento_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>aggregate(datos$Murder~datos$grupo,FUN=mean)</code></pre>
+<pre><code>##   datos$grupo datos$Murder
+## 1           1    14.087500
+## 2           2    11.054545
+## 3           3     5.871429
+## 4           4     3.180000</code></pre>
+<p>Medias:</p>
+<pre class="r"><code>aggregate(cbind(UrbanPop,Murder,Rape,Assault)~grupo,data=datos,FUN=mean)</code></pre>
+<pre><code>##   grupo UrbanPop    Murder     Rape  Assault
+## 1     1 53.50000 14.087500 24.53750 252.7500
+## 2     2 79.09091 11.054545 32.61818 264.0909
+## 3     3 70.76190  5.871429 18.58095 134.4762
+## 4     4 49.30000  3.180000 11.63000  78.7000</code></pre>
+<pre class="r"><code>grupos_hclust_lb &lt;- ifelse(grupos_complete==1,&quot;rural_violento&quot;,
+                           ifelse(grupos_complete==2,&quot;urbano_violento&quot;,
+                                  ifelse(grupos_complete==3,&quot;urbano_pacifico&quot;,&quot;rural_pacifico&quot;)))</code></pre>
+<p>Dispersión:</p>
+<pre class="r"><code>aggregate(cbind(UrbanPop,Murder,Rape,Assault)~grupo,data=datos,FUN=sd)</code></pre>
+<pre><code>##   grupo  UrbanPop   Murder     Rape  Assault
+## 1     1  8.211490 2.277491 8.887702 44.97857
+## 2     2  6.833075 2.179616 6.928033 39.92607
+## 3     3 10.444639 2.182004 5.406535 45.77622
+## 4     4  9.165758 1.706068 3.301868 26.47452</code></pre>
+</div>
+</div>
+<div id="k-medias" class="section level2">
+<h2>K-Medias</h2>
+<pre class="r"><code>usarrest_kmeans &lt;- kmeans(usarrest_sc,2)
+usarrest_kmeans$centers</code></pre>
+<pre><code>##      Murder    Assault   UrbanPop       Rape
+## 1  1.004934  1.0138274  0.1975853  0.8469650
+## 2 -0.669956 -0.6758849 -0.1317235 -0.5646433</code></pre>
+<pre class="r"><code>usarrest_kmeans &lt;- kmeans(usarrest_sc,4,nstart=5)
+usarrest_kmeans$centers</code></pre>
+<pre><code>##       Murder    Assault   UrbanPop        Rape
+## 1  0.6950701  1.0394414  0.7226370  1.27693964
+## 2 -0.9615407 -1.1066010 -0.9301069 -0.96676331
+## 3 -0.4894375 -0.3826001  0.5758298 -0.26165379
+## 4  1.4118898  0.8743346 -0.8145211  0.01927104</code></pre>
+<pre class="r"><code>aggregate(cbind(UrbanPop,Murder,Rape,Assault)~usarrest_kmeans$cluster,data=USArrests,FUN=mean)</code></pre>
+<pre><code>##   usarrest_kmeans$cluster UrbanPop   Murder     Rape   Assault
+## 1                       1 76.00000 10.81538 33.19231 257.38462
+## 2                       2 52.07692  3.60000 12.17692  78.53846
+## 3                       3 73.87500  5.65625 18.78125 138.87500
+## 4                       4 53.75000 13.93750 21.41250 243.62500</code></pre>
+<pre class="r"><code>grupos_kmeans_lb &lt;- ifelse(usarrest_kmeans$cluster==1,&quot;rural_pacifico&quot;,
+                           ifelse(usarrest_kmeans$cluster==2,&quot;rural_violento&quot;,
+                                  ifelse(usarrest_kmeans$cluster==3,&quot;urbano_pacifico&quot;,&quot;urbano_violento&quot;)))</code></pre>
+<pre class="r"><code>aggregate(cbind(UrbanPop,Murder,Rape,Assault)~grupos_kmeans_lb,data=USArrests,FUN=mean)</code></pre>
+<pre><code>##   grupos_kmeans_lb UrbanPop   Murder     Rape   Assault
+## 1   rural_pacifico 76.00000 10.81538 33.19231 257.38462
+## 2   rural_violento 52.07692  3.60000 12.17692  78.53846
+## 3  urbano_pacifico 73.87500  5.65625 18.78125 138.87500
+## 4  urbano_violento 53.75000 13.93750 21.41250 243.62500</code></pre>
+<pre class="r"><code>table(grupos_kmeans_lb,grupos_hclust_lb)</code></pre>
+<pre><code>##                  grupos_hclust_lb
+## grupos_kmeans_lb  rural_pacifico rural_violento urbano_pacifico urbano_violento
+##   rural_pacifico               0              1               1              11
+##   rural_violento              10              0               3               0
+##   urbano_pacifico              0              0              16               0
+##   urbano_violento              0              7               1               0</code></pre>
+<h1 style="text-align: right;">
+<a href="intro_clustering.html"><span style="color: #000000; font-size: 14pt;"><strong> SEGUNDA APLICACIÓN: introducción clustering</strong></span></a>
 </h1>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">La asigntaura se desarrolla en su totalidad en el programa R Studio. </span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Este es un entorno popular para crear aplicaciones y procesar datos en el lenguaje de programación R. Inicialmente, puede realizar la descarga en el siguiente link: <a style="color: #808080;" href="https://rstudio.com/products/rstudio/download/#download">https://rstudio.com/products/rstudio/download/#download</a></span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;"></span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Aqui podrá observar las sesiones digidas hasta la fecha. Al dar click podrá ver especificamente cada temática desde la conceptualización, hasta la practica realizada en el programa R. </span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;"> Luego de la descarga, se puede generar un Notebook o un documento R Markdown (etiquetas) dando click a file, new file y luego escoger el tipo de documento  </span>
-</h5>
-<h5 style="text-align: justify;">
-<span style="color: #808080;"> Durante las sesiones podrá observa el paso a paso y la descripción de cada algortitmo registrado. Aquí puede observar un resumen claro de cada sesión de la asignatura, puede entrar a la sesión que desee dando click a la imagen o en el enlace de la descripción.;</span>
-</h5>
-<p style="text-align: justify;">
-<span style="color: #808080;"></span>
-</p>
-<p>
- 
-</p>
-<h1>
-Sesión 1 - Reglas
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">En la sesión inicial el profesor realiza la introducción a la asignatura y presenta los conceptos iniciales. En esta sesión podrá aprender el término predicción, modelos, estructuras, notaciones matemáticas con respecto a variables aleatorias, Función de Distribución de probabilidad, Función de Densidad de Probabilidad, entre otros. Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Reglas.html">Sesión 1 – Reglas.</a></span>
-</h5>
-<p>
-<a href="Reglas.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/sesion1.PNG" alt="" width="410" height="267" /></a>
-</p>
-<p>
- 
-</p>
-<h1>
-Sesión 2 - Introduccion 1R y KNN
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="intro_1R_y_KNN.html">Sesión 2– Introducción 1R y KNN</a></span>
-</h5>
-<p>
-<a href="intro_1R_y_KNN.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Sesion2.png" alt="" width="360" height="219" /></a>
-</p>
-<h1>
-Sesión 3 - Predicción y KNN
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Teoria_prediccion.html">Sesión 3 - Predicción y KNN</a></span>
-</h5>
-<p>
-<a href="Teoria_prediccion.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Sesion3.PNG" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 4 - Regresión Líneal
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="sesion04.html">Sesión 4 - Regresión Lineal</a></span>
-</h5>
-<p>
-<a href="sesion04.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Regresionlineal.png" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 5 - Regresión Líneal 2
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="RegresionLineal2.html">Sesión 5 - Regresión Lineal 2</a></span>
-</h5>
-<p>
-<a href="RegresionLineal2.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Regresionlineal1.png" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 6 - Regresión Lineal Generalizada - Distribución de Bernoulli y Poisson.
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Bernoulli_Poisson.html">Sesión 6 - Regresión Lineal generalizada </a></span>
-</h5>
-<p>
-<a href="Bernoulli_Poisson.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/distribucionpoisson.png" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 7 - Componentes Principales.
-</h1>
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="practica_pca.html">Sesión 7 - Componentes Principales</a></span>
-</h5>
-<p>
-<a href="practica_pca.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/ComponentesPrincipales.png" alt="" width="326" height="258" /></a>
-</p>
-<h1>
-Sesión 8 - Agrupamiento
-<p>
- 
-</p>
-<h5 style="text-align: justify;">
-<span style="color: #808080;">Para ingresar a esta sesión puede dar click en el siguiente enlace: <a style="color: #808080;" href="Codigo_Agrupamiento.html">Sesión 8 - Agrupamiento</a></span>
-</h5>
-<p>
-<a href="Codigo_Agrupamiento.html"><img style="display: block; margin-left: auto; margin-right: auto;" src="Images/Agrupamiento.png" alt="" width="326" height="258" /></a>
-</p>
+</div>
 
 
 
